@@ -5,8 +5,11 @@ class CIsaacPlayer : public CCharacter
 
 	fVec2 m_dirVec2;
 	float m_veclocity;
+	float m_headDelay = 0.f;
+	float m_attackTime = 0.f;
 	bool  m_isMove;
-	bool  m_isAttack;
+	bool  m_isAttack = false;
+	bool  m_isAttackKey = false;
 	enum class IsaacStateHead {
 		IDLE,
 		LEFT_MOVE,
@@ -41,13 +44,22 @@ public:
 	virtual CIsaacPlayer* Clone();
 	
 	virtual void update();
-	virtual void render(HDC hdc);
+	virtual void render();
 	virtual void finalupdate();
 
 	void HeadState(IsaacStateHead head);
 	void BodyState(IsaacStateBody body);
+
+	void Attack();
+	void Move();
+
 	void CreateWaterballoon(fVec2 dir );
 	void CreateBomb();
 	
+
+
+	virtual void OnCollision(CCollider* _pOther);
+	virtual void OnCollisionEnter(CCollider* _pOther);
+	virtual void OnCollisionExit(CCollider* _pOther);
 };
 

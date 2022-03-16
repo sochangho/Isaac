@@ -2,6 +2,7 @@
 #include "CCharacter.h"
 #include "CGameObject.h"
 #include "CAnimator.h"
+#include "CScene.h"
 CCharacter::CCharacter()
 {
     m_parent = nullptr;
@@ -22,9 +23,7 @@ CCharacter::~CCharacter()
         if (m_vecChilde[i]->m_parent != nullptr) {
 
             m_vecChilde[i]->m_parent = nullptr;
-        }
-
-        delete m_vecChilde[i];
+        }    
     }
 
     m_vecChilde.clear();
@@ -37,48 +36,36 @@ CCharacter* CCharacter::Clone()
 
 void CCharacter::update()
 {
-   
-   
-    for (int i = 0; i < m_vecChilde.size(); i++) {
-
-        m_vecChilde[i]->update();
-    }
     
+    if (m_parent != nullptr) {
+
+        SetPos(m_parent->GetPos() - m_fptFinalPos);
+
+    }
+   
+
+  
 }
 
 void CCharacter::finalupdate()
 {
    
-    if (m_parent != nullptr) {
-
-       SetPos(m_parent->GetPos() - m_fptFinalPos);
-
-    }
     CGameObject::finalupdate();
    
-    for (int i = 0; i < m_vecChilde.size(); i++) {
-
-        m_vecChilde[i]->finalupdate();
-    }
 }
 
-void CCharacter::render(HDC hdc)
+void CCharacter::render()
 {
-   
-
-    component_render(hdc);
-
-    for (int i = 0; i < m_vecChilde.size(); i++) {
-
-        m_vecChilde[i]->render(hdc);
-    }
-
+    component_render();
 }
 
-void CCharacter::AddChilde(CCharacter* character)
+void CCharacter::AddChilde(CCharacter* character , GROUP_GAMEOBJ type)
 {
     character->m_parent = this;
     character->m_fptFinalPos = character->m_parent->GetPos() - character->GetPos();
+
+    CScene* curScene = CSceneManager::getInst()->GetCurScene();
+    curScene->AddObject(character, GROUP_GAMEOBJ::PLAYER);
     m_vecChilde.push_back(character);
 
 }

@@ -15,15 +15,21 @@ public:
 	virtual CCharacter* Clone();
 	virtual void update();
 	virtual void finalupdate();
-	virtual void render(HDC hdc);
+	virtual void render();
 
-	void AddChilde(CCharacter* character);
+	void AddChilde(CCharacter* character , GROUP_GAMEOBJ type);
 	fPoint GetFinalPos();
 
 	vector<CCharacter*>& GetChildes();
 
 	template<typename T>
 	CCharacter* FindTypeChilde();
+
+
+
+	virtual void OnCollision(CCollider* _pOther) {}
+	virtual void OnCollisionEnter(CCollider* _pOther) {}
+	virtual void OnCollisionExit(CCollider* _pOther) {}
 };
 
 template<typename T>

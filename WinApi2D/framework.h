@@ -39,11 +39,14 @@ using namespace std;
 enum class GROUP_GAMEOBJ
 {
 	DEFAULT,
+	BACKGROUND,
+	MAP,
 	TILE,
 	PLAYER,
 	MONSTER,
 	MISSILE_PLAYER,
 	MISSILE_MONSTER,
+	TEARS,
 
 	UI,		// UI는 모든 게임오브젝트 중 최상단 Layer에 위치
 	SIZE,
@@ -59,22 +62,11 @@ enum class GROUP_SCENE
 	SIZE,
 };
 
-//========================================
-//## Core DC의 GDI					##
-//========================================
-
-enum class TYPE_BRUSH
+enum class GROUP_TILE
 {
-	HOLLOW,
-
-	SIZE,
-};
-
-enum class TYPE_PEN
-{
-	RED,
-	GREEN,
-	BLUE,
+	NONE,
+	GROUND,
+	WALL,
 
 	SIZE,
 };
@@ -104,6 +96,7 @@ enum class TYPE_EVENT
 #include "CCameraManager.h"
 #include "CUIManager.h"
 #include "CSoundManager.h"
+#include "CRenderManager.h"
 
 //========================================
 //##			디파인문				##
