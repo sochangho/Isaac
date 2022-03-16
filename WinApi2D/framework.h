@@ -60,6 +60,26 @@ enum class GROUP_SCENE
 };
 
 //========================================
+//## Core DC의 GDI					##
+//========================================
+
+enum class TYPE_BRUSH
+{
+	HOLLOW,
+
+	SIZE,
+};
+
+enum class TYPE_PEN
+{
+	RED,
+	GREEN,
+	BLUE,
+
+	SIZE,
+};
+
+//========================================
 //## 이벤트 타입					##
 //========================================
 
@@ -84,7 +104,6 @@ enum class TYPE_EVENT
 #include "CCameraManager.h"
 #include "CUIManager.h"
 #include "CSoundManager.h"
-#include "CRenderManager.h"
 
 //========================================
 //##			디파인문				##

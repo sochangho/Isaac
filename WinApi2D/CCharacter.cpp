@@ -37,13 +37,13 @@ CCharacter* CCharacter::Clone()
 
 void CCharacter::update()
 {
-    GetAnimator()->update();
-
+   
+   
     for (int i = 0; i < m_vecChilde.size(); i++) {
 
         m_vecChilde[i]->update();
     }
-
+    
 }
 
 void CCharacter::finalupdate()
@@ -62,15 +62,15 @@ void CCharacter::finalupdate()
     }
 }
 
-void CCharacter::render()
+void CCharacter::render(HDC hdc)
 {
    
 
-    component_render();
+    component_render(hdc);
 
     for (int i = 0; i < m_vecChilde.size(); i++) {
 
-        m_vecChilde[i]->render();
+        m_vecChilde[i]->render(hdc);
     }
 
 }

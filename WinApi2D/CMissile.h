@@ -13,7 +13,7 @@ public:
 	virtual CMissile* Clone();
 
 	virtual void update();
-	virtual void render();
+	virtual void render(HDC hDC);
 
 	void SetDir(fVec2 vec);
 	void SetDir(float theta);

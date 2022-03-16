@@ -47,14 +47,14 @@ void CScene::finalupdate()
     }
 }
 
-void CScene::render()
+void CScene::render(HDC hDC)
 {
     // 씬이 가진 모든 오브젝트 render
     for (int i = 0; i < (int)GROUP_GAMEOBJ::SIZE; i++)
     {
         if ((UINT)GROUP_GAMEOBJ::TILE == i)
         {
-            render_tile();
+            render_tile(hDC);
             continue;
         }
         for (vector<CGameObject*>::iterator iter = m_arrObj[i].begin();
@@ -62,7 +62,7 @@ void CScene::render()
         {
             if (!(*iter)->isDead())
             {
-                (*iter)->render();
+                (*iter)->render(hDC);
                 iter++;
             }
             else
@@ -73,7 +73,7 @@ void CScene::render()
     }
 }
 
-void CScene::render_tile()
+void CScene::render_tile(HDC hDC)
 {
     const vector<CGameObject*>& vecTile = GetGroupObject(GROUP_GAMEOBJ::TILE);
 
@@ -96,7 +96,7 @@ void CScene::render_tile()
             }
             int iIdx = (m_iTileX * iCurRow) + iCurCol;
 
-            vecTile[iIdx]->render();
+            vecTile[iIdx]->render(hDC);
         }
     }
 }
@@ -160,7 +160,7 @@ void CScene::CreateTile(UINT xSize, UINT ySize)
     m_iTileX = xSize;
     m_iTileY = ySize;
 
-    CD2DImage* pImg = CResourceManager::getInst()->LoadD2DImage(L"Tile", L"texture\\tile\\tilemap.bmp");
+    CTexture* pTex = CResourceManager::getInst()->LoadTextrue(L"Tile", L"texture\\tile\\tilemap.bmp");
 
     for (UINT i = 0; i < ySize; i++)
     {
@@ -168,7 +168,7 @@ void CScene::CreateTile(UINT xSize, UINT ySize)
         {
             CTile* pTile = new CTile();
             pTile->SetPos(fPoint((float)(j * CTile::SIZE_TILE), (float)(i * CTile::SIZE_TILE)));
-            pTile->SetTexture(pImg);
+            pTile->SetTexture(pTex);
             AddObject(pTile, GROUP_GAMEOBJ::TILE);
         }
     }

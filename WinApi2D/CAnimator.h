@@ -2,7 +2,7 @@
 
 class CGameObject;
 class CAnimation;
-class CD2DImage;
+class CTexture;
 
 class CAnimator
 {
@@ -20,9 +20,9 @@ public:
 	CGameObject* GetObj();
 
 	void update();
-	void render();
+	void render(HDC hDC);
 
-	void CreateAnimation(const wstring& strName, CD2DImage* tex, fPoint lt, fPoint slice,
+	void CreateAnimation(const wstring& strName, CTexture* tex, fPoint lt, fPoint slice,
 						fPoint step, float duration, UINT frmCount);
 	CAnimation* FindAnimation(const wstring& strName);
 	void Play(const wstring& strName);

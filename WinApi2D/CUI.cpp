@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CUI.h"
+#include "SelectGDI.h"
 
 CUI::CUI(bool bCameraAffected)
 {
@@ -53,7 +54,7 @@ void CUI::finalupdate()
 	finalupdate_child();
 }
 
-void CUI::render()
+void CUI::render(HDC hDC)
 {
 	fPoint fptPos = GetFinalPos();
 	fPoint fptScale = GetScale();
@@ -65,24 +66,24 @@ void CUI::render()
 
 	if (m_bLbtnDown)
 	{
-		CRenderManager::getInst()->RenderRectangle(
-			fptPos.x,
-			fptPos.y,
-			fptPos.x + fptScale.x,
-			fptPos.y + fptScale.y,
-			RGB(0, 255, 0));
+		SelectGDI green(hDC, TYPE_PEN::GREEN);
+		
+		Rectangle(hDC,
+			(int)(fptPos.x),
+			(int)(fptPos.y),
+			(int)(fptPos.x + fptScale.x),
+			(int)(fptPos.y + fptScale.y));
 	}
 	else
 	{
-		CRenderManager::getInst()->RenderRectangle(
-			fptPos.x,
-			fptPos.y,
-			fptPos.x + fptScale.x,
-			fptPos.y + fptScale.y,
-			RGB(0, 0, 0));
+		Rectangle(hDC,
+			(int)(fptPos.x),
+			(int)(fptPos.y),
+			(int)(fptPos.x + fptScale.x),
+			(int)(fptPos.y + fptScale.y));
 	}
 
-	render_child();
+	render_child(hDC);
 }
 
 void CUI::update_child()
@@ -101,11 +102,11 @@ void CUI::finalupdate_child()
 	}
 }
 
-void CUI::render_child()
+void CUI::render_child(HDC hDC)
 {
 	for (UINT i = 0; i < m_vecChildUI.size(); i++)
 	{
-		m_vecChildUI[i]->render();
+		m_vecChildUI[i]->render(hDC);
 	}
 }
 

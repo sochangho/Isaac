@@ -35,20 +35,20 @@ void CMissile::update()
 		DeleteObj(this);
 }
 
-void CMissile::render()
+void CMissile::render(HDC hDC)
 {
 	fPoint pos = GetPos();
 	fPoint scale = GetScale();
 
 	fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(pos);
 
-	CRenderManager::getInst()->RenderEllipse(
-		fptRenderPos.x,
-		fptRenderPos.y,
-		scale.x / 2.f,
-		scale.y / 2.f);
+	Ellipse(hDC,
+		(int)(fptRenderPos.x - scale.x / 2.f),
+		(int)(fptRenderPos.y - scale.y / 2.f),
+		(int)(fptRenderPos.x + scale.x / 2.f),
+		(int)(fptRenderPos.y + scale.y / 2.f));
 
-	component_render();
+	component_render(hDC);
 }
 
 void CMissile::SetDir(fVec2 vec)

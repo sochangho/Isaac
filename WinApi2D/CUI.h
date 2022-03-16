@@ -23,11 +23,11 @@ public:
 
 	virtual void update();
 	virtual void finalupdate();
-	virtual void render();
+	virtual void render(HDC hDC);
 
 	void update_child();
 	void finalupdate_child();
-	void render_child();
+	void render_child(HDC hDC);
 
 	virtual void MouseOn();
 	virtual void MouseLbtnDown();

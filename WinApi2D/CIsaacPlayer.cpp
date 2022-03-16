@@ -16,16 +16,15 @@ CIsaacPlayer::CIsaacPlayer()
 	/// </summary>
 	CPlayerBody* playerBody = new CPlayerBody;
 	fPoint playerPos = GetPos();
-	playerBody->SetPos(playerPos + fPoint(0, 10));
-	playerBody->CreateCollider();
-	playerBody->GetCollider()->SetScale(fPoint(17, 17));
+	playerBody->SetPos(playerPos + fPoint(1, 4));
+	
 	/// <summary>
 	/// 플레이어 머리
 	/// </summary>
 	CPlayerHead* playerHead = new CPlayerHead;
-	playerHead->SetPos(playerPos - fPoint(0, 10));
-	playerHead->CreateCollider();
-	playerHead->GetCollider()->SetScale(fPoint(30, 30));
+	playerHead->SetPos(playerPos - fPoint(0, 5));
+	
+	
 
 	/// <summary>
 	/// 자식 캐릭터로 
@@ -146,9 +145,9 @@ void CIsaacPlayer::update()
 	CCharacter::update();
 }
 
-void CIsaacPlayer::render()
+void CIsaacPlayer::render(HDC hdc)
 {
-	CCharacter::render();
+	CCharacter::render(hdc);
 }
 
 void CIsaacPlayer::finalupdate()
@@ -158,52 +157,47 @@ void CIsaacPlayer::finalupdate()
 
 void CIsaacPlayer::HeadState(IsaacStateHead head)
 {
-	vector<CCharacter*>& childes =  GetChildes();
-	int index = -1;
-	for (int i = 0; i < childes.size(); i++) {
-
-		if (dynamic_cast<CPlayerHead*>(childes[i]) != nullptr) {
-			index = i;
-		}
-
-	}
-
-	if (index == -1) {
-		return;
-	}
-
+	
 
 	if (m_stHead != head) {
+
+		CCharacter* childe = FindTypeChilde<CPlayerHead>();
+
+		if (childe == nullptr) {
+			return;
+		}
+
+
 		m_stHead = head;
 
 		switch (m_stHead)
 		{
 		case CIsaacPlayer::IsaacStateHead::IDLE:
-			childes[index]->GetAnimator()->Play(L"IDLE");
+			childe->GetAnimator()->Play(L"IDLE");
 			break;
 		case CIsaacPlayer::IsaacStateHead::LEFT_MOVE:
-			childes[index]->GetAnimator()->Play(L"LEFT_MOVE");
+			childe->GetAnimator()->Play(L"LEFT_MOVE");
 			break;
 		case CIsaacPlayer::IsaacStateHead::RIGHT_MOVE:
-			childes[index]->GetAnimator()->Play(L"RIGHT_MOVE");
+			childe->GetAnimator()->Play(L"RIGHT_MOVE");
 			break;
 		case CIsaacPlayer::IsaacStateHead::UP_MOVE:
-			childes[index]->GetAnimator()->Play(L"UP_MOVE");
+			childe->GetAnimator()->Play(L"UP_MOVE");
 			break;
 		case CIsaacPlayer::IsaacStateHead::DOWN_MOVE:
-			childes[index]->GetAnimator()->Play(L"DOWN_MOVE");
+			childe->GetAnimator()->Play(L"DOWN_MOVE");
 			break;
 		case CIsaacPlayer::IsaacStateHead::LEFT_ATTACK:
-			childes[index]->GetAnimator()->Play(L"LEFT_ATTACK");
+			childe->GetAnimator()->Play(L"LEFT_ATTACK");
 			break;
 		case CIsaacPlayer::IsaacStateHead::RIGHT_ATTACK:
-			childes[index]->GetAnimator()->Play(L"RIGHT_ATTACK");
+			childe->GetAnimator()->Play(L"RIGHT_ATTACK");
 			break;
 		case CIsaacPlayer::IsaacStateHead::UP_ATTACK:
-			childes[index]->GetAnimator()->Play(L"UP_ATTACK");
+			childe->GetAnimator()->Play(L"UP_ATTACK");
 			break;
 		case CIsaacPlayer::IsaacStateHead::DOWN_ATTACK:
-			childes[index]->GetAnimator()->Play(L"DOWN_ATTACK");
+			childe->GetAnimator()->Play(L"DOWN_ATTACK");
 			break;
 		default:
 			break;
@@ -216,39 +210,35 @@ void CIsaacPlayer::HeadState(IsaacStateHead head)
 
 void CIsaacPlayer::BodyState(IsaacStateBody body)
 {
-	vector<CCharacter*>& childes = GetChildes();
-	int index = -1;
-	for (int i = 0; i < childes.size(); i++) {
 
-		if (dynamic_cast<CPlayerBody*>(childes[i]) != nullptr) {
-			index = i;
-		}
 
-	}
-
-	if (index == -1) {
-		return;
-	}
 
 	if (body != m_stBody) {
+
+        
+		CCharacter* childe = FindTypeChilde<CPlayerBody>();
+
+		if (childe == nullptr) {
+			return;
+		}
 
 		m_stBody = body;
 		switch (m_stBody)
 		{
 		case CIsaacPlayer::IsaacStateBody::IDLE:
-			childes[index]->GetAnimator()->Play(L"IDLE");
+			childe->GetAnimator()->Play(L"BODY_IDLE");
 			break;
 		case CIsaacPlayer::IsaacStateBody::LEFT_MOVE:
-			childes[index]->GetAnimator()->Play(L"LEFT_MOVE");
+			childe->GetAnimator()->Play(L"BODY_LEFT_MOVE");
 			break;
 		case CIsaacPlayer::IsaacStateBody::RIGHT_MOVE:
-			childes[index]->GetAnimator()->Play(L"RIGHT_MOVE");
+			childe->GetAnimator()->Play(L"BODY_RIGHT_MOVE");
 			break;
 		case CIsaacPlayer::IsaacStateBody::UP_MOVE:
-			childes[index]->GetAnimator()->Play(L"UP_MOVE");
+			childe->GetAnimator()->Play(L"BODY_UP_MOVE");
 			break;
 		case CIsaacPlayer::IsaacStateBody::DOWN_MOVE:
-			childes[index]->GetAnimator()->Play(L"DOWN_MOVE");
+			childe->GetAnimator()->Play(L"BODY_DOWN_MOVE");
 			break;
 		default:
 			break;

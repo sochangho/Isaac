@@ -17,7 +17,7 @@ private:
 
 public:
 	void update();
-	void render();
+	void render(HDC hDC);
 	void init();
 
 	CScene* GetCurScene();							//현재 씬 반환

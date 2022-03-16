@@ -41,7 +41,7 @@ public:
 	virtual CIsaacPlayer* Clone();
 	
 	virtual void update();
-	virtual void render();
+	virtual void render(HDC hdc);
 	virtual void finalupdate();
 
 	void HeadState(IsaacStateHead head);

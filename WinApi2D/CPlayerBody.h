@@ -1,16 +1,16 @@
 #pragma once
-#include "CD2DImage.h"
+#include "CTexture.h"
 #include "CCharacter.h"
 class CPlayerBody : public CCharacter
 {private:
-	CD2DImage* m_pImg;
+	CTexture* m_pTex;
 public:
 	CPlayerBody();
 	~CPlayerBody();
 
 	virtual CPlayerBody* Clone();
 	virtual void update();
-	virtual void render();
+	virtual void render(HDC hdc);
 	virtual void finalupdate();
 	
 

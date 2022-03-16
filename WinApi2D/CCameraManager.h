@@ -35,7 +35,7 @@ private:
 	float m_fSpeed;				// 타겟을 따라가는 속도
 
 	list<tCamEffect> m_listCamEffect;
-	CTexture* m_pImg;
+	CTexture* m_pTex;
 
 public:
 	void init();

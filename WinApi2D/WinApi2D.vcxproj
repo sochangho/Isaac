@@ -157,7 +157,6 @@
     <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CCore.h" />
-    <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CIsaacPlayer.h" />
@@ -169,7 +168,6 @@
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayerBody.h" />
     <ClInclude Include="CPlayerHead.h" />
-    <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
     <ClInclude Include="CScene.h" />
@@ -185,8 +183,8 @@
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Logger.h" />
-    <ClInclude Include="Map_Start.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="SingleTon.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
@@ -201,7 +199,6 @@
     <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CCore.cpp" />
-    <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CIsaacPlayer.cpp" />
@@ -213,7 +210,6 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayerBody.cpp" />
     <ClCompile Include="CPlayerHead.cpp" />
-    <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />
     <ClCompile Include="CScene.cpp" />
@@ -227,7 +223,6 @@
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
-    <ClCompile Include="Map_Start.cpp" />
     <ClCompile Include="WinApi2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -236,10 +231,6 @@
   <ItemGroup>
     <Image Include="small.ico" />
     <Image Include="WinApi2D.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

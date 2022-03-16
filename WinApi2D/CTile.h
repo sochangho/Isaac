@@ -1,13 +1,13 @@
 #pragma once
 #include "CGameObject.h"
 
-class CD2DImage;
+class CTexture;
 
 class CTile : public CGameObject
 {
 
 private:
-	CD2DImage* m_pImg;
+	CTexture* m_pTex;
 	int m_iIdx;			// 텍스쳐 인덱스
 
 public:
@@ -19,9 +19,9 @@ public:
 	virtual CTile* Clone();
 
 	virtual void update();
-	virtual void render();
+	virtual void render(HDC hDC);
 
-	void SetTexture(CD2DImage* pTex);
+	void SetTexture(CTexture* pTex);
 	void SetImgIdx(UINT idx);
 
 	virtual void Save(FILE* pFile);

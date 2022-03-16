@@ -4,10 +4,9 @@
 #include "CGameObject.h"
 #include "CPlayer.h"
 #include "CMonster.h"
-#include "Map_Start.h"
-#include "CIsaacPlayer.h"
+
 #include "CSound.h"
-#include "CD2DImage.h"
+#include "CIsaacPlayer.h"
 
 CScene_Start::CScene_Start()
 {
@@ -21,26 +20,32 @@ void CScene_Start::update()
 {
 	CScene::update();
 
-	//if (KeyDown(VK_TAB))
-	//{
-	//	ChangeScn(GROUP_SCENE::TOOL);
-	//}
+	/*if (KeyDown(VK_TAB))
+	{
+		ChangeScn(GROUP_SCENE::TOOL);
+	}
 
-	//if (KeyDown('Z'))
-	//{
-	//	CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
-	//	CSoundManager::getInst()->Play(L"bgm");
-	//}
+	if (KeyDown(VK_LBUTTON))
+	{
+		fPoint fptLookAt = CCameraManager::getInst()->GetRealPos(MousePos());
+		CCameraManager::getInst()->SetLookAt(fptLookAt);
+	}
 
-	//if (KeyDown('X'))
-	//{
-	//	CSoundManager::getInst()->Stop(L"bgm");
-	//}
+	if (KeyDown('Z'))
+	{
+		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
+		CSoundManager::getInst()->Play(L"bgm");
+	}
+
+	if (KeyDown('X'))
+	{
+		CSoundManager::getInst()->Stop(L"bgm");
+	}*/
 }
 
 void CScene_Start::Enter()
 {
-	//// 타일 로딩
+	// 타일 로딩
 	//wstring path = CPathManager::getInst()->GetContentPath();
 	//path += L"tile\\Start.tile";
 	////LoadTile(path);
@@ -56,18 +61,21 @@ void CScene_Start::Enter()
 	//pMonster->SetCenterPos(pMonster->GetPos());
 	//AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
 
-	//Map_Start* map = new Map_Start;
-	//map->SetPos(fPoint(100, 100));
-	//map->SetScale(fPoint(100, 100));
-	//AddObject(map, GROUP_GAMEOBJ::MONSTER);
-
 	//CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	//CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
+	//// Camera Look 지정
+	//CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	//CCameraManager::getInst()->FadeOut(5.f);
+	//CCameraManager::getInst()->FadeIn(5.f);
+	////CCameraManager::getInst()->SetTargetObj(pPlayer);
+
 	CIsaacPlayer* player = new CIsaacPlayer;
-	player->SetPos(fPoint(10 ,10));	
+	player->SetPos(fPoint(200, 200));
 	AddObject(player, GROUP_GAMEOBJ::PLAYER);
-	CCameraManager::getInst()->SetLookAt(player->GetPos());
+	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+
+
 }
 
 void CScene_Start::Exit()
