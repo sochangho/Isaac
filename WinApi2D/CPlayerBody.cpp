@@ -10,7 +10,7 @@ CPlayerBody::CPlayerBody()
     m_pImg = CResourceManager::getInst()->
         LoadD2DImage(L"PlayerBody", L"texture\\Animation\\isaacAniTex.png");
     
-    SetName(L"PlayerHead");
+    SetName(L"PlayerBody");
     SetScale(fPoint(50 , 50));
     CreateAnimator();
     GetAnimator()->CreateAnimation(L"IDLE", m_pImg, fPoint(0.f, 31.6f), fPoint(28.37f, 31.6f), fPoint(28.37f, 0.f), 0.5f, 1);

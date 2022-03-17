@@ -79,6 +79,9 @@
     <Filter Include="Object\TestObject">
       <UniqueIdentifier>{cb044c1f-f3a8-4edb-91e0-52f642a365eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Character\Items">
+      <UniqueIdentifier>{65eee1af-190d-46ef-9b29-47feeb56373a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -223,7 +226,13 @@
       <Filter>Object\TestObject</Filter>
     </ClInclude>
     <ClInclude Include="CBomb.h">
+      <Filter>Object\Character\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="CScaleAnimation.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CBombEffect.h">
+      <Filter>Object\Character\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -351,7 +360,13 @@
       <Filter>Object\TestObject</Filter>
     </ClCompile>
     <ClCompile Include="CBomb.cpp">
+      <Filter>Object\Character\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CScaleAnimation.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBombEffect.cpp">
+      <Filter>Object\Character\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

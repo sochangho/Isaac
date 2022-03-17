@@ -153,6 +153,7 @@
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CBomb.h" />
+    <ClInclude Include="CBombEffect.h" />
     <ClInclude Include="CButtonUI.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCharacter.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
+    <ClInclude Include="CScaleAnimation.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CScene_Start.h" />
@@ -203,6 +205,7 @@
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CBomb.cpp" />
+    <ClCompile Include="CBombEffect.cpp" />
     <ClCompile Include="CButtonUI.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
     <ClCompile Include="CCharacter.cpp" />
@@ -225,6 +228,7 @@
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />
+    <ClCompile Include="CScaleAnimation.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CScene_Start.cpp" />

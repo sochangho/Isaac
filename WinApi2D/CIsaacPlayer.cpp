@@ -4,6 +4,7 @@
 #include "CPlayerHead.h"
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CBomb.h"
 #include "CTears.h"
 CIsaacPlayer::CIsaacPlayer()
 {
@@ -198,6 +199,12 @@ void CIsaacPlayer::update()
 
 	}
 
+	if (KeyDown('E')) {
+
+		CreateBomb();
+	}
+
+
 	if (!m_isMove) {
 
 		if (!m_isAttackKey ) {
@@ -355,6 +362,12 @@ void CIsaacPlayer::CreateWaterballoon(fVec2 dir)
 
 void CIsaacPlayer::CreateBomb()
 {
+	fPoint pos = GetPos();
+
+	CBomb* bomb = new CBomb;
+	pos.y -= 20;
+	bomb->SetPos(pos);
+	CreateObj(bomb, GROUP_GAMEOBJ::BOMB);
 }
 
 
