@@ -11,6 +11,8 @@
 #include "CD2DImage.h"
 
 #include "CIsaacPlayer.h"
+#include "CTestObject.h"
+#include "CCollider.h"
 
 CScene_Start::CScene_Start()
 {
@@ -24,21 +26,21 @@ void CScene_Start::update()
 {
 	CScene::update();
 
-	if (KeyDown(VK_TAB))
-	{
-		ChangeScn(GROUP_SCENE::TOOL);
-	}
+	//if (KeyDown(VK_TAB))
+	//{
+	//	ChangeScn(GROUP_SCENE::TOOL);
+	//}
 
-	if (KeyDown('Z'))
-	{
-		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
-		CSoundManager::getInst()->Play(L"bgm");
-	}
+	//if (KeyDown('Z'))
+	//{
+	//	CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
+	//	CSoundManager::getInst()->Play(L"bgm");
+	//}
 
-	if (KeyDown('X'))
-	{
-		CSoundManager::getInst()->Stop(L"bgm");
-	}
+	//if (KeyDown('X'))
+	//{
+	//	CSoundManager::getInst()->Stop(L"bgm");
+	//}
 }
 
 void CScene_Start::Enter()
@@ -64,7 +66,7 @@ void CScene_Start::Enter()
 	//map->SetPos(fPoint(-200.f, -300.f));
 	//AddObject(map, GROUP_GAMEOBJ::MAP);
 
-	CBackGround* backGround = new CBackGround;
+	//CBackGround* backGround = new CBackGround;
 	//backGround->Load(L"BackGround_Start", L"texture\\background\\background_start.png");
 	//backGround->SetPos(fPoint(-100.f, -500.f));
 	//AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
@@ -82,6 +84,15 @@ void CScene_Start::Enter()
 	player->SetPos(fPoint(200, 200));
 	AddObject(player, GROUP_GAMEOBJ::PLAYER);
 	
+	CTestObject* test = new CTestObject();
+	test->SetPos(player->GetPos());
+	test->SetName(L"Monster");
+	test->CreateCollider();
+	test->GetCollider()->SetScale(fPoint(100, 100));
+	AddObject(test, GROUP_GAMEOBJ::MONSTER);
+	
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::MONSTER);
+
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 
 

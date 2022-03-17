@@ -4,12 +4,15 @@ class CIsaacPlayer : public CCharacter
 {private:
 
 	fVec2 m_dirVec2;
+	
 	float m_veclocity;
-	float m_headDelay = 0.f;
+	float m_bodyDelay = 0.f;
 	float m_attackTime = 0.f;
+
 	bool  m_isMove;
 	bool  m_isAttack = false;
 	bool  m_isAttackKey = false;
+
 	enum class IsaacStateHead {
 		IDLE,
 		LEFT_MOVE,
@@ -57,6 +60,7 @@ public:
 	void CreateBomb();
 	
 
+     
 
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);
