@@ -67,20 +67,11 @@
     <Filter Include="Object\Map">
       <UniqueIdentifier>{9f3c24ba-7e30-486b-b0ca-8648d10081ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Character\Player">
-      <UniqueIdentifier>{eeb6c492-e086-4e28-969c-7726721b779f}</UniqueIdentifier>
+    <Filter Include="Object\Effect">
+      <UniqueIdentifier>{24a16952-4ae4-4483-a863-2540c3339c66}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Character\Tears">
-      <UniqueIdentifier>{3f5d8ecc-3110-414d-b7cd-2b6cd43eea29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Character\Effect">
-      <UniqueIdentifier>{7bbd8e30-3f79-4d28-9603-c447a84c202a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\TestObject">
-      <UniqueIdentifier>{cb044c1f-f3a8-4edb-91e0-52f642a365eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Character\Items">
-      <UniqueIdentifier>{65eee1af-190d-46ef-9b29-47feeb56373a}</UniqueIdentifier>
+    <Filter Include="Object\Item">
+      <UniqueIdentifier>{157f8c85-8b05-4473-9aca-ab5e4efd47ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +92,6 @@
     </ClInclude>
     <ClInclude Include="SingleTon.h">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="CGameObject.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="struct.h">
       <Filter>Util</Filter>
@@ -201,38 +189,44 @@
     <ClInclude Include="CBackGround.h">
       <Filter>Object\Map</Filter>
     </ClInclude>
-    <ClInclude Include="CCharacter.h">
-      <Filter>Object\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CIsaacPlayer.h">
-      <Filter>Object\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerBody.h">
-      <Filter>Object\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerHead.h">
-      <Filter>Object\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CTears.h">
-      <Filter>Object\Character\Tears</Filter>
-    </ClInclude>
-    <ClInclude Include="CEffect.h">
-      <Filter>Object\Character\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="CTearsEffect.h">
-      <Filter>Object\Character\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="CTestObject.h">
-      <Filter>Object\TestObject</Filter>
+    <ClInclude Include="CTileButton.h">
+      <Filter>Object\UI</Filter>
     </ClInclude>
     <ClInclude Include="CBomb.h">
-      <Filter>Object\Character\Items</Filter>
+      <Filter>Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="CScaleAnimation.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CTears.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CTestObject.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CTearsEffect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="CBombEffect.h">
-      <Filter>Object\Character\Effect</Filter>
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CCharacter.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CIsaacPlayer.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerBody.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerHead.h">
+      <Filter>Object\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +235,6 @@
     </ClCompile>
     <ClCompile Include="CCore.cpp">
       <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="CGameObject.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="CTimeManager.cpp">
       <Filter>Engine\Manager</Filter>
@@ -335,38 +326,44 @@
     <ClCompile Include="CBackGround.cpp">
       <Filter>Object\Map</Filter>
     </ClCompile>
-    <ClCompile Include="CCharacter.cpp">
-      <Filter>Object\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CIsaacPlayer.cpp">
-      <Filter>Object\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerBody.cpp">
-      <Filter>Object\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerHead.cpp">
-      <Filter>Object\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CTears.cpp">
-      <Filter>Object\Character\Tears</Filter>
-    </ClCompile>
-    <ClCompile Include="CEffect.cpp">
-      <Filter>Object\Character\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="CTearsEffect.cpp">
-      <Filter>Object\Character\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="CTestObject.cpp">
-      <Filter>Object\TestObject</Filter>
+    <ClCompile Include="CTileButton.cpp">
+      <Filter>Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="CBomb.cpp">
-      <Filter>Object\Character\Items</Filter>
+      <Filter>Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="CScaleAnimation.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CTears.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CTestObject.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTearsEffect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="CBombEffect.cpp">
-      <Filter>Object\Character\Effect</Filter>
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CCharacter.cpp">
+      <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CIsaacPlayer.cpp">
+      <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerBody.cpp">
+      <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerHead.cpp">
+      <Filter>Object\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

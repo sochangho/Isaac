@@ -10,6 +10,7 @@
 #include "CSound.h"
 #include "CD2DImage.h"
 
+
 #include "CIsaacPlayer.h"
 #include "CTestObject.h"
 #include "CCollider.h"
@@ -26,10 +27,10 @@ void CScene_Start::update()
 {
 	CScene::update();
 
-	//if (KeyDown(VK_TAB))
-	//{
-	//	ChangeScn(GROUP_SCENE::TOOL);
-	//}
+	if (KeyDown(VK_TAB))
+	{
+		ChangeScn(GROUP_SCENE::TOOL);
+	}
 
 	//if (KeyDown('Z'))
 	//{
@@ -46,9 +47,9 @@ void CScene_Start::update()
 void CScene_Start::Enter()
 {
 	//// 타일 로딩
-	//wstring path = CPathManager::getInst()->GetContentPath();
-	//path += L"tile\\Start.tile";
-	////LoadTile(path);
+	wstring path = CPathManager::getInst()->GetContentPath();
+	path += L"tile\\stageRoom01.tile";
+	LoadTile(path);
 
 	//// Player 추가
 	//CGameObject* pPlayer = new CPlayer;
@@ -63,7 +64,6 @@ void CScene_Start::Enter()
 
 	//CMap* map = new CMap;
 	//map->Load(L"Map_Start", L"texture\\map\\Yoshis Island 2.png");
-	//map->SetPos(fPoint(-200.f, -300.f));
 	//AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	//CBackGround* backGround = new CBackGround;
@@ -73,32 +73,39 @@ void CScene_Start::Enter()
 
 	//CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	//CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
+	//CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 
 	//// Camera Look 지정
 	//CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	//CCameraManager::getInst()->SetTargetObj(pPlayer);
-	//CCameraManager::getInst()->FadeOut(5.f);
-	//CCameraManager::getInst()->FadeIn(5.f);
+	//CCameraManager::getInst()->FadeOut(1.f);
+	//CCameraManager::getInst()->FadeIn(1.f);
+
+	CMap* map = new CMap;
+	map->Load(L"Map_Start", L"texture\\map\\basement.png");
+	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	CIsaacPlayer* player = new CIsaacPlayer;
-	player->SetPos(fPoint(200, 200));
+	player->SetPos(fPoint(map->GetScale().x / 2, map->GetScale().y / 2));
 	AddObject(player, GROUP_GAMEOBJ::PLAYER);
-	
+
 	CTestObject* test = new CTestObject();
 	test->SetPos(player->GetPos());
 	test->SetName(L"Monster");
 	test->CreateCollider();
 	test->GetCollider()->SetScale(fPoint(100, 100));
 	AddObject(test, GROUP_GAMEOBJ::MONSTER);
-	
+
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::BOMB);
-
-
-	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-
-
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOMB, GROUP_GAMEOBJ::TILE);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::TILE);
+    
+	//CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	CCameraManager::getInst()->SetLookAt(fPoint(map->GetPos().x + map->GetScale().x / 2 , map->GetPos().y +  map->GetScale().y / 2 ));
+	CCameraManager::getInst()->SetTargetObj(player);
 }
 
 void CScene_Start::Exit()

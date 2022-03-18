@@ -6,6 +6,7 @@
 #include "CAnimator.h"
 #include "CBomb.h"
 #include "CTears.h"
+#include "CTile.h"
 CIsaacPlayer::CIsaacPlayer()
 {
 	
@@ -34,6 +35,9 @@ CIsaacPlayer::CIsaacPlayer()
 	AddChilde(playerBody , GROUP_GAMEOBJ::PLAYER);
 	AddChilde(playerHead , GROUP_GAMEOBJ::PLAYER);
 
+	CreateCollider();
+	GetCollider()->SetScale(fPoint(30, 50));
+	GetCollider()->SetOffsetPos(fPoint(0, -20));
 
 }
 
@@ -379,9 +383,24 @@ void CIsaacPlayer::OnCollision(CCollider* _pOther)
 
 void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 {
+	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+
+		m_iswall = true;
+
+	}
+
 }
 
 void CIsaacPlayer::OnCollisionExit(CCollider* _pOther)
 {
+
+	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+
+		m_iswall = false;
+
+	}
+	
 }
 
