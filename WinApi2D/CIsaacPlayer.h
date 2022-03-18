@@ -12,7 +12,10 @@ class CIsaacPlayer : public CCharacter
 	bool  m_isMove;
 	bool  m_isAttack = false;
 	bool  m_isAttackKey = false;
-	bool  m_iswall = false;
+	
+	
+
+
 	enum class IsaacStateHead {
 		IDLE,
 		LEFT_MOVE,

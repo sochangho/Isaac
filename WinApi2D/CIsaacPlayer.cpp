@@ -383,24 +383,12 @@ void CIsaacPlayer::OnCollision(CCollider* _pOther)
 
 void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
-	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
 
-		m_iswall = true;
-
-	}
 
 }
 
 void CIsaacPlayer::OnCollisionExit(CCollider* _pOther)
 {
-
-	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
-	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
-
-		m_iswall = false;
-
-	}
 	
 }
 
