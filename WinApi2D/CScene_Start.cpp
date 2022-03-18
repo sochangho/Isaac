@@ -31,7 +31,10 @@ void CScene_Start::update()
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
 	}
-
+	if (KeyDown(VK_SPACE))
+	{
+		ChangeScn(GROUP_SCENE::STARTROOM);
+	}
 	//if (KeyDown('Z'))
 	//{
 	//	CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
@@ -47,9 +50,9 @@ void CScene_Start::update()
 void CScene_Start::Enter()
 {
 	//// 타일 로딩
-	wstring path = CPathManager::getInst()->GetContentPath();
+	/*wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\stageRoom01.tile";
-	LoadTile(path);
+	LoadTile(path);*/
 
 	//// Player 추가
 	//CGameObject* pPlayer = new CPlayer;
@@ -81,31 +84,12 @@ void CScene_Start::Enter()
 	//CCameraManager::getInst()->FadeOut(1.f);
 	//CCameraManager::getInst()->FadeIn(1.f);
 
-	CMap* map = new CMap;
-	map->Load(L"Map_Start", L"texture\\map\\basement.png");
-	AddObject(map, GROUP_GAMEOBJ::MAP);
 
-	CIsaacPlayer* player = new CIsaacPlayer;
-	player->SetPos(fPoint(map->GetScale().x / 2, map->GetScale().y / 2));
-	AddObject(player, GROUP_GAMEOBJ::PLAYER);
-
-	CTestObject* test = new CTestObject();
-	test->SetPos(player->GetPos());
-	test->SetName(L"Monster");
-	test->CreateCollider();
-	test->GetCollider()->SetScale(fPoint(100, 100));
-	AddObject(test, GROUP_GAMEOBJ::MONSTER);
-
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::MONSTER);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::BOMB);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOMB, GROUP_GAMEOBJ::TILE);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::TILE);
     
+	
 	//CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
-	CCameraManager::getInst()->SetLookAt(fPoint(map->GetPos().x + map->GetScale().x / 2 , map->GetPos().y +  map->GetScale().y / 2 ));
-	CCameraManager::getInst()->SetTargetObj(player);
+	//CCameraManager::getInst()->SetLookAt(fPoint(map->GetPos().x + map->GetScale().x /2 , map->GetPos().y +  map->GetScale().y/2 ));
+	
 }
 
 void CScene_Start::Exit()

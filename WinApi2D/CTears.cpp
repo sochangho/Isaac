@@ -4,6 +4,7 @@
 #include "CAnimation.h"
 #include "CCollider.h"
 #include "CTearsEffect.h"
+#include "CTile.h"
 CTears::CTears()
 {
 	m_pImg = CResourceManager::getInst()->
@@ -71,7 +72,11 @@ void CTears::OnCollisionEnter(CCollider* pOther)
 		
 
 	}
-	if (pOther->GetObj()->GetName() == L"Wall") {
+
+	CTile* tile = dynamic_cast<CTile*>(pOther->GetObj());
+
+
+	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
 
 		CTearsEffect* effect = new CTearsEffect;
 		effect->SetPos(GetPos());

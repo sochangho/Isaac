@@ -5,6 +5,8 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 #include "CCollider.h"
+#include "CIsaacPlayer.h"
+#include "CTile.h"
 CPlayerBody::CPlayerBody()
 {
     m_pImg = CResourceManager::getInst()->
@@ -50,4 +52,40 @@ void CPlayerBody::render()
 void CPlayerBody::finalupdate()
 {
     CCharacter::finalupdate();
+}
+
+void CPlayerBody::OnCollision(CCollider* _pOther)
+{
+    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
+    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+
+    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+
+        issac->m_dirVec2.y = -1;
+
+    }
+}
+
+void CPlayerBody::OnCollisionEnter(CCollider* _pOther)
+{
+    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
+    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+
+    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+
+        issac->m_isColCheck = true;
+       
+    }
+}
+
+void CPlayerBody::OnCollisionExit(CCollider* _pOther)
+{
+    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
+    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+
+    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+
+        issac->m_isColCheck = false;
+        issac->m_veclocity = 0;
+    }
 }

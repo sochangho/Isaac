@@ -32,7 +32,7 @@ public:
 	void AddObject(CGameObject* pObj, GROUP_GAMEOBJ group);
 	void DeleteGroup(GROUP_GAMEOBJ group);
 	void DeleteAll();
-
+	void GroupCheckSetting();
 	void LoadTile(const wstring& strPath);
 };
 

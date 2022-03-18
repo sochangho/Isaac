@@ -1,7 +1,16 @@
 #pragma once
 #include "CCharacter.h"
+#include "CPlayerBody.h"
+#include "CPlayerHead.h"
+#include "CPlayerLeft.h"
+#include "CPlayerRight.h"
 class CIsaacPlayer : public CCharacter
-{private:
+{
+	friend class CPlayerBody;
+	friend class CPlayerHead;
+	friend class CPlayerLeft;
+	friend class CPlayerRight;
+private:
 
 	fVec2 m_dirVec2;
 	
@@ -9,10 +18,13 @@ class CIsaacPlayer : public CCharacter
 	float m_bodyDelay = 0.f;
 	float m_attackTime = 0.f;
 
+	float m_ColDuration = 0.3f;
+	float m_ColTime = 0.f;
+
+	bool  m_isColCheck = false;
 	bool  m_isMove;
 	bool  m_isAttack = false;
 	bool  m_isAttackKey = false;
-	
 	
 
 
@@ -58,11 +70,12 @@ public:
 
 	void Attack();
 	void Move();
+	void OppositeMove();
 
 	void CreateWaterballoon(fVec2 dir );
 	void CreateBomb();
 	
-
+	float GetVelocity();
      
 
 	virtual void OnCollision(CCollider* _pOther);

@@ -123,6 +123,16 @@ void CScene::DeleteAll()
     }
 }
 
+void CScene::GroupCheckSetting()
+{
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::MONSTER);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::BOMB);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOMB, GROUP_GAMEOBJ::TILE);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::TILE);
+}
+
 void CScene::LoadTile(const wstring& strPath)
 {
     DeleteGroup(GROUP_GAMEOBJ::TILE);
@@ -153,7 +163,7 @@ void CScene::LoadTile(const wstring& strPath)
         {
             // TODO : OBB 충돌체 추가
         }
-        else if (GROUP_TILE::NONE != newTile->GetGroup())
+        else if (GROUP_TILE::NONE != newTile->GetGroup() && GROUP_TILE::ROAD != newTile->GetGroup())
         {
             newTile->CreateCollider();
             newTile->GetCollider()->SetScale(fPoint(CTile::SIZE_TILE, CTile::SIZE_TILE));

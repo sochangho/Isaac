@@ -21,7 +21,7 @@ public:
 	fPoint GetFinalPos();
 
 	vector<CCharacter*>& GetChildes();
-
+	CCharacter* GetParentObj();
 	template<typename T>
 	CCharacter* FindTypeChilde();
 

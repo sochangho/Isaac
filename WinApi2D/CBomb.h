@@ -3,6 +3,9 @@
 #include "CD2DImage.h"
 #include "CCollider.h"
 #include "CScaleAnimation.h"
+#include "CTile.h"
+#include "CIsaacPlayer.h"
+#include "CCollider.h"
 class CBomb : public CGameObject
 {
 private:
@@ -33,7 +36,7 @@ public:
 	virtual void render();
 
 
-
+	void OnCollision(CCollider* pOther);
 	void OnCollisionEnter(CCollider* pOther);
 	void OnCollisionExit(CCollider* pOther);
 

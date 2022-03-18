@@ -3,7 +3,7 @@
 
 #include "CScene_Start.h"
 #include "CScene_Tool.h"
-
+#include "CStartRoom.h"
 CSceneManager::CSceneManager()
 {
 	// ¾À ¸ñ·Ï ÃÊ±âÈ­
@@ -51,6 +51,9 @@ void CSceneManager::init()
 
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
+
+	m_arrScene[(size_t)GROUP_SCENE::STARTROOM] = new CStartRoom;
+	m_arrScene[(size_t)GROUP_SCENE::STARTROOM]->SetName(L"StartRoom");
 
 	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::START];
 	m_pCurScene->Enter();

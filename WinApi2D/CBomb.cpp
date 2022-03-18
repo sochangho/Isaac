@@ -5,6 +5,7 @@
 #include "CCollider.h"
 #include "CScaleAnimation.h"
 #include "CBombEffect.h"
+#include "CIsaacPlayer.h"
 CBomb::CBomb()
 {
     m_pImg = CResourceManager::getInst()
@@ -65,7 +66,7 @@ void CBomb::update()
         if (m_adCurTime < m_adDuration) {
 
             m_adCurTime += fDT;
-            m_velocity += 1000.f * fDT;
+            m_velocity += 300.f * fDT;
         }
         else {
 
@@ -104,6 +105,23 @@ void CBomb::render()
     component_render();
 }
 
+
+void CBomb::OnCollision(CCollider* pOther)
+{
+   
+    CTile* tile = dynamic_cast<CTile*>(pOther->GetObj());
+
+    if (tile != nullptr  && tile->GetGroup() == GROUP_TILE::WALL) {
+
+        fPoint thisPos = GetPos();
+        fPoint tilePos = pOther->GetObj()->GetPos();
+
+        m_dir.x = thisPos.x - tilePos.x;
+        m_dir.y = thisPos.y - tilePos.y;
+    }
+
+}
+
 void CBomb::OnCollisionEnter(CCollider* pOther)
 {
 
@@ -113,6 +131,9 @@ void CBomb::OnCollisionEnter(CCollider* pOther)
         fPoint thisPos = GetPos();
         fPoint playerPos =pOther->GetObj()->GetPos();
 
+        CPlayerBody* isaacBody = dynamic_cast<CPlayerBody*>(pOther->GetObj());
+        CIsaacPlayer* isaac = dynamic_cast<CIsaacPlayer*>(isaacBody->GetParentObj());        
+        m_velocity = isaac->GetVelocity();
         m_dir.x = thisPos.x - playerPos.x;
         m_dir.y = thisPos.y - playerPos.y;
         m_adCurTime = 0.f;

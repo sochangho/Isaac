@@ -58,6 +58,7 @@ enum class GROUP_SCENE
 {
 	TOOL,
 	START,
+	STARTROOM,
 	STAGE_01,
 	STAGE_02,
 
@@ -71,6 +72,7 @@ enum class GROUP_TILE
 	PLATFORM,
 	WALL,
 	SLOPE,
+	ROAD,
 
 	SIZE,
 };
