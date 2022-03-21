@@ -347,19 +347,15 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 	}
 	else if (m_gTile == GROUP_TILE::WALL)
 	{
-		m_gTile = GROUP_TILE::ROAD_START;
+		m_gTile = GROUP_TILE::ROAD;
 		button->SetText(L"ROAD_START");
 	}
-	else if (m_gTile == GROUP_TILE::ROAD_START) {
-		m_gTile = GROUP_TILE::ROAD_END;
-		button->SetText(L"ROAD_END");
-
-	}
-	else if (m_gTile == GROUP_TILE::ROAD_END) {
+	else if (m_gTile == GROUP_TILE::ROAD) {
 		m_gTile = GROUP_TILE::NONE;
 		button->SetText(L"NONE");
 
 	}
+	
 }
 
 void ClickTileButton(DWORD_PTR param1, DWORD_PTR param2)
@@ -383,21 +379,21 @@ void CScene_Tool::CreateTilePanel()
 	panelTile->SetScale(fPoint(400.f, 600.f));
 	panelTile->SetPos(fPoint(WINSIZEX - 450.f, 50.f));
 
-	CD2DImage* pImg = CResourceManager::getInst()->LoadD2DImage(L"Tile", L"texture\\tile\\tilemap.bmp");
-	for (UINT y = 0; y < 12; y++)
-	{
-		for (UINT x = 0; x < 12; x++)
-		{
-			CTileButton* btnTile = new CTileButton;
-			btnTile->SetScale(fPoint(CTile::SIZE_TILE, CTile::SIZE_TILE));
-			btnTile->SetPos(fPoint((float)x * CTile::SIZE_TILE, (float)y * CTile::SIZE_TILE));
-			btnTile->SetPos(btnTile->GetPos() + fPoint(8.f, 8.f));
-			btnTile->SetImage(pImg);
-			btnTile->SetIdx(y * 12 + x);
-			btnTile->SetClickedCallBack(ClickTileButton, (DWORD_PTR)this, (DWORD_PTR)btnTile);
-			panelTile->AddChild(btnTile);
-		}
-	}
+	//CD2DImage* pImg = CResourceManager::getInst()->LoadD2DImage(L"Tile", L"texture\\tile\\tilemap.bmp");
+	//for (UINT y = 0; y < 12; y++)
+	//{
+	//	for (UINT x = 0; x < 12; x++)
+	//	{
+	//		CTileButton* btnTile = new CTileButton;
+	//		btnTile->SetScale(fPoint(CTile::SIZE_TILE, CTile::SIZE_TILE));
+	//		btnTile->SetPos(fPoint((float)x * CTile::SIZE_TILE, (float)y * CTile::SIZE_TILE));
+	//		btnTile->SetPos(btnTile->GetPos() + fPoint(8.f, 8.f));
+	//		btnTile->SetImage(pImg);
+	//		btnTile->SetIdx(y * 12 + x);
+	//		btnTile->SetClickedCallBack(ClickTileButton, (DWORD_PTR)this, (DWORD_PTR)btnTile);
+	//		panelTile->AddChild(btnTile);
+	//	}
+	//}
 
 	CButtonUI* btnTileGroup = new CButtonUI;
 	btnTileGroup->SetScale(fPoint(100.f, 50.f));
@@ -483,7 +479,7 @@ void CScene_Tool::PrintTileGroup()
 				3.f
 			);
 		}
-		else if (GROUP_TILE::ROAD_START == pTile->GetGroup()) {
+		else if (GROUP_TILE::ROAD == pTile->GetGroup()) {
 
 			CRenderManager::getInst()->RenderEllipse(
 				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
@@ -495,18 +491,7 @@ void CScene_Tool::PrintTileGroup()
 			);
 
 		}
-		else if (GROUP_TILE::ROAD_END == pTile->GetGroup()) {
-
-			CRenderManager::getInst()->RenderEllipse(
-				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
-				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
-				CTile::SIZE_TILE / 2.f,
-				CTile::SIZE_TILE / 2.f,
-				RGB(255, 255, 255),
-				3.f
-			);
-
-		}
+	
 	}
 }
 

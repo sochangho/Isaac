@@ -66,34 +66,25 @@ void CTileNavMap::CreateCTileNavMap()
 
 	vector<CGameObject*>& tileVec = CSceneManager::getInst()->GetCurScene()->GetTiles();
 
-	CTile* tile = dynamic_cast<CTile*>(tileVec[tileVec.size() - 1]);
-
-	xSize = tile->GetX() + 1;
-	ySize = tile->GetY() + 1;
-
-
 	for (int i = 0; i < tileVec.size(); i++) {
+
 		CTile* tile = dynamic_cast<CTile*>(tileVec[i]);
-		if (tile != nullptr) {
+		if (tile->GetGroup() == GROUP_TILE::ROAD || tile->GetGroup() == GROUP_TILE::WALL) {
+
 			m_tileNavVec.push_back(tile);
 
-
-
-			if (tile->GetGroup() == GROUP_TILE::ROAD_START) {
-							m_startX = tile->GetX();
-							m_startY = tile->GetY();
-			}
-
-			if (tile->GetGroup() == GROUP_TILE::ROAD_END) {
-							m_EndX = tile->GetX();
-							m_EndY = tile->GetY();
-		    }
 		}
+
+
 	}
 
+	m_startX =  m_tileNavVec[0]->GetX();
+	m_startY = m_tileNavVec[0]->GetY();
+	m_EndX = m_tileNavVec[m_tileNavVec.size() - 1]->GetX();
+	m_EndY = m_tileNavVec[m_tileNavVec.size() - 1]->GetY();
 
-
-
+	xSize = m_EndX - m_startX + 1;
+	ySize = m_EndY - m_startY + 1;
 }
 
 
@@ -183,8 +174,8 @@ void CTileNavMap::CTileNavAstarUpdate()
 
 					if (miniter->point.x + i > GetStartX() && miniter->point.y + j > GetStartY()
 						&& miniter->point.x + i < GetEndX() && miniter->point.y + j < GetEndY()
-						&& !(i == 0 && j == 0) &&
-						m_tileNavVec[xSize * (UINT)(miniter->point.y+j) + (UINT)(miniter->point.x+i)]->GetGroup() != GROUP_TILE::WALL) {
+						&& !(i == 0 && j == 0) 
+						) {
 
 						iPoint newPoint(miniter->point.x + i, miniter->point.y + j);
 

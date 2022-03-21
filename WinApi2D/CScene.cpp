@@ -169,8 +169,7 @@ void CScene::LoadTile(const wstring& strPath)
         {
             // TODO : OBB 충돌체 추가
         }
-        else if (GROUP_TILE::NONE != newTile->GetGroup() && GROUP_TILE::ROAD_START != newTile->GetGroup() && 
-            GROUP_TILE::ROAD_END != newTile->GetGroup())
+        else if (GROUP_TILE::NONE != newTile->GetGroup() && GROUP_TILE::ROAD != newTile->GetGroup() )
         {
             newTile->CreateCollider();
             newTile->GetCollider()->SetScale(fPoint(CTile::SIZE_TILE, CTile::SIZE_TILE));
