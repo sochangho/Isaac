@@ -347,10 +347,15 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 	}
 	else if (m_gTile == GROUP_TILE::WALL)
 	{
-		m_gTile = GROUP_TILE::ROAD;
-		button->SetText(L"ROAD");
+		m_gTile = GROUP_TILE::ROAD_START;
+		button->SetText(L"ROAD_START");
 	}
-	else if (m_gTile == GROUP_TILE::ROAD) {
+	else if (m_gTile == GROUP_TILE::ROAD_START) {
+		m_gTile = GROUP_TILE::ROAD_END;
+		button->SetText(L"ROAD_END");
+
+	}
+	else if (m_gTile == GROUP_TILE::ROAD_END) {
 		m_gTile = GROUP_TILE::NONE;
 		button->SetText(L"NONE");
 
@@ -478,7 +483,7 @@ void CScene_Tool::PrintTileGroup()
 				3.f
 			);
 		}
-		else if (GROUP_TILE::ROAD == pTile->GetGroup()) {
+		else if (GROUP_TILE::ROAD_START == pTile->GetGroup()) {
 
 			CRenderManager::getInst()->RenderEllipse(
 				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
@@ -486,6 +491,18 @@ void CScene_Tool::PrintTileGroup()
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				RGB(0, 255, 255),
+				3.f
+			);
+
+		}
+		else if (GROUP_TILE::ROAD_END == pTile->GetGroup()) {
+
+			CRenderManager::getInst()->RenderEllipse(
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				CTile::SIZE_TILE / 2.f,
+				CTile::SIZE_TILE / 2.f,
+				RGB(255, 255, 255),
 				3.f
 			);
 

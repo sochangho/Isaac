@@ -2,7 +2,7 @@
 #include "CGameObject.h"
 #include "CCollider.h"
 #include "CAnimator.h"
-
+#include "CTile.h"
 CGameObject::CGameObject()
 {
 	m_fptPos = {};
@@ -118,6 +118,9 @@ void CGameObject::component_render()
 	{
 		m_pCollider->render();
 	}
+
+	
+
 }
 
 CCollider* CGameObject::GetCollider()
@@ -140,4 +143,24 @@ void CGameObject::CreateAnimator()
 {
 	m_pAnimator = new CAnimator;
 	m_pAnimator->m_pOwner = this;
+}
+
+void CGameObject::SetDestionations(const list<iPoint>& des)
+{
+
+	destinations.clear();
+	destinations = des;
+
+
+
+
+	for (list<iPoint>::iterator iter = destinations.begin(); iter != destinations.end(); iter++) {
+
+		CRenderManager::getInst()->RenderRectangle(
+			iter->x - CTile::SIZE_TILE / 2,
+			iter->y - CTile::SIZE_TILE / 2,
+			iter->x + CTile::SIZE_TILE / 2,
+			iter->y + CTile::SIZE_TILE / 2);
+
+	}
 }

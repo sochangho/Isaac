@@ -91,6 +91,12 @@ vector<CGameObject*>& CScene::GetUIGroup()
     return m_arrObj[(UINT)GROUP_GAMEOBJ::UI];
 }
 
+vector<CGameObject*>& CScene::GetTiles()
+{
+    
+    return m_arrObj[(UINT)GROUP_GAMEOBJ::TILE];
+}
+
 void CScene::SetName(const wstring& strName)
 {
     m_strName = strName;
@@ -163,7 +169,8 @@ void CScene::LoadTile(const wstring& strPath)
         {
             // TODO : OBB 충돌체 추가
         }
-        else if (GROUP_TILE::NONE != newTile->GetGroup() && GROUP_TILE::ROAD != newTile->GetGroup())
+        else if (GROUP_TILE::NONE != newTile->GetGroup() && GROUP_TILE::ROAD_START != newTile->GetGroup() && 
+            GROUP_TILE::ROAD_END != newTile->GetGroup())
         {
             newTile->CreateCollider();
             newTile->GetCollider()->SetScale(fPoint(CTile::SIZE_TILE, CTile::SIZE_TILE));

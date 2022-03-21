@@ -16,13 +16,16 @@
 #include "CCollider.h"
 #include "CCenterObject.h"
 #include "CTile.h"
+#include "CTileNavMap.h"
 CStartRoom::CStartRoom()
 {
 }
 
 CStartRoom::~CStartRoom()
 {
-	
+	if (tileNav != nullptr) {
+		delete tileNav;
+	}
 }
 
 void CStartRoom::update()
@@ -32,6 +35,17 @@ void CStartRoom::update()
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
 	}
+
+
+	if (KeyDown('C')) {
+
+		if (tileNav != nullptr) {
+
+			tileNav->CTileNavAstarUpdate();
+		}
+
+	}
+
 }
 
 void CStartRoom::Enter()
@@ -40,27 +54,9 @@ void CStartRoom::Enter()
 	path += L"tile\\stageRoom01.tile";
 	LoadTile(path);
 
-	const vector<CGameObject*>& tiles = GetGroupObject(GROUP_GAMEOBJ::TILE);
+	tileNav = new CTileNavMap;
 
-	vector<CTile*> rodeTileVec;
-
-	for (int i = 0; i < tiles.size(); i++) {
-
-		CTile* tile = dynamic_cast<CTile*>(tiles[i]);
-		if (tile != nullptr && tile->GetGroup() == GROUP_TILE::ROAD || tile->GetGroup() == GROUP_TILE::WALL) {
-
-			rodeTileVec.push_back(tile);
-
-		}
-	}
-
-
-
-	roadTile = new CTile*[1];
 	
-
-
-	//¹è°æ
 	CBackGround* backGround = new CBackGround;
 	backGround->Load(L"BackGround", L"texture\\map\\bgblack.png");
 	//backGround->SetPos(fPoint(-100.f, -500.f));
@@ -95,6 +91,10 @@ void CStartRoom::Enter()
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 	CCameraManager::getInst()->SetTargetObj(center);
 
+
+	tileNav->SetDestinaion(player);
+	tileNav->SetStartingPoint(center);
+
 }
 
 void CStartRoom::Exit()
@@ -103,3 +103,4 @@ void CStartRoom::Exit()
 
 	CCollisionManager::getInst()->Reset();
 }
+

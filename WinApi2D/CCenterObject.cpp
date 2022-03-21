@@ -17,3 +17,8 @@ CCenterObject* CCenterObject::Clone()
 void CCenterObject::update()
 {
 }
+
+void CCenterObject::render()
+{
+    component_render();
+}

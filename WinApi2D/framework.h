@@ -72,7 +72,8 @@ enum class GROUP_TILE
 	PLATFORM,
 	WALL,
 	SLOPE,
-	ROAD,
+	ROAD_START,
+	ROAD_END,
 
 	SIZE,
 };

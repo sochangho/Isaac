@@ -1,11 +1,12 @@
 #pragma once
 #include "CScene.h"
 #include "CTile.h"
+#include "CTileNavMap.h"
 class CStartRoom : public CScene
 {
 private:
 
-	CTile** roadTile;
+	CTileNavMap* tileNav;
 
 public:
 	CStartRoom();
@@ -16,5 +17,6 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 
+	
 };
 

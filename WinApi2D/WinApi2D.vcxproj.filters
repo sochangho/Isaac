@@ -240,6 +240,9 @@
     <ClInclude Include="CCenterObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CTileNavMap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -387,6 +390,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CCenterObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileNavMap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

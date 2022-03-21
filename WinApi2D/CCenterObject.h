@@ -9,7 +9,7 @@ public:
 
 	virtual CCenterObject* Clone();
 	virtual void update();
-	
+	virtual void render();
 
 };
 

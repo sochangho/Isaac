@@ -4,6 +4,21 @@ struct iPoint
 {
 	int x;
 	int y;
+
+	iPoint() {
+		x = -1;
+		y = -1;
+	}
+	iPoint(int x, int y) {
+		this->x = x;
+		this->y = y;
+	}
+
+	bool operator==(const iPoint& other) {
+	
+		return (x == other.x) && (y == other.y);
+	}
+
 };
 
 struct fPoint
