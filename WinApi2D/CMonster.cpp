@@ -15,22 +15,14 @@ CMonster::~CMonster()
 
 void CMonster::update()
 {
-	if (!is_stop) {
-		GoDestition();
-	}
+	
+	CCharacter::update();
 }
 
 void CMonster::render()
 {
 
-	fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(GetPos());
-	CRenderManager::getInst()->RenderRectangle(
-		fptRenderPos.x - GetScale().x / 2,
-		fptRenderPos.y - GetScale().y / 2,
-		fptRenderPos.x + GetScale().x / 2,
-		fptRenderPos.y + GetScale().y / 2);
-
-
+	
 	COLORREF rgb = RGB(0, 0, 255);	
 	for (auto iter = m_destinations.begin(); iter != m_destinations.end(); iter++) {
 
@@ -45,7 +37,13 @@ void CMonster::render()
 			fptRenderPos.y + CTile::SIZE_TILE / 2 , rgb);
 
 	}
+	CCharacter::render();
 
+}
+
+void CMonster::finalupdate()
+{
+	CCharacter::finalupdate();
 }
 
 void CMonster::SetDestination(const list<iPoint>& des)
@@ -95,4 +93,14 @@ void CMonster::GoDestition()
 	
 
 
+}
+
+fVec2 CMonster::GetMonsterDir()
+{
+	return m_dirVec2;
+}
+
+bool CMonster::GetStop()
+{
+	return is_stop;
 }
