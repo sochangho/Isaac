@@ -7,7 +7,7 @@ class CMonster : public CCharacter
 {
 private:
 	fVec2 m_dirVec2;
-	float m_veclocity = 100.f;	
+	
 	float m_hp = 100.f;
 	bool is_stop = true;
 
@@ -16,13 +16,19 @@ private:
 	
 
 public:
+	float m_veclocity = 150.f;
 	CMonster();
 	virtual ~CMonster();
 
 	virtual void update();
 	virtual void render();
+	virtual void finalupdate();
 
 	void SetDestination(const list<iPoint>& des);
 	void GoDestition();
+	
+	fVec2 GetMonsterDir();
+	bool GetStop();
+
 };
 
