@@ -11,6 +11,10 @@ CScene::CScene()
 
 CScene::~CScene()
 {
+    if (tileNav != nullptr) {
+        delete tileNav;
+    }
+
     // 씬이 가진 모든 게임오브젝트 삭제
     for (int i = 0; i < (int)GROUP_GAMEOBJ::SIZE; i++)
     {
@@ -180,4 +184,15 @@ void CScene::LoadTile(const wstring& strPath)
     }
 
     fclose(pFile);
+}
+
+CTileNavMap* CScene::GettileNav()
+{
+    return tileNav;
+}
+
+void CScene::SetTileNav(CTileNavMap* nav)
+{
+
+    tileNav = nav;
 }

@@ -119,15 +119,7 @@ void CGameObject::component_render()
 		m_pCollider->render();
 	}
 
-	for (list<iPoint>::iterator iter = destinations.begin(); iter != destinations.end(); iter++) {
 
-		CRenderManager::getInst()->RenderRectangle(
-			iter->x - CTile::SIZE_TILE / 2,
-			iter->y - CTile::SIZE_TILE / 2,
-			iter->x + CTile::SIZE_TILE / 2,
-			iter->y + CTile::SIZE_TILE / 2);
-
-	}
 
 }
 
@@ -155,11 +147,3 @@ void CGameObject::CreateAnimator()
 
 }
 
-void CGameObject::SetDestionations(const list<iPoint>& des)
-{
-
-	destinations.clear();
-	destinations = des;
-
-
-}

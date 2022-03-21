@@ -2,7 +2,7 @@
 #include "CTileNavMap.h"
 #include "CTile.h"
 #include "CScene.h"
-
+#include "CMonster.h"
 int CTileNavMap::getH(const iPoint& start, const iPoint& end)
 {
 	int xSize = abs(start.x - end.x);		// 가로로 가야 하는 횟수
@@ -30,6 +30,10 @@ int CTileNavMap::getH(const iPoint& start, const iPoint& end)
 int CTileNavMap::getG(int i, int j, const ASNode& node)
 {
 	return i * j == 0 ? node.g + 10 : node.g + 14;
+}
+
+void CTileNavMap::MonsterRoadUpdate()
+{
 }
 
 CTileNavMap::CTileNavMap()
@@ -115,109 +119,123 @@ void CTileNavMap::CTileNavAstarUpdate()
 	iPoint idtPos;
 	idtPos.x = fdtPos.x / CTile::SIZE_TILE;
 	idtPos.y = fdtPos.y / CTile::SIZE_TILE;
+	
+	for (vector<CGameObject*>::iterator miter = m_startingPointVec.begin(); miter != m_startingPointVec.end();) {
 
-	for (int mi = 0; mi < m_startingPointVec.size(); mi++) {
+		if (!(*miter)->isDead()) {
+			
+			list<ASNode> roadList;
+			fPoint fstartPos = (*miter)->GetPos();
+			iPoint istartPos;
 
-		list<ASNode> roadList;
-		fPoint fstartPos = m_startingPointVec[mi]->GetPos();
-		iPoint istartPos;
+			istartPos.x = fstartPos.x / CTile::SIZE_TILE;
+			istartPos.y = fstartPos.y / CTile::SIZE_TILE;
 
-		istartPos.x = fstartPos.x / CTile::SIZE_TILE;
-		istartPos.y = fstartPos.y / CTile::SIZE_TILE;
+			ASNode startNode(true, nullptr, istartPos, 0, getH(istartPos, idtPos));
+			roadList.push_back(startNode);
 
-		ASNode startNode(true, nullptr, istartPos, 0, getH(istartPos, idtPos));
-		roadList.push_back(startNode);
+			while (true) {
 
-		while (true) {
+				list<ASNode>::iterator miniter = roadList.end();
+				int minF = INF;
+				for (list<ASNode>::iterator iter = roadList.begin(); iter != roadList.end(); iter++) {
 
-			list<ASNode>::iterator miniter = roadList.end();
-			int minF = INF;
-			for (list<ASNode>::iterator iter = roadList.begin(); iter != roadList.end(); iter++) {
+					if ((iter->active == true) && (iter->f < minF)) {
 
-				if ((iter->active == true) && (iter->f < minF)) {
-
-					miniter = iter;
-					minF = iter->f;
-				}
-
-			}
-
-			if (miniter != roadList.end() && miniter->point == idtPos) {
-
-				ASNode endNode = *miniter;
-				ASNode* pPathNode = &endNode;
-				list<iPoint> path;
-				while (pPathNode != nullptr) {
-
-					pPathNode->point.x *= CTile::SIZE_TILE;
-					pPathNode->point.y *= CTile::SIZE_TILE;
-					path.push_front(pPathNode->point);
-					pPathNode = pPathNode->connect;
-
+						miniter = iter;
+						minF = iter->f;
+					}
 
 				}
 
-				m_startingPointVec[mi]->SetDestionations(path);
-				break;
-			}
+				if (miniter != roadList.end() && miniter->point == idtPos) {
 
-			if (miniter == roadList.end()) {
+					ASNode endNode = *miniter;
+					ASNode* pPathNode = &endNode;
+					list<iPoint> path;
+					while (pPathNode != nullptr) {
 
-				m_startingPointVec[mi]->SetDestionations(list<iPoint>());
-				break;
-			}
+						pPathNode->point.x *= CTile::SIZE_TILE;
+						pPathNode->point.y *= CTile::SIZE_TILE;
+						path.push_front(pPathNode->point);
+						pPathNode = pPathNode->connect;
+
+
+					}
+
+					CMonster* monster = dynamic_cast<CMonster*>(*miter);
+
+					monster->SetDestination(path);
+					break;
+				}
+
+				if (miniter == roadList.end()) {
+					CMonster* monster = dynamic_cast<CMonster*>(*miter);
+					monster->SetDestination(list<iPoint>());
+					break;
+				}
 
 
 
-			for (int i = -1; i < 2; i++) {
-				for (int j = -1; j < 2; j++) {
+				for (int i = -1; i < 2; i++) {
+					for (int j = -1; j < 2; j++) {
 
-					if (miniter->point.x + i > GetStartX() && miniter->point.y + j > GetStartY()
-						&& miniter->point.x + i < GetEndX() && miniter->point.y + j < GetEndY()
-						&& !(i == 0 && j == 0) 
-						) {
+						if (miniter->point.x + i > GetStartX() && miniter->point.y + j > GetStartY()
+							&& miniter->point.x + i < GetEndX() && miniter->point.y + j < GetEndY()
+							&& !(i == 0 && j == 0) && WallCheck(miniter->point.x, miniter->point.y)
+							) {
 
-						iPoint newPoint(miniter->point.x + i, miniter->point.y + j);
+							iPoint newPoint(miniter->point.x + i, miniter->point.y + j);
 
-						int newG = getG(i, j, *miniter);
-						int newH = getH(newPoint, idtPos);
-						int newF = newG + newH;
+							int newG = getG(i, j, *miniter);
+							int newH = getH(newPoint, idtPos);
+							int newF = newG + newH;
 
-						bool find = false;
+							bool find = false;
 
-						for (list<ASNode>::iterator iter = roadList.begin(); iter != roadList.end(); iter++) {
+							for (list<ASNode>::iterator iter = roadList.begin(); iter != roadList.end(); iter++) {
 
-							if (iter->point == newPoint) {
+								if (iter->point == newPoint) {
 
-								if (iter->f > newF) {
+									if (iter->f > newF) {
 
-									iter->g = newG;
-									iter->h = newH;
-									iter->f = newF;
-									iter->connect = &(*miniter);
+										iter->g = newG;
+										iter->h = newH;
+										iter->f = newF;
+										iter->connect = &(*miniter);
+									}
+
+
+									find = true;
+									break;
 								}
+							}
+
+							if (!find) {
 
 
-								find = true;
-								break;
+								ASNode newNode(true, &(*miniter), newPoint, newG, newH);
+								roadList.push_back(newNode);
+
 							}
 						}
-
-						if (!find) {
-
-
-							ASNode newNode(true, &(*miniter), newPoint, newG, newH);
-							roadList.push_back(newNode);
-
-						}
 					}
+
 				}
 
+				miniter->active = false;
+
 			}
-
-			miniter->active = false;
-
+			miter++;
 		}
+else {
+
+     miter = m_startingPointVec.erase(miter);
+
+}
+
+
+		
 
 	}
 
@@ -231,4 +249,27 @@ void CTileNavMap::SetStartingPoint(CGameObject* obj)
 void CTileNavMap::SetDestinaion(CGameObject* obj)
 {
 	m_Objdestination = obj;
+}
+
+bool CTileNavMap::WallCheck(UINT x, UINT y)
+{ 
+	for (int i = 0; i < m_tileNavVec.size(); i++) {
+
+		if (m_tileNavVec[i]->GetX() == x && m_tileNavVec[i]->GetY() == y) {
+
+			if (m_tileNavVec[i]->GetGroup() == GROUP_TILE::WALL) {
+
+				return false;
+			}
+			else if (m_tileNavVec[i]->GetGroup() == GROUP_TILE::ROAD) {
+
+
+				return true;
+			}
+
+		}
+
+	}
+    
+	return false;
 }

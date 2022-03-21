@@ -6,7 +6,8 @@ class CStartRoom : public CScene
 {
 private:
 
-	CTileNavMap* tileNav;
+	float m_duration = 2.f;
+	float m_curTime = 0.f;
 
 public:
 	CStartRoom();

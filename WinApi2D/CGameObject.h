@@ -19,7 +19,6 @@ private:
 	bool m_bAlive;
 	void SetDead();
 
-	list<iPoint> destinations;
 
 public:
 	CGameObject();
@@ -53,6 +52,6 @@ public:
 	void CreateAnimator();					// 애니메이터 생성
 
 
-	void SetDestionations(const list<iPoint>& des);
+
 };
 

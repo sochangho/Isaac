@@ -73,6 +73,9 @@
     <Filter Include="Object\Item">
       <UniqueIdentifier>{157f8c85-8b05-4473-9aca-ab5e4efd47ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Character\Monster">
+      <UniqueIdentifier>{448be6d8-df86-447a-bb52-fe66e0ee0862}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -159,9 +162,6 @@
     <ClInclude Include="CMissile.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CPlayer.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
@@ -237,10 +237,22 @@
     <ClInclude Include="CStartRoom.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CTileNavMap.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
     <ClInclude Include="CCenterObject.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CGaper.h">
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CGaperHead.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CTileNavMap.h">
+    <ClInclude Include="CGaperBody.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -309,9 +321,6 @@
       <Filter>Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonster.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
@@ -389,10 +398,22 @@
     <ClCompile Include="CStartRoom.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="CTileNavMap.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
     <ClCompile Include="CCenterObject.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Object\Character\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CGaper.cpp">
+      <Filter>Object\Character\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CGaperHead.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CTileNavMap.cpp">
+    <ClCompile Include="CGaperBody.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

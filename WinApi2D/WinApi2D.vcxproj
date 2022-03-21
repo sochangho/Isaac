@@ -165,6 +165,9 @@
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
+    <ClInclude Include="CGaper.h" />
+    <ClInclude Include="CGaperBody.h" />
+    <ClInclude Include="CGaperHead.h" />
     <ClInclude Include="CIsaacPlayer.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMissile.h" />
@@ -223,6 +226,9 @@
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
+    <ClCompile Include="CGaper.cpp" />
+    <ClCompile Include="CGaperBody.cpp" />
+    <ClCompile Include="CGaperHead.cpp" />
     <ClCompile Include="CIsaacPlayer.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMissile.cpp" />

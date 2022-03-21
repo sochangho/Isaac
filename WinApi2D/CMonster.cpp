@@ -3,80 +3,96 @@
 #include "CCollider.h"
 #include "CD2DImage.h"
 #include "CAnimator.h"
-
-CMonster* CMonster::Clone()
-{
-	return new CMonster(*this);
-}
-
+#include "CTile.h"
+#include "CScene.h"
 CMonster::CMonster()
 {
-	m_fptCenterPos = fPoint(0, 0);
-	m_fVelocity = 0;
-	m_fDistance = 300;
-	m_bIsUPDir = true;
-
-	SetName(L"Monster");
-	SetScale(fPoint(100, 100));
-
-	CreateCollider();
-	GetCollider()->SetScale(fPoint(90.f, 90.f));
-
-	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"MonsterTex", L"texture\\PlayerStand.png");
-
-	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"PlayerStand", m_pImg, fPoint(0, 0), fPoint(32.f, 32.f), fPoint(32.f, 0), 0.1f, 5, true);
-	GetAnimator()->Play(L"PlayerStand");
 }
 
 CMonster::~CMonster()
 {
 }
 
-void CMonster::render()
-{
-	fPoint pos = GetPos();
- 	fPoint scale = GetScale();
-	pos = CCameraManager::getInst()->GetRenderPos(pos);
-
-	component_render();
-
-	/*CRenderManager::getInst()->RenderImage(
-		m_pImg,
-		pos.x,
-		pos.y,
-		pos.x + scale.x,
-		pos.y + scale.y);*/
-}
-
 void CMonster::update()
 {
-	fPoint pos = GetPos();
-
-	if (m_bIsUPDir)
-	{
-		pos.y -= fDT * m_fVelocity;
-		if (pos.y < m_fptCenterPos.y - m_fDistance)
-			m_bIsUPDir = false;
+	if (!is_stop) {
+		GoDestition();
 	}
-	else
-	{
-		pos.y += fDT * m_fVelocity;
-		if (pos.y > m_fptCenterPos.y + m_fDistance)
-			m_bIsUPDir = true;
-	}
-
-	SetPos(pos);
-
-	GetAnimator()->update();
 }
 
-void CMonster::SetCenterPos(fPoint point)
+void CMonster::render()
 {
-	m_fptCenterPos = point;
+
+	fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(GetPos());
+	CRenderManager::getInst()->RenderRectangle(
+		fptRenderPos.x - GetScale().x / 2,
+		fptRenderPos.y - GetScale().y / 2,
+		fptRenderPos.x + GetScale().x / 2,
+		fptRenderPos.y + GetScale().y / 2);
+
+
+	COLORREF rgb = RGB(0, 0, 255);	
+	for (auto iter = m_destinations.begin(); iter != m_destinations.end(); iter++) {
+
+		fPoint pos;
+		pos.x = iter->x;
+		pos.y = iter->y;
+		fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(pos);
+		CRenderManager::getInst()->RenderRectangle(
+			fptRenderPos.x - CTile::SIZE_TILE / 2,
+			fptRenderPos.y - CTile::SIZE_TILE / 2,
+			fptRenderPos.x + CTile::SIZE_TILE / 2,
+			fptRenderPos.y + CTile::SIZE_TILE / 2 , rgb);
+
+	}
+
 }
 
-void CMonster::OnCollisionEnter(CCollider* pOther)
+void CMonster::SetDestination(const list<iPoint>& des)
 {
+	is_stop = true;
+	m_destinations.clear();
+	m_destinations = des;		
+	m_curIter = m_destinations.begin();
+	is_stop = false;
+
+}
+
+void CMonster::GoDestition()
+{
+	fPoint monsterPos = GetPos();
+
+	if (m_curIter != m_destinations.end()) {
+		
+		m_dirVec2.x = (float)m_curIter->x - monsterPos.x;
+		m_dirVec2.y = (float)m_curIter->y - monsterPos.y;
+	}
+	else {
+
+		//CSceneManager::getInst()->GetCurScene()->GettileNav()->CTileNavAstarUpdate();
+		
+	}
+
+
+	if ( m_dirVec2.Length() >= 0.01f) {
+	
+		monsterPos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
+		monsterPos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
+		SetPos(monsterPos);		
+	}
+	else {
+
+
+
+		if (m_curIter != m_destinations.end()) {
+
+			m_curIter++;
+			
+		}
+
+
+	}
+	
+
 
 }

@@ -58,6 +58,7 @@ private:
 
 	int getH(const iPoint& start, const iPoint& end);
 	int getG(int i, int j, const ASNode& node);
+	void MonsterRoadUpdate();
 public:
 	CTileNavMap();
 	~CTileNavMap();
@@ -70,6 +71,6 @@ public:
 	void CTileNavAstarUpdate();
 	void SetStartingPoint(CGameObject* obj);
 	void SetDestinaion(CGameObject* obj);
-
+	bool WallCheck(UINT x, UINT y);
 };
 

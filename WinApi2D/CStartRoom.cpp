@@ -17,15 +17,14 @@
 #include "CCenterObject.h"
 #include "CTile.h"
 #include "CTileNavMap.h"
+#include "CMonster.h"
 CStartRoom::CStartRoom()
 {
 }
 
 CStartRoom::~CStartRoom()
 {
-	if (tileNav != nullptr) {
-		delete tileNav;
-	}
+	
 }
 
 void CStartRoom::update()
@@ -37,15 +36,18 @@ void CStartRoom::update()
 	}
 
 
-	if (KeyDown('C')) {
+	if (m_curTime < m_duration) {
 
-		if (tileNav != nullptr) {
-
-			tileNav->CTileNavAstarUpdate();
-		}
-
+		m_curTime +=fDT;
+	}
+	else {
+		GettileNav()->CTileNavAstarUpdate();
+		m_curTime = 0.f;
+		
 	}
 
+
+	
 }
 
 void CStartRoom::Enter()
@@ -54,7 +56,7 @@ void CStartRoom::Enter()
 	path += L"tile\\stageRoom01.tile";
 	LoadTile(path);
 
-	tileNav = new CTileNavMap;
+	SetTileNav(new CTileNavMap);
 
 	
 	CBackGround* backGround = new CBackGround;
@@ -85,16 +87,20 @@ void CStartRoom::Enter()
 
 	CCenterObject* center = new CCenterObject;
 	center->SetPos(player->GetPos());
-	AddObject(center, GROUP_GAMEOBJ::DEFAULT);
+	AddObject(center, GROUP_GAMEOBJ::UI);
+
+	CMonster* monster = new CMonster;
+	monster->SetPos(fPoint(map->GetScale().x / 2 + 100, map->GetScale().y / 2 + 100));
+	monster->SetScale(fPoint(50, 50));
+	AddObject(monster, GROUP_GAMEOBJ::MONSTER);
 
 	GroupCheckSetting();
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 	CCameraManager::getInst()->SetTargetObj(center);
-
-
-	tileNav->SetDestinaion(player);
-	tileNav->SetStartingPoint(center);
-
+	
+	GettileNav()->SetDestinaion(player);
+	GettileNav()->SetStartingPoint(monster);
+	GettileNav()->CTileNavAstarUpdate();
 }
 
 void CStartRoom::Exit()

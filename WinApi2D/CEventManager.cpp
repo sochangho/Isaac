@@ -2,7 +2,7 @@
 #include "CEventManager.h"
 #include "CGameObject.h"
 #include "CScene.h"
-
+#include "CMonster.h"
 CEventManager::CEventManager()
 {
 
@@ -36,6 +36,9 @@ void CEventManager::Execute(const tEvent& event)
 		if (pObj->isDead())
 			return;
 		pObj->SetDead();
+
+
+
 		m_vecDead.push_back(pObj);
 	}
 		break;
