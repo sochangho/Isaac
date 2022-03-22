@@ -2,6 +2,8 @@
 #include "CCharacter.h"
 class CGaperHead : public CCharacter
 {
+private:
+	CD2DImage* m_pImg;
 public:
 	
 	CGaperHead();
@@ -12,7 +14,7 @@ public:
 
 	virtual void update();
 	virtual void render();
-	
+	virtual void finalupdate();
 
 
 };
