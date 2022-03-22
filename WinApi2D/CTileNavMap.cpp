@@ -32,13 +32,10 @@ int CTileNavMap::getG(int i, int j, const ASNode& node)
 	return i * j == 0 ? node.g + 10 : node.g + 14;
 }
 
-void CTileNavMap::MonsterRoadUpdate()
-{
-}
 
 CTileNavMap::CTileNavMap()
 {
-	m_Objdestination = nullptr;
+	
 	CreateCTileNavMap();
 }
 
@@ -50,16 +47,6 @@ CTileNavMap::~CTileNavMap()
 	}
 
 	m_tileNavVec.clear();
-
-	if (m_Objdestination != nullptr) {
-
-		m_Objdestination = nullptr;
-	}
-
-
-	for (int i = 0; i < m_startingPointVec.size(); i++) {
-		m_startingPointVec[i] = nullptr;
-	}
 
 
 }
@@ -75,20 +62,21 @@ void CTileNavMap::CreateCTileNavMap()
 		CTile* tile = dynamic_cast<CTile*>(tileVec[i]);
 		if (tile->GetGroup() == GROUP_TILE::ROAD || tile->GetGroup() == GROUP_TILE::WALL) {
 
-			m_tileNavVec.push_back(tile);
+
+			UINT x = tile->GetX();
+			UINT y = tile->GetY();
+			TILE_INDEX tileindex;
+			tileindex.x = x;
+			tileindex.y = y;
+			tileMap.insert(make_pair(tileindex.ID, tile->GetGroup()));
+			
 
 		}
 
 
 	}
 
-	m_startX =  m_tileNavVec[0]->GetX();
-	m_startY = m_tileNavVec[0]->GetY();
-	m_EndX = m_tileNavVec[m_tileNavVec.size() - 1]->GetX();
-	m_EndY = m_tileNavVec[m_tileNavVec.size() - 1]->GetY();
 
-	xSize = m_EndX - m_startX + 1;
-	ySize = m_EndY - m_startY + 1;
 }
 
 
@@ -113,20 +101,85 @@ UINT CTileNavMap::GetEndY()
     return m_EndY;
 }
 
-void CTileNavMap::CTileNavAstarUpdate()
+fPoint CTileNavMap::CTileNavRandomUpdate(CGameObject* Monster)
 {
-	fPoint fdtPos = m_Objdestination->GetPos();
+	vector<iPoint> i_vec;
+	
+	random_device rd;
+	mt19937_64 gen(rd());
+
+	fPoint  fmonsterPos = Monster->GetPos();
+	iPoint  iPos;
+	iPos.x = fmonsterPos.x / CTile::SIZE_TILE;
+	iPos.y = fmonsterPos.y / CTile::SIZE_TILE;
+
+	
+	
+
+	for (int i = -1; i < 3; i++) {
+		for (int j = -1; j < 3; j++) {
+
+			if (!((i == 0) && (j == 0)) && WallCheck(iPos.x + i, iPos.y + j)) {
+				i_vec.push_back(iPoint(iPos.x + i, iPos.y + j));
+			}
+		}
+	}
+
+	
+	
+
+	fPoint resultPos;
+	if (i_vec.size() == 0) {
+
+		resultPos.x = iPos.x * CTile::SIZE_TILE;
+		resultPos.y = iPos.y * CTile::SIZE_TILE;
+		
+	}
+	else {
+
+	
+		uniform_int_distribution<int> dis(0, i_vec.size() - 1);
+		resultPos.x = i_vec[dis(gen)].x * CTile::SIZE_TILE;
+		resultPos.y = i_vec[dis(gen)].y * CTile::SIZE_TILE;
+
+	}
+
+
+	return resultPos;
+
+}
+
+void CTileNavMap::CTileNavAstarUpdate(CGameObject* objdestination, CGameObject* Monster)
+{
+	fPoint fdtPos = objdestination->GetPos();
 	iPoint idtPos;
 	idtPos.x = fdtPos.x / CTile::SIZE_TILE;
 	idtPos.y = fdtPos.y / CTile::SIZE_TILE;
 	
-	for (vector<CGameObject*>::iterator miter = m_startingPointVec.begin(); miter != m_startingPointVec.end();) {
+	if (!WallCheck(idtPos.x, idtPos.y)) {
 
-		if (!(*miter)->isDead()) {
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+
+				if (
+				
+					!((i == 0) && (j == 0)) && WallCheck(idtPos.x + i, idtPos.y + j)) {					
+					idtPos.x += i;
+					idtPos.y += j;
+				}
+
+			}
+
+		}
+
+
+	}
+
+
 			
-			list<ASNode> roadList;
-			fPoint fstartPos = (*miter)->GetPos();
-			iPoint istartPos;
+	list<ASNode> roadList;
+	fPoint fstartPos = Monster->GetPos();
+	iPoint istartPos;
 
 			istartPos.x = fstartPos.x / CTile::SIZE_TILE;
 			istartPos.y = fstartPos.y / CTile::SIZE_TILE;
@@ -163,14 +216,14 @@ void CTileNavMap::CTileNavAstarUpdate()
 
 					}
 
-					CMonster* monster = dynamic_cast<CMonster*>(*miter);
+					CMonster* monster = dynamic_cast<CMonster*>(Monster);
 
 					monster->SetDestination(path);
 					break;
 				}
 
 				if (miniter == roadList.end()) {
-					CMonster* monster = dynamic_cast<CMonster*>(*miter);
+					CMonster* monster = dynamic_cast<CMonster*>(Monster);
 					monster->SetDestination(list<iPoint>());
 					break;
 				}
@@ -180,9 +233,8 @@ void CTileNavMap::CTileNavAstarUpdate()
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
 
-						if (miniter->point.x + i > GetStartX() && miniter->point.y + j > GetStartY()
-							&& miniter->point.x + i < GetEndX() && miniter->point.y + j < GetEndY()
-							&& !(i == 0 && j == 0) && WallCheck(miniter->point.x, miniter->point.y)
+						if (
+							!(i == 0 && j == 0) && WallCheck(miniter->point.x + i, miniter->point.y + j)
 							) {
 
 							iPoint newPoint(miniter->point.x + i, miniter->point.y + j);
@@ -226,34 +278,37 @@ void CTileNavMap::CTileNavAstarUpdate()
 				miniter->active = false;
 
 			}
-			miter++;
-		}
-else {
-
-     miter = m_startingPointVec.erase(miter);
-
-}
-
-
 		
 
-	}
-
 }
 
-void CTileNavMap::SetStartingPoint(CGameObject* obj)
-{
-	m_startingPointVec.push_back(obj);
-}
 
-void CTileNavMap::SetDestinaion(CGameObject* obj)
-{
-	m_Objdestination = obj;
-}
 
 bool CTileNavMap::WallCheck(UINT x, UINT y)
 { 
-	for (int i = 0; i < m_tileNavVec.size(); i++) {
+
+
+	TILE_INDEX tileindex;
+	tileindex.x = x;
+	tileindex.y = y;
+
+	map<ULONGLONG, GROUP_TILE>::iterator iter = tileMap.find(tileindex.ID);
+
+	if (tileMap.end() == iter) {	
+		return false;
+	}
+
+	if (iter->second == GROUP_TILE::WALL) {
+
+		return false;
+	}
+	else {
+
+		return true;
+	}
+
+
+	/*for (int i = 0; i < m_tileNavVec.size(); i++) {
 
 		if (m_tileNavVec[i]->GetX() == x && m_tileNavVec[i]->GetY() == y) {
 
@@ -263,13 +318,11 @@ bool CTileNavMap::WallCheck(UINT x, UINT y)
 			}
 			else if (m_tileNavVec[i]->GetGroup() == GROUP_TILE::ROAD) {
 
-
 				return true;
 			}
-
+		
 		}
-
 	}
     
-	return false;
+	return false;*/
 }

@@ -7,6 +7,7 @@
 CScene::CScene()
 {
     m_strName = L"";
+    tileNav = nullptr;
 }
 
 CScene::~CScene()

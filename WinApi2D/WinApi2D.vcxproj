@@ -152,6 +152,7 @@
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CBackGround.h" />
+    <ClInclude Include="CBloodEffect.h" />
     <ClInclude Include="CBomb.h" />
     <ClInclude Include="CBombEffect.h" />
     <ClInclude Include="CButtonUI.h" />
@@ -177,8 +178,6 @@
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayerBody.h" />
     <ClInclude Include="CPlayerHead.h" />
-    <ClInclude Include="CPlayerLeft.h" />
-    <ClInclude Include="CPlayerRight.h" />
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
@@ -213,6 +212,7 @@
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CBackGround.cpp" />
+    <ClCompile Include="CBloodEffect.cpp" />
     <ClCompile Include="CBomb.cpp" />
     <ClCompile Include="CBombEffect.cpp" />
     <ClCompile Include="CButtonUI.cpp" />
@@ -238,8 +238,6 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayerBody.cpp" />
     <ClCompile Include="CPlayerHead.cpp" />
-    <ClCompile Include="CPlayerLeft.cpp" />
-    <ClCompile Include="CPlayerRight.cpp" />
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />

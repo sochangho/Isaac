@@ -84,3 +84,8 @@ CCharacter* CCharacter::GetParentObj()
 {
     return m_parent;
 }
+
+vector<CCharacter*>& CCharacter::AllChilde()
+{
+   return m_vecChilde;
+}

@@ -37,15 +37,7 @@ void CStartRoom::update()
 	}
 
 
-	if (m_curTime < m_duration) {
 
-		m_curTime +=fDT;
-	}
-	else {
-		GettileNav()->CTileNavAstarUpdate();
-		m_curTime = 0.f;
-		
-	}
 
 
 	
@@ -57,8 +49,7 @@ void CStartRoom::Enter()
 	path += L"tile\\stageRoom01.tile";
 	LoadTile(path);
 
-	SetTileNav(new CTileNavMap);
-
+	
 	
 	CBackGround* backGround = new CBackGround;
 	backGround->Load(L"BackGround", L"texture\\map\\bgblack.png");
@@ -93,15 +84,20 @@ void CStartRoom::Enter()
 	CGaper* monster = new CGaper;
 	monster->SetPos(fPoint(map->GetScale().x / 2 + 100, map->GetScale().y / 2 + 100));
 	monster->SetScale(fPoint(50, 50));
+	monster->SetDestinaionObj(player);
 	AddObject(monster, GROUP_GAMEOBJ::MONSTER);
 
+	CGaper* monster1 = new CGaper;
+	monster1->SetPos(fPoint(map->GetScale().x / 2 + 50, map->GetScale().y / 2 + 50));
+	monster1->SetScale(fPoint(50, 50));
+	monster1->SetDestinaionObj(player);
+	AddObject(monster1, GROUP_GAMEOBJ::MONSTER);
+	
 	GroupCheckSetting();
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 	CCameraManager::getInst()->SetTargetObj(center);
 	
-	GettileNav()->SetDestinaion(player);
-	GettileNav()->SetStartingPoint(monster);
-	GettileNav()->CTileNavAstarUpdate();
+	
 }
 
 void CStartRoom::Exit()

@@ -28,11 +28,10 @@ CPlayerHead::CPlayerHead()
     GetAnimator()->CreateAnimation(L"UP_ATTACK", m_pImg, fPoint(30.88f * 4.f, 0.f), fPoint(30.88f, 31.6f), fPoint(30.88f, 0.f), 0.5f, 2);
     GetAnimator()->CreateAnimation(L"DOWN_ATTACK", m_pImg, fPoint(0.f, 0.f), fPoint(30.88f, 31.6f), fPoint(30.88f, 0.f), 0.5f, 2);
 
+   
+
     GetAnimator()->Play(L"IDLE");
 
-    CreateCollider();
-    GetCollider()->SetScale(fPoint(35, 35));
-    GetCollider()->SetOffsetPos(fPoint(0, -8));
 }
 
 CPlayerHead::~CPlayerHead()
@@ -53,7 +52,11 @@ void CPlayerHead::update()
 
 void CPlayerHead::render()
 {
-    CCharacter::render();
+    CIsaacPlayer* player = dynamic_cast<CIsaacPlayer*>(GetParentObj());
+
+    if (player->m_isAttacked == false) {
+        CCharacter::render();
+    }
 }
 
 void CPlayerHead::finalupdate()
@@ -63,36 +66,15 @@ void CPlayerHead::finalupdate()
 
 void CPlayerHead::OnCollision(CCollider* _pOther)
 {
-    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
-    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
-
-    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
-
-        issac->m_dirVec2.y = 1;
-
-    }
+    
 }
 
 void CPlayerHead::OnCollisionEnter(CCollider* _pOther)
 {
-    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
-    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
-
-    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
-
-        issac->m_isColCheck = true;
-        
-    }
+   
 }
 
 void CPlayerHead::OnCollisionExit(CCollider* _pOther)
 {
-    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
-    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
-
-    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
-
-        issac->m_isColCheck = false;
-        issac->m_veclocity = 0;
-    }
+    
 }

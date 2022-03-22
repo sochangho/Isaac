@@ -8,9 +8,12 @@ private:
 	fVec2 m_fvDir;
 	float m_velocity = 400.f;
 	float m_lifeTime = 0.f;
+	
 	CD2DImage* m_pImg;
 
 public:
+	float m_dmg = 10.f;
+
 	CTears();
 	~CTears();
 	virtual CTears* Clone();

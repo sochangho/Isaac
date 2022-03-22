@@ -59,6 +59,8 @@ void CTears::render()
 
 void CTears::OnCollisionEnter(CCollider* pOther)
 {
+
+
 	if (pOther->GetObj()->GetName() == L"Monster") {
 		
 

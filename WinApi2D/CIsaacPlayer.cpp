@@ -7,9 +7,20 @@
 #include "CBomb.h"
 #include "CTears.h"
 #include "CTile.h"
+#include "CMonster.h"
+#include "CAnimation.h"
 CIsaacPlayer::CIsaacPlayer()
 {
 	
+	
+	m_pImg = CResourceManager::getInst()->
+		LoadD2DImage(L"playerDefault", L"texture\\Animation\\character_001_isaac.png");
+	SetName(L"PlayerHead");
+	SetScale(fPoint(100, 100));
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"Attacked", m_pImg, fPoint(64.f*2, 64.f*3), fPoint(64.f, 64.f), fPoint(64.f, 0.f), 0.5f, 1);
+	GetAnimator()->FindAnimation(L"Attacked")->GetFrame(0).fptOffset = fPoint(0 , -20);
+	GetAnimator()->Play(L"Attacked");
 	m_stHead = IsaacStateHead::IDLE;
 	m_stBody = IsaacStateBody::IDLE;
 	m_isMove = false;
@@ -28,21 +39,17 @@ CIsaacPlayer::CIsaacPlayer()
 	CPlayerHead* playerHead = new CPlayerHead;
 	playerHead->SetPos(playerPos - fPoint(0, 15));
 
-	CPlayerLeft* playerleft = new CPlayerLeft;
-	playerleft->SetPos(playerPos - fPoint(20, 0));
 
-	CPlayerRight* playerright =new CPlayerRight;
-	playerright->SetPos(playerPos + fPoint(20, 0));
-
+	
 
 	/// <summary>
 	/// 자식 캐릭터로 
 	/// </summary>
 	AddChilde(playerBody , GROUP_GAMEOBJ::PLAYER);
 	AddChilde(playerHead , GROUP_GAMEOBJ::PLAYER);
-	AddChilde(playerleft, GROUP_GAMEOBJ::PLAYER);
-	AddChilde(playerright, GROUP_GAMEOBJ::PLAYER);
 
+	CreateCollider();
+	GetCollider()->SetScale(fPoint(20, 20));
 	
 
 }
@@ -62,31 +69,45 @@ void CIsaacPlayer::update()
 	
 	Attack();
 
-	if (!m_isColCheck) {
+	if (!m_isColCheck && !m_isAttacked ) {
 		Move();
 	}
+
+	if (m_isAttacked) {
+		AttackedMove();
+	}
+
+	if (m_isInvincibility) {
+
+		Invincibility();
+	}
+
+
+
 	if (KeyDown('E')) {
 
 		CreateBomb();
 	}
 
+	fPoint pos = GetPos();
+	if (!m_isAttacked ) {
 
-
-
-	fPoint pos = GetPos();	
-	pos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
-	pos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
-
-	
+		
+		pos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
+		pos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
+		
+	}
 
 	SetPos(pos);
-
+	GetAnimator()->update();
 	CCharacter::update();
 }
 
 void CIsaacPlayer::render()
 {
-	CCharacter::render();
+	if (m_isAttacked == true) {
+		CCharacter::render();
+	}
 }
 
 void CIsaacPlayer::finalupdate()
@@ -310,7 +331,9 @@ void CIsaacPlayer::Move()
 	}
 	else if (Key('D')) {
 
+
 		m_dirVec2.x = 1;
+		
 		if (!m_isAttackKey) {
 			if (Key('S')) {
 
@@ -333,8 +356,8 @@ void CIsaacPlayer::Move()
 
 		m_isMove = true;
 		if (m_veclocity < 200.f) {
-
-			m_veclocity += 100.f * fDT;
+			
+			m_veclocity += 200.f * fDT;
 		}
 
 
@@ -383,6 +406,45 @@ void CIsaacPlayer::OppositeMove()
 
 		m_ColTime = 0;
 		m_isColCheck = false;
+		
+	}
+
+}
+
+void CIsaacPlayer::AttackedMove()
+{
+
+	if (m_attacedTime < m_AttackedDuration) {
+
+		m_attacedTime += fDT;
+
+		fPoint pos = GetPos();
+		pos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
+		pos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
+		SetPos(pos);
+		
+	}
+	else {
+
+		m_attacedTime = 0;
+		m_veclocity = 0;
+		m_isAttacked = false;
+
+	}
+
+}
+
+void CIsaacPlayer::Invincibility()
+{
+	if (m_invincibilityT < m_invincibilityD) {
+
+		m_invincibilityT += fDT;
+
+	}
+	else {
+
+		m_isInvincibility = false;
+		m_invincibilityT = 0.f;
 	}
 
 }
@@ -410,7 +472,7 @@ void CIsaacPlayer::CreateBomb()
 	fPoint pos = GetPos();
 
 	CBomb* bomb = new CBomb;
-	pos.y -= 20;
+	pos.y -= 30;
 	bomb->SetPos(pos);
 	CreateObj(bomb, GROUP_GAMEOBJ::BOMB);
 }
@@ -425,16 +487,85 @@ float CIsaacPlayer::GetVelocity()
 
 void CIsaacPlayer::OnCollision(CCollider* _pOther)
 {
+
+	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+
+	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+
+		m_isColCheck = true;
+
+		if (tile->GetCollider()->GetFinalPos().x - GetCollider()->GetFinalPos().x > 0) {
+
+			m_dirVec2.x = -1;
+
+		}
+		else {
+
+			m_dirVec2.x = 1;
+		}
+		
+
+		if (tile->GetCollider()->GetFinalPos().y - GetCollider()->GetFinalPos().y > 0) {
+
+			m_dirVec2.y = -1;
+
+		}
+		else {
+
+			m_dirVec2.y = 1;
+		}
+
+
+
+	}
+
+
+	
 }
 
 void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 {
+	
+	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
 
+	if (tile != nullptr  && tile->GetGroup() == GROUP_TILE::WALL) {
+
+		m_isColCheck = true;
+
+	}
+	
+	CMonster* monster = dynamic_cast<CMonster*>(_pOther->GetObj());
+	if (monster != nullptr && !m_isInvincibility) {
+
+		m_isInvincibility = true;
+		m_isAttacked = true;
+		m_veclocity = 100;
+		fPoint pos = GetPos();
+		fPoint monsterPos = monster->GetPos();
+		m_dirVec2.x = pos.x - monsterPos.x;
+		m_dirVec2.y = pos.y - monsterPos.y;
+
+
+		//HP: 감소
+
+	}
 
 }
 
 void CIsaacPlayer::OnCollisionExit(CCollider* _pOther)
 {
+
 	
+	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+
+	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+
+		m_isColCheck = false;
+		m_veclocity = 0;
+		
+	}
+	
+
+
 }
 

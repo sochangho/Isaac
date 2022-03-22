@@ -24,7 +24,7 @@ public:
 	CCharacter* GetParentObj();
 	template<typename T>
 	CCharacter* FindTypeChilde();
-
+	vector<CCharacter*>& AllChilde();
 
 
 	virtual void OnCollision(CCollider* _pOther) {}

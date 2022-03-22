@@ -16,6 +16,9 @@ private:
 
 	GaperState m_state;
 
+
+
+
 public:
 
 	CGaper();
@@ -25,9 +28,7 @@ public:
 	virtual void render();
 	virtual void finalupdate();
 
-	virtual void OnCollision(CCollider* _pOther);
-	virtual void OnCollisionEnter(CCollider* _pOther);
-	virtual void OnCollisionExit(CCollider* _pOther);
+
 
 	void StateChange(GaperState state);
 

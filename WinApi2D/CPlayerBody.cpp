@@ -7,6 +7,7 @@
 #include "CCollider.h"
 #include "CIsaacPlayer.h"
 #include "CTile.h"
+#include "CMonster.h"
 CPlayerBody::CPlayerBody()
 {
     m_pImg = CResourceManager::getInst()->
@@ -21,11 +22,11 @@ CPlayerBody::CPlayerBody()
     GetAnimator()->CreateAnimation(L"UP_MOVE", m_pImg, fPoint(28.37f * 5.f , 31.6f), fPoint(28.37f, 31.6f), fPoint(28.37f, 0.f), 0.1f, 5);
     GetAnimator()->CreateAnimation(L"DOWN_MOVE", m_pImg, fPoint(0.f, 31.6f), fPoint(28.37f, 31.6f), fPoint(28.37f, 0.f), 0.1f, 5);
 
+  
+
     GetAnimator()->Play(L"IDLE");
 
-    CreateCollider();
-    GetCollider()->SetScale(fPoint(20, 20));
-    GetCollider()->SetOffsetPos(fPoint(0, -10));
+  
 }
 
 CPlayerBody::~CPlayerBody()
@@ -45,8 +46,11 @@ void CPlayerBody::update()
 
 void CPlayerBody::render()
 {
-    CCharacter::render();
-  
+    CIsaacPlayer* player = dynamic_cast<CIsaacPlayer*>(GetParentObj());
+
+    if (player->m_isAttacked == false) {
+        CCharacter::render();
+    }
 }
 
 void CPlayerBody::finalupdate()
@@ -56,36 +60,17 @@ void CPlayerBody::finalupdate()
 
 void CPlayerBody::OnCollision(CCollider* _pOther)
 {
-    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
-    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+    
 
-    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
 
-        issac->m_dirVec2.y = -1;
-
-    }
 }
 
 void CPlayerBody::OnCollisionEnter(CCollider* _pOther)
 {
-    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
-    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
-
-    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
-
-        issac->m_isColCheck = true;
-       
-    }
+   
 }
 
 void CPlayerBody::OnCollisionExit(CCollider* _pOther)
 {
-    CIsaacPlayer* issac = dynamic_cast<CIsaacPlayer*>(GetParentObj());
-    CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
-
-    if (tile != nullptr && issac != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
-
-        issac->m_isColCheck = false;
-        issac->m_veclocity = 0;
-    }
+   
 }

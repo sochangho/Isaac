@@ -2,15 +2,15 @@
 #include "CCharacter.h"
 #include "CPlayerBody.h"
 #include "CPlayerHead.h"
-#include "CPlayerLeft.h"
-#include "CPlayerRight.h"
+
 class CIsaacPlayer : public CCharacter
 {
 	friend class CPlayerBody;
 	friend class CPlayerHead;
-	friend class CPlayerLeft;
-	friend class CPlayerRight;
+
 private:
+
+	CD2DImage* m_pImg;
 
 	fVec2 m_dirVec2;
 	
@@ -21,12 +21,18 @@ private:
 	float m_ColDuration = 0.3f;
 	float m_ColTime = 0.f;
 
+	float m_AttackedDuration = 0.3f;
+	float m_attacedTime = 0.f;
+
+	float m_invincibilityD = 2.f;
+	float m_invincibilityT = 0.f;
+
 	bool  m_isColCheck = false;
 	bool  m_isMove;
 	bool  m_isAttack = false;
 	bool  m_isAttackKey = false;
-	
-
+	bool  m_isAttacked =  false;
+	bool  m_isInvincibility = false;
 
 	enum class IsaacStateHead {
 		IDLE,
@@ -69,8 +75,12 @@ public:
 	void BodyState(IsaacStateBody body);
 
 	void Attack();
+
 	void Move();
 	void OppositeMove();
+	void AttackedMove();
+	void Invincibility();
+
 
 	void CreateWaterballoon(fVec2 dir );
 	void CreateBomb();

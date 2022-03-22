@@ -124,15 +124,13 @@ void CBomb::OnCollision(CCollider* pOther)
 
 void CBomb::OnCollisionEnter(CCollider* pOther)
 {
-
+    CIsaacPlayer* isaac = dynamic_cast<CIsaacPlayer*>(pOther->GetObj());
    
-    if (pOther->GetObj()->GetName() == L"PlayerBody" ) {
+    if (isaac != nullptr ) {
 
         fPoint thisPos = GetPos();
         fPoint playerPos =pOther->GetObj()->GetPos();
-
-        CPlayerBody* isaacBody = dynamic_cast<CPlayerBody*>(pOther->GetObj());
-        CIsaacPlayer* isaac = dynamic_cast<CIsaacPlayer*>(isaacBody->GetParentObj());        
+     
         m_velocity = isaac->GetVelocity();
         m_dir.x = thisPos.x - playerPos.x;
         m_dir.y = thisPos.y - playerPos.y;

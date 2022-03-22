@@ -3,8 +3,13 @@
 #include "CGaperBody.h"
 #include "CGaperHead.h"
 #include "CAnimator.h"
+#include "CCollider.h"
 CGaper::CGaper()
 {
+	random_device rd;
+	mt19937_64 gen(rd());
+	uniform_int_distribution<int> dis(120, 130);
+	m_veclocity = dis(gen);
 
 	CGaperBody* body = new CGaperBody;
 	fPoint Pos = GetPos();
@@ -15,6 +20,9 @@ CGaper::CGaper()
 
 	AddChilde(body, GROUP_GAMEOBJ::MONSTER);
 	AddChilde(head, GROUP_GAMEOBJ::MONSTER);
+
+	CreateCollider();
+	GetCollider()->SetScale(fPoint(30, 50));
 
 }
 
@@ -29,35 +37,50 @@ CGaper* CGaper::Clone()
 
 void CGaper::update()
 {
+	bool change = false;
+
+
+
 	if (!GetStop()) {
-		GoDestition();
+	change	= GoDestition();
 	}
+
+
+
 	CMonster::update();
 	
 	fVec2 dir = GetMonsterDir();
-	if (dir.x > 0) {
 
-		StateChange(GaperState::RIGHT);
-	}
-	else if(dir.x < 0) {
+	if (change == true) {
 
-		StateChange(GaperState::LEFT);
-	}
-	else if (dir.x == 0) {
+		if (dir.x > 0) {
 
-
-		if (dir.y > 0) {
-
-			StateChange(GaperState::DOWN);
+			StateChange(GaperState::RIGHT);
 		}
-		else{
+		else if (dir.x < 0) {
 
-			StateChange(GaperState::UP);
+			StateChange(GaperState::LEFT);
+		}
+		else if (dir.x == 0) {
+
+
+			if (dir.y > 0) {
+
+				StateChange(GaperState::DOWN);
+			}
+			else if(dir.y<0) {
+
+				StateChange(GaperState::UP);
+			}
+			else {
+
+				StateChange(GaperState::IDLE);
+
+			}
+
 		}
 
 	}
-
-
 
 
 }
@@ -73,17 +96,7 @@ void CGaper::finalupdate()
 	CMonster::finalupdate();
 }
 
-void CGaper::OnCollision(CCollider* _pOther)
-{
-}
 
-void CGaper::OnCollisionEnter(CCollider* _pOther)
-{
-}
-
-void CGaper::OnCollisionExit(CCollider* _pOther)
-{
-}
 
 void CGaper::StateChange(GaperState state)
 {

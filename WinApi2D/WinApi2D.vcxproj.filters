@@ -228,12 +228,6 @@
     <ClInclude Include="CPlayerHead.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerLeft.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerRight.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CStartRoom.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -249,11 +243,14 @@
     <ClInclude Include="CGaper.h">
       <Filter>Object\Character\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="CGaperHead.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CGaperBody.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CGaperHead.h">
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CBloodEffect.h">
+      <Filter>Object\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -389,12 +386,6 @@
     <ClCompile Include="CPlayerHead.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerLeft.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerRight.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CStartRoom.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -411,10 +402,13 @@
       <Filter>Object\Character\Monster</Filter>
     </ClCompile>
     <ClCompile Include="CGaperHead.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Object\Character\Monster</Filter>
     </ClCompile>
     <ClCompile Include="CGaperBody.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Object\Character\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CBloodEffect.cpp">
+      <Filter>Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

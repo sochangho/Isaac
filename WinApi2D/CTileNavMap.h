@@ -6,7 +6,15 @@ class CTileNavMap
 {
 private:
 
-	
+	union TILE_INDEX
+	{
+		struct
+		{
+			UINT x;
+			UINT y;
+		};
+		ULONGLONG ID;
+	};
 
 	struct ASNode
 	{
@@ -39,7 +47,7 @@ private:
 
 
 
-
+	map<ULONGLONG, GROUP_TILE> tileMap;
 
 	vector<CTile*> m_tileNavVec;
 
@@ -52,13 +60,10 @@ private:
 	UINT  m_EndX;
 	UINT  m_EndY;
 
-	CGameObject* m_Objdestination;
-	vector<CGameObject*> m_startingPointVec;
-
 
 	int getH(const iPoint& start, const iPoint& end);
 	int getG(int i, int j, const ASNode& node);
-	void MonsterRoadUpdate();
+	
 public:
 	CTileNavMap();
 	~CTileNavMap();
@@ -68,9 +73,11 @@ public:
 	UINT GetStartY();
 	UINT GetEndX();
 	UINT GetEndY();
-	void CTileNavAstarUpdate();
-	void SetStartingPoint(CGameObject* obj);
-	void SetDestinaion(CGameObject* obj);
+	void CTileNavAstarUpdate(CGameObject* objdestination , CGameObject* Monster);
+	fPoint CTileNavRandomUpdate(CGameObject* Monster);
+
+
 	bool WallCheck(UINT x, UINT y);
+
 };
 
