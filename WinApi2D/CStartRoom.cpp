@@ -18,7 +18,6 @@
 #include "CTile.h"
 #include "CTileNavMap.h"
 #include "CMonster.h"
-#include "CGaper.h"
 CStartRoom::CStartRoom()
 {
 }
@@ -90,7 +89,7 @@ void CStartRoom::Enter()
 	center->SetPos(player->GetPos());
 	AddObject(center, GROUP_GAMEOBJ::UI);
 
-	CGaper* monster = new CGaper;
+	CMonster* monster = new CMonster;
 	monster->SetPos(fPoint(map->GetScale().x / 2 + 100, map->GetScale().y / 2 + 100));
 	monster->SetScale(fPoint(50, 50));
 	AddObject(monster, GROUP_GAMEOBJ::MONSTER);

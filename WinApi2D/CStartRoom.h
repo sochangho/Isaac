@@ -6,7 +6,7 @@ class CStartRoom : public CScene
 {
 private:
 
-	float m_duration = 1.f;
+	float m_duration = 2.f;
 	float m_curTime = 0.f;
 
 public:
