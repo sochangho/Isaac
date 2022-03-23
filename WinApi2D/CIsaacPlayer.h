@@ -86,7 +86,7 @@ public:
 	void CreateBomb();
 	
 	float GetVelocity();
-     
+	fVec2 GetPlayerDir();
 
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);

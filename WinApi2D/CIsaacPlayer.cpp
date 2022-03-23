@@ -9,6 +9,7 @@
 #include "CTile.h"
 #include "CMonster.h"
 #include "CAnimation.h"
+#include "CBombRange.h"
 CIsaacPlayer::CIsaacPlayer()
 {
 	
@@ -482,6 +483,11 @@ float CIsaacPlayer::GetVelocity()
 	return m_veclocity;
 }
 
+fVec2 CIsaacPlayer::GetPlayerDir()
+{
+	return m_dirVec2;
+}
+
 
 
 
@@ -549,6 +555,22 @@ void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 		//HP: °¨¼Ò
 
 	}
+
+
+	CBombRange* bomb = dynamic_cast<CBombRange*>(_pOther->GetObj());
+
+	if (bomb != nullptr && !m_isInvincibility) {
+
+		m_isInvincibility = true;
+		m_isAttacked = true;
+		m_veclocity = 100;
+		fPoint pos = GetPos();
+		fPoint bombPos = bomb->GetPos();
+		m_dirVec2.x = pos.x - bombPos.x;
+		m_dirVec2.y = pos.y - bombPos.y;
+	}
+
+
 
 }
 

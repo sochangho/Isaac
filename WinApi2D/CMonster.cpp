@@ -8,6 +8,7 @@
 #include "CTileNavMap.h"
 #include "CTears.h"
 #include "CBloodEffect.h"
+#include "CBombRange.h"
 CMonster::CMonster()
 {
 	m_destitionobj = nullptr;
@@ -232,7 +233,7 @@ void CMonster::OnCollisionEnter(CCollider* _pOther)
 {
         
 	CTears* tears = dynamic_cast<CTears*>(_pOther->GetObj());
-
+	CBombRange* range = dynamic_cast<CBombRange*>(_pOther->GetObj());
 
 	if (tears != nullptr && !is_attacked) {
 
@@ -266,6 +267,41 @@ void CMonster::OnCollisionEnter(CCollider* _pOther)
 	  }
        
 	}
+
+
+	if (range != nullptr && !is_attacked) {
+
+		is_stop = true;
+		is_attacked = true;
+		fPoint pos = GetPos();
+		fPoint rangePos = range->GetPos();
+		m_dirVec2.x = pos.x - rangePos.x;
+		m_dirVec2.y = pos.y - rangePos.y;
+
+		m_hp -= range->m_dmg;
+
+		if (m_hp <= 0.f) {
+
+
+			//effect»ý¼º
+
+			CBloodEffect* blood = new CBloodEffect;
+			blood->SetPos(GetPos());
+			CreateObj(blood, GROUP_GAMEOBJ::EFFECT);
+			DeleteObj(this);
+
+			vector<CCharacter*>& childes = AllChilde();
+
+			for (int i = 0; i < childes.size(); i++) {
+
+				DeleteObj(childes[i]);
+			}
+
+
+		}
+
+	}
+
 
 
 }

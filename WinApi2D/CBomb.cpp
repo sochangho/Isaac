@@ -6,6 +6,7 @@
 #include "CScaleAnimation.h"
 #include "CBombEffect.h"
 #include "CIsaacPlayer.h"
+#include "CBombRange.h"
 CBomb::CBomb()
 {
     m_pImg = CResourceManager::getInst()
@@ -38,61 +39,11 @@ CBomb* CBomb::Clone()
 void CBomb::update()
 {
 
-    if (m_curTime < m_duration) {
 
-        m_curTime += fDT;
-
-    }
-    else {
-
-        m_curTime = 0.f;
-        //터짐 이펙트 생성
-        CBombEffect* effect = new CBombEffect;
-        effect->SetPos(GetPos());
-        CreateObj(effect, GROUP_GAMEOBJ::EFFECT);
-        
-        
-        //Collider가지는 오브젝트 생성 및 안에 있는 콜리더 데미지  
-        //
-        //
-        
-        
-        //이 오브젝트 삭제
-        DeleteObj(this);
-    }
-
-    if (m_isPlayerCol) {
-
-        if (m_adCurTime < m_adDuration) {
-
-            m_adCurTime += fDT;
-            m_velocity += 300.f * fDT;
-        }
-        else {
-
-            m_velocity -= 200.f * fDT;
-           
-            if (m_velocity < 0.f) {
-
-                m_velocity = 0.f;
-                m_adCurTime = 0.f;
-                m_isPlayerCol = false;
-
-            }
-
-        }
-
-    }
-    
-        
-
-    
+    Explosion();
 
 
-    fPoint pos = GetPos();
-    pos.x += m_dir.normalize().x * m_velocity * fDT;
-    pos.y += m_dir.normalize().y * m_velocity * fDT;
-    SetPos(pos);
+    CDropItem::update();
 
     if (scaleAnimation != nullptr) {
         scaleAnimation->ScaleAnimationUpate(this);
@@ -105,44 +56,34 @@ void CBomb::render()
     component_render();
 }
 
-
-void CBomb::OnCollision(CCollider* pOther)
+void CBomb::Explosion()
 {
-   
-    CTile* tile = dynamic_cast<CTile*>(pOther->GetObj());
 
-    if (tile != nullptr  && tile->GetGroup() == GROUP_TILE::WALL) {
+    if (m_curTime < m_duration) {
 
-        fPoint thisPos = GetPos();
-        fPoint tilePos = pOther->GetObj()->GetPos();
-
-        m_dir.x = thisPos.x - tilePos.x;
-        m_dir.y = thisPos.y - tilePos.y;
-    }
-
-}
-
-void CBomb::OnCollisionEnter(CCollider* pOther)
-{
-    CIsaacPlayer* isaac = dynamic_cast<CIsaacPlayer*>(pOther->GetObj());
-   
-    if (isaac != nullptr ) {
-
-        fPoint thisPos = GetPos();
-        fPoint playerPos =pOther->GetObj()->GetPos();
-     
-        m_velocity = isaac->GetVelocity();
-        m_dir.x = thisPos.x - playerPos.x;
-        m_dir.y = thisPos.y - playerPos.y;
-        m_adCurTime = 0.f;
-        m_isPlayerCol = true;
+        m_curTime += fDT;
 
     }
+    else {
+
+        m_curTime = 0.f;
+        //터짐 이펙트 생성
+        CBombEffect* effect = new CBombEffect;
+        effect->SetPos(GetPos());
+        CreateObj(effect, GROUP_GAMEOBJ::EFFECT);
+
+
+        //Collider가지는 오브젝트 생성 및 안에 있는 콜리더 데미지  
+
+        CBombRange* range = new CBombRange;
+        range->SetPos(GetPos());
+        CreateObj(range, GROUP_GAMEOBJ::ATTACKRANGE);
+        //이 오브젝트 삭제
+        DeleteObj(this);
+    }
+
+
 }
 
-void CBomb::OnCollisionExit(CCollider* pOther)
-{
-
-}
 
 

@@ -65,7 +65,7 @@ void CCharacter::AddChilde(CCharacter* character , GROUP_GAMEOBJ type)
     character->m_fptFinalPos = character->m_parent->GetPos() - character->GetPos();
 
     CScene* curScene = CSceneManager::getInst()->GetCurScene();
-    curScene->AddObject(character, GROUP_GAMEOBJ::PLAYER);
+    CreateObj(character, type);
     m_vecChilde.push_back(character);
 
 }

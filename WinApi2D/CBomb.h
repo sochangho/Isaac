@@ -6,24 +6,18 @@
 #include "CTile.h"
 #include "CIsaacPlayer.h"
 #include "CCollider.h"
-class CBomb : public CGameObject
+#include "CDropItem.h"
+class CBomb : public CDropItem
 {
 private:
 	CD2DImage* m_pImg;
 	CScaleAnimation* scaleAnimation;
     
-	fVec2 m_dir;
+
 
 	float m_duration = 3.f;
 	float m_curTime = 0.f;
-	float m_velocity = 0.f;
 
-	float m_adDuration = 0.2f;
-	float m_adCurTime = 0.f;
-
-	bool m_isPlayerCol = false;
-
-    
 
 
 public:
@@ -34,11 +28,9 @@ public:
 	virtual CBomb* Clone();
 	virtual void update();
 	virtual void render();
+	
+	void Explosion();
 
-
-	void OnCollision(CCollider* pOther);
-	void OnCollisionEnter(CCollider* pOther);
-	void OnCollisionExit(CCollider* pOther);
 
 };
 

@@ -19,6 +19,7 @@
 #include "CTileNavMap.h"
 #include "CMonster.h"
 #include "CGaper.h"
+#include "CDropRedBayby.h"
 CStartRoom::CStartRoom()
 {
 }
@@ -93,6 +94,10 @@ void CStartRoom::Enter()
 	monster1->SetDestinaionObj(player);
 	AddObject(monster1, GROUP_GAMEOBJ::MONSTER);
 	
+	CDropRedBayby* redbaby = new CDropRedBayby;
+	redbaby->SetPos(fPoint(map->GetScale().x / 2 + 50, map->GetScale().y / 2 + 50));
+	AddObject(redbaby, GROUP_GAMEOBJ::DROPITEM);
+
 	GroupCheckSetting();
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 	CCameraManager::getInst()->SetTargetObj(center);

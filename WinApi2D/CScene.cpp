@@ -142,6 +142,9 @@ void CScene::GroupCheckSetting()
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOMB, GROUP_GAMEOBJ::TILE);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::TILE);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::PLAYER);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::MONSTER);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::DROPITEM, GROUP_GAMEOBJ::PLAYER);
 }
 
 void CScene::LoadTile(const wstring& strPath)

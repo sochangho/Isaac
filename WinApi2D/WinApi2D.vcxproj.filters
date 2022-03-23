@@ -76,6 +76,9 @@
     <Filter Include="Object\Character\Monster">
       <UniqueIdentifier>{448be6d8-df86-447a-bb52-fe66e0ee0862}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Item\DropItem">
+      <UniqueIdentifier>{1f9d7819-fcba-4a36-87a4-d5132ebaed9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -192,9 +195,6 @@
     <ClInclude Include="CTileButton.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CBomb.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
     <ClInclude Include="CScaleAnimation.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
@@ -251,6 +251,24 @@
     </ClInclude>
     <ClInclude Include="CBloodEffect.h">
       <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CDropItem.h">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CBombRange.h">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CBomb.h">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CIsaacPlayer2.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CDropRedBayby.h">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedBaby.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -350,9 +368,6 @@
     <ClCompile Include="CTileButton.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CBomb.cpp">
-      <Filter>Object\Item</Filter>
-    </ClCompile>
     <ClCompile Include="CScaleAnimation.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
@@ -409,6 +424,24 @@
     </ClCompile>
     <ClCompile Include="CBloodEffect.cpp">
       <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CDropItem.cpp">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClCompile>
+    <ClCompile Include="CBombRange.cpp">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClCompile>
+    <ClCompile Include="CBomb.cpp">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClCompile>
+    <ClCompile Include="CIsaacPlayer2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CDropRedBayby.cpp">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedBaby.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
