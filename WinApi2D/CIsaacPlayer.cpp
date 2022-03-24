@@ -464,6 +464,15 @@ void CIsaacPlayer::CreateWaterballoon(fVec2 dir)
 	tears->SetDir(dir);
 
 	CreateObj(tears, GROUP_GAMEOBJ::TEARS);
+	vector<CCharacter*>& childes = GetChildes();
+
+	for (int i = 0; i < childes.size(); i++) {
+		CIsaacPlayer2* player2 = dynamic_cast<CIsaacPlayer2*>(childes[i]);
+		if (player2 != nullptr) {
+			player2->ItemUse(dir);
+		}
+	}
+
 
 }
 
@@ -486,6 +495,18 @@ float CIsaacPlayer::GetVelocity()
 fVec2 CIsaacPlayer::GetPlayerDir()
 {
 	return m_dirVec2;
+}
+
+CIsaacPlayer::IsaacStateBody CIsaacPlayer::GetBodyState()
+{
+	return m_stBody;
+}
+
+void CIsaacPlayer::AddPet(CIsaacPlayer2* character)
+{
+
+
+
 }
 
 

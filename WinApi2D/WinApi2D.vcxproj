@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -153,6 +153,7 @@
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CBloodEffect.h" />
+    <ClInclude Include="CBloodTears.h" />
     <ClInclude Include="CBomb.h" />
     <ClInclude Include="CBombEffect.h" />
     <ClInclude Include="CBombRange.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CD2DImage.h" />
+    <ClInclude Include="CDefaultTears.h" />
     <ClInclude Include="CDropItem.h" />
     <ClInclude Include="CDropRedBayby.h" />
     <ClInclude Include="CEffect.h" />
@@ -218,6 +220,7 @@
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CBloodEffect.cpp" />
+    <ClCompile Include="CBloodTears.cpp" />
     <ClCompile Include="CBomb.cpp" />
     <ClCompile Include="CBombEffect.cpp" />
     <ClCompile Include="CBombRange.cpp" />
@@ -229,6 +232,7 @@
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CD2DImage.cpp" />
+    <ClCompile Include="CDefaultTears.cpp" />
     <ClCompile Include="CDropItem.cpp" />
     <ClCompile Include="CDropRedBayby.cpp" />
     <ClCompile Include="CEffect.cpp" />

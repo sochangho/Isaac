@@ -98,6 +98,12 @@ void CStartRoom::Enter()
 	redbaby->SetPos(fPoint(map->GetScale().x / 2 + 50, map->GetScale().y / 2 + 50));
 	AddObject(redbaby, GROUP_GAMEOBJ::DROPITEM);
 
+
+	CDropRedBayby* redbaby1 = new CDropRedBayby;
+	redbaby1->SetPos(fPoint(map->GetScale().x / 2 + 100, map->GetScale().y / 2 + 100));
+	AddObject(redbaby1, GROUP_GAMEOBJ::DROPITEM);
+
+
 	GroupCheckSetting();
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 	CCameraManager::getInst()->SetTargetObj(center);

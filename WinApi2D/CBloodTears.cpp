@@ -1,16 +1,17 @@
 #include "framework.h"
-#include "CTears.h"
+#include "CBloodTears.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
 #include "CCollider.h"
 #include "CTearsEffect.h"
 #include "CTile.h"
-CTears::CTears()
+CBloodTears::CBloodTears()
 {
-  SetImg(CResourceManager::getInst()->
-		LoadD2DImage(L"Tears", L"texture\\Animation\\tearsEffect.png"));
+
+	SetImg(CResourceManager::getInst()->
+		LoadD2DImage(L"BloodTears", L"texture\\Animation\\blodTearsEffect.png"));
 	SetName(L"Attack");
-	SetScale(fPoint(90, 90));
+	SetScale(fPoint(100, 100));
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"IDLE", GetImg(), fPoint(0.f, 0.f), fPoint(64.f, 64.f), fPoint(64.f, 0.f), 0.5f, 1);
 	GetAnimator()->Play(L"IDLE");
@@ -19,13 +20,11 @@ CTears::CTears()
 	SetEffect(new CTearsEffect);
 }
 
-CTears::~CTears()
+CBloodTears::~CBloodTears()
 {
 }
 
-CTears* CTears::Clone()
+CBloodTears* CBloodTears::Clone()
 {
-	return new CTears(*this);
+	return new CBloodTears(*this);
 }
-
-

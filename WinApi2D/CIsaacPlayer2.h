@@ -1,8 +1,9 @@
 #pragma once
 #include "CCharacter.h"
+
 class CIsaacPlayer2 : public CCharacter
 {
-
+	
 public:
 
 	enum class Player2State {
@@ -30,5 +31,8 @@ public:
 private:
 	Player2State state;
 	Player2State cur_state = Player2State::IDLE;
+	float m_velocity;
+	float m_distance;
+	fPoint m_destination;
 };
 

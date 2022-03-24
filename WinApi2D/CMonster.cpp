@@ -6,7 +6,7 @@
 #include "CTile.h"
 #include "CScene.h"
 #include "CTileNavMap.h"
-#include "CTears.h"
+#include "CDefaultTears.h"
 #include "CBloodEffect.h"
 #include "CBombRange.h"
 CMonster::CMonster()
@@ -232,7 +232,7 @@ void CMonster::OnCollision(CCollider* _pOther)
 void CMonster::OnCollisionEnter(CCollider* _pOther)
 {
         
-	CTears* tears = dynamic_cast<CTears*>(_pOther->GetObj());
+	CDefaultTears* tears = dynamic_cast<CDefaultTears*>(_pOther->GetObj());
 	CBombRange* range = dynamic_cast<CBombRange*>(_pOther->GetObj());
 
 	if (tears != nullptr && !is_attacked) {

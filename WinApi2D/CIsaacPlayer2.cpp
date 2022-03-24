@@ -5,9 +5,16 @@
 CIsaacPlayer2::CIsaacPlayer2()
 {
 
+    random_device rd;
+    mt19937_64 gen(rd());
+    uniform_int_distribution<int> dis(130, 180);
+
+    m_velocity = dis(gen);
+    uniform_int_distribution<int> distance(10 , 50);
+    m_distance = distance(gen);
 
 
-
+    
 
 
 }
@@ -23,7 +30,7 @@ CIsaacPlayer2* CIsaacPlayer2::Clone()
 
 void CIsaacPlayer2::update()
 {
-   CCharacter::update();
+    //CCharacter::update();
 
 
     CIsaacPlayer* player = dynamic_cast<CIsaacPlayer*>(GetParentObj());
@@ -33,37 +40,48 @@ void CIsaacPlayer2::update()
         return;
     }
 
+    vector<CCharacter*>& childes = player->GetChildes();
+
     
-    fVec2 playerDir = player->GetPlayerDir();
 
 
-    if (playerDir.x > 0) {
+    fPoint pos = GetPos();
+    fVec2 dir = player->GetPos() - GetPos();
+   
+    if (dir.Length() > m_distance) {
+        pos.x += m_velocity * dir.normalize().x * fDT;
+        pos.y += m_velocity * dir.normalize().y * fDT;
+        SetPos(pos);
+    }
 
+   
+    CIsaacPlayer::IsaacStateBody dobystate = player->GetBodyState();
+   
+    switch (dobystate)
+    {
+    case CIsaacPlayer::IsaacStateBody::IDLE: {
+        state = Player2State::IDLE;
+    }
+        break;
+    case CIsaacPlayer::IsaacStateBody::LEFT_MOVE: {
+        state = Player2State::LEFT;
+    }
+        break;
+    case CIsaacPlayer::IsaacStateBody::RIGHT_MOVE: {
         state = Player2State::RIGHT;
     }
-    else if(playerDir.x < 0) {
-
-        state = Player2State::LEFT;
-
+        break;
+    case CIsaacPlayer::IsaacStateBody::UP_MOVE: {
+        state = Player2State::UP;
     }
-    else {
-
-        if (playerDir.y > 0) {
-
-            state = Player2State::DOWN;
-        }
-        else if(playerDir.y < 0) {
-
-            state = Player2State::UP;
-
-        }
-        else {
-
-            state = Player2State::IDLE;
-        }
+        break;
+    case CIsaacPlayer::IsaacStateBody::DOWN_MOVE: {
+        state = Player2State::DOWN;
     }
-
-
+        break;
+    default:
+        break;
+    }
  
 }
 

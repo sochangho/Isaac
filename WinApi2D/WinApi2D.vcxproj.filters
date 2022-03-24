@@ -79,6 +79,9 @@
     <Filter Include="Object\Item\DropItem">
       <UniqueIdentifier>{1f9d7819-fcba-4a36-87a4-d5132ebaed9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Item\Tears">
+      <UniqueIdentifier>{30ddc3c0-3410-41fa-ba52-56703b15870d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -198,9 +201,6 @@
     <ClInclude Include="CScaleAnimation.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="CTears.h">
-      <Filter>Object\Item</Filter>
-    </ClInclude>
     <ClInclude Include="CTestObject.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
@@ -268,6 +268,15 @@
       <Filter>Object\Item\DropItem</Filter>
     </ClInclude>
     <ClInclude Include="CRedBaby.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CTears.h">
+      <Filter>Object\Item\Tears</Filter>
+    </ClInclude>
+    <ClInclude Include="CBloodTears.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CDefaultTears.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -371,9 +380,6 @@
     <ClCompile Include="CScaleAnimation.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="CTears.cpp">
-      <Filter>Object\Item</Filter>
-    </ClCompile>
     <ClCompile Include="CTestObject.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
@@ -441,6 +447,15 @@
       <Filter>Object\Item\DropItem</Filter>
     </ClCompile>
     <ClCompile Include="CRedBaby.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CTears.cpp">
+      <Filter>Object\Item\Tears</Filter>
+    </ClCompile>
+    <ClCompile Include="CBloodTears.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CDefaultTears.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
