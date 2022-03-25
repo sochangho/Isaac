@@ -10,6 +10,7 @@
 #include "CMonster.h"
 #include "CAnimation.h"
 #include "CBombRange.h"
+#include "CScene.h"
 CIsaacPlayer::CIsaacPlayer()
 {
 	
@@ -98,7 +99,7 @@ void CIsaacPlayer::update()
 		pos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
 		
 	}
-
+	PetUpdate();
 	SetPos(pos);
 	GetAnimator()->update();
 	CCharacter::update();
@@ -466,13 +467,26 @@ void CIsaacPlayer::CreateWaterballoon(fVec2 dir)
 	CreateObj(tears, GROUP_GAMEOBJ::TEARS);
 	vector<CCharacter*>& childes = GetChildes();
 
-	for (int i = 0; i < childes.size(); i++) {
-		CIsaacPlayer2* player2 = dynamic_cast<CIsaacPlayer2*>(childes[i]);
-		if (player2 != nullptr) {
-			player2->ItemUse(dir);
-		}
-	}
 
+	for (auto iter = childes.begin(); iter != childes.end(); ) {
+
+
+		if ((*iter)->isDead()) {
+
+			iter = childes.erase(iter);
+		}
+		else {
+
+			CIsaacPlayer2* player2 = dynamic_cast<CIsaacPlayer2*>(*iter);
+			if (player2 != nullptr) {
+				player2->ItemUse(dir);
+			}
+
+			iter++;
+		}
+
+
+	}
 
 }
 
@@ -504,6 +518,54 @@ CIsaacPlayer::IsaacStateBody CIsaacPlayer::GetBodyState()
 
 void CIsaacPlayer::AddPet(CIsaacPlayer2* character)
 {
+	character->SetPos(GetPos());
+	this->AddChilde(character, GROUP_GAMEOBJ::PLAYER2);
+
+}
+
+void CIsaacPlayer::PetUpdate()
+{
+
+	vector<CCharacter*>& childes = GetChildes();
+	CCharacter* prevC = nullptr;
+	
+	for (auto iter = childes.begin(); iter != childes.end(); ) {
+
+		if ((*iter)->isDead()) {
+			iter = childes.erase(iter);
+		}
+		else {
+
+			fPoint dPos;
+			fPoint sPos;
+			CIsaacPlayer2* player2 = dynamic_cast<CIsaacPlayer2*>(*iter);
+			if (player2 != nullptr) {
+
+
+				if (prevC == nullptr) {
+					
+					dPos = GetPos();
+					sPos = (*iter)->GetPos();
+				}
+				else {
+
+					dPos = prevC->GetPos();
+					sPos = (*iter)->GetPos();
+				}
+
+				fPoint distance = dPos - sPos;
+				if (distance.Length() > 30.f) {
+					sPos.x += 170.f * distance.normalize().x * fDT;
+					sPos.y += 170.f * distance.normalize().y * fDT;
+
+					(*iter)->SetPos(sPos);
+				}
+
+				prevC = *iter;			
+			}			
+			iter++;
+		}
+	}
 
 
 

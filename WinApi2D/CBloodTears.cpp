@@ -18,6 +18,7 @@ CBloodTears::CBloodTears()
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(20, 20));
 	SetEffect(new CTearsEffect);
+	m_dmg = 30.f;
 }
 
 CBloodTears::~CBloodTears()

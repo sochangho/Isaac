@@ -166,6 +166,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CDefaultTears.h" />
+    <ClInclude Include="CDoor.h" />
     <ClInclude Include="CDropItem.h" />
     <ClInclude Include="CDropRedBayby.h" />
     <ClInclude Include="CEffect.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="CGaperHead.h" />
     <ClInclude Include="CIsaacPlayer.h" />
     <ClInclude Include="CIsaacPlayer2.h" />
+    <ClInclude Include="CItemRoom1.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
@@ -233,6 +235,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CDefaultTears.cpp" />
+    <ClCompile Include="CDoor.cpp" />
     <ClCompile Include="CDropItem.cpp" />
     <ClCompile Include="CDropRedBayby.cpp" />
     <ClCompile Include="CEffect.cpp" />
@@ -243,6 +246,7 @@
     <ClCompile Include="CGaperHead.cpp" />
     <ClCompile Include="CIsaacPlayer.cpp" />
     <ClCompile Include="CIsaacPlayer2.cpp" />
+    <ClCompile Include="CItemRoom1.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
@@ -282,6 +286,9 @@
   <ItemGroup>
     <Image Include="small.ico" />
     <Image Include="WinApi2D.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

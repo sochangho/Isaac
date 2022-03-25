@@ -65,7 +65,7 @@ public:
 
 
 	void AddPet(CIsaacPlayer2* character);
-
+	void PetUpdate();
 
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);

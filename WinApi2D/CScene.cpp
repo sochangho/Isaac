@@ -28,6 +28,11 @@ CScene::~CScene()
 
 void CScene::update()
 {
+    if (m_arrObj[(int)GROUP_GAMEOBJ::MONSTER].size() == 0) {
+
+        clear = true;
+    }
+
     // 씬이 가진 모든 오브젝트 업데이트
     for (int i = 0; i < (int)GROUP_GAMEOBJ::SIZE; i++)
     {
@@ -37,6 +42,10 @@ void CScene::update()
                 m_arrObj[i][j]->update();
         }
     }
+
+
+  
+
 }
 
 void CScene::finalupdate()
@@ -102,6 +111,16 @@ vector<CGameObject*>& CScene::GetTiles()
     return m_arrObj[(UINT)GROUP_GAMEOBJ::TILE];
 }
 
+bool CScene::GetCrear()
+{
+    return clear;
+}
+
+void CScene::SetCrear(bool clear)
+{
+    this->clear = clear;
+}
+
 void CScene::SetName(const wstring& strName)
 {
     m_strName = strName;
@@ -145,6 +164,8 @@ void CScene::GroupCheckSetting()
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::PLAYER);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::MONSTER);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::DROPITEM, GROUP_GAMEOBJ::PLAYER);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::DOOR, GROUP_GAMEOBJ::PLAYER);
+
 }
 
 void CScene::LoadTile(const wstring& strPath)

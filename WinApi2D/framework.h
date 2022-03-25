@@ -41,6 +41,7 @@ enum class GROUP_GAMEOBJ
 	BACKGROUND,
 	MAP,
 	TILE,
+	DOOR,
 	BOMB,
 	ATTACKRANGE,
 	PLAYER,
@@ -61,6 +62,7 @@ enum class GROUP_SCENE
 	TOOL,
 	START,
 	STARTROOM,
+	ITEMROOM,
 	STAGE_01,
 	STAGE_02,
 
@@ -127,6 +129,19 @@ enum class TYPE_EVENT
 #define CreateObj(pObj, group)	CEventManager::getInst()->EventCreateObject(pObj, group)
 #define DeleteObj(pObj)			CEventManager::getInst()->EventDeleteObject(pObj)
 #define ChangeScn(scene)		CEventManager::getInst()->EventChangeScene(scene)
+
+
+#define DOORUP_X 520
+#define DOORUP_Y 218
+
+#define DOORDOWN_X 520
+#define DOORDOWN_Y 698
+
+#define DOORLEFT_X 130
+#define DOORLFET_Y 468
+
+#define DOORRIGHT_X 910
+#define DOORRIGHT_Y 468
 
 //========================================
 //## 전역변수(인스턴스, 윈도우 핸들)	##

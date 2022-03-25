@@ -45,14 +45,7 @@ void CIsaacPlayer2::update()
     
 
 
-    fPoint pos = GetPos();
-    fVec2 dir = player->GetPos() - GetPos();
-   
-    if (dir.Length() > m_distance) {
-        pos.x += m_velocity * dir.normalize().x * fDT;
-        pos.y += m_velocity * dir.normalize().y * fDT;
-        SetPos(pos);
-    }
+ 
 
    
     CIsaacPlayer::IsaacStateBody dobystate = player->GetBodyState();

@@ -20,6 +20,7 @@
 #include "CMonster.h"
 #include "CGaper.h"
 #include "CDropRedBayby.h"
+#include "CDoor.h"
 CStartRoom::CStartRoom()
 {
 }
@@ -73,6 +74,28 @@ void CStartRoom::Enter()
 	map1->Load(L"Map_Control", L"texture\\map\\controls.png");
 	map1->SetPos(fPoint(map->GetScale().x / 6, map->GetScale().y / 3));
 	AddObject(map1, GROUP_GAMEOBJ::MAP);
+
+	CDoor* doorup = new CDoor;
+	doorup->SetPos(fPoint(DOORUP_X , DOORUP_Y));
+	//doorup->Load(DOOR_DIR::UP );
+	AddObject(doorup, GROUP_GAMEOBJ::DOOR);
+
+	CDoor* doordown = new CDoor;
+	doordown->SetPos(fPoint(DOORDOWN_X , DOORDOWN_Y));
+	//doordown->Load(DOOR_DIR::DOWN);
+	AddObject(doordown, GROUP_GAMEOBJ::DOOR);
+
+	CDoor* doorleft = new CDoor;
+	doorleft->SetPos(fPoint(DOORLEFT_X, DOORLFET_Y));
+	//doorleft->Load(DOOR_DIR::LEFT);
+	AddObject(doorleft, GROUP_GAMEOBJ::DOOR);
+
+	CDoor* doorright = new CDoor;
+	doorright->SetPos(fPoint(DOORRIGHT_X, DOORRIGHT_Y));
+	//doorright->Load(DOOR_DIR::RIGHT);
+	AddObject(doorright, GROUP_GAMEOBJ::DOOR);
+
+
 
 	CIsaacPlayer* player = new CIsaacPlayer;
 	player->SetPos(fPoint(map->GetScale().x / 2, map->GetScale().y / 2));

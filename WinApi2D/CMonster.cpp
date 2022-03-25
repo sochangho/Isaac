@@ -235,7 +235,7 @@ void CMonster::OnCollisionEnter(CCollider* _pOther)
 	CDefaultTears* tears = dynamic_cast<CDefaultTears*>(_pOther->GetObj());
 	CBombRange* range = dynamic_cast<CBombRange*>(_pOther->GetObj());
 
-	if (tears != nullptr && !is_attacked) {
+	if (tears != nullptr ) {
 
 		is_stop = true;
 		is_attacked = true;
@@ -269,7 +269,7 @@ void CMonster::OnCollisionEnter(CCollider* _pOther)
 	}
 
 
-	if (range != nullptr && !is_attacked) {
+	if (range != nullptr ) {
 
 		is_stop = true;
 		is_attacked = true;

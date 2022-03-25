@@ -273,11 +273,17 @@
     <ClInclude Include="CTears.h">
       <Filter>Object\Item\Tears</Filter>
     </ClInclude>
+    <ClInclude Include="CDefaultTears.h">
+      <Filter>Object\Item\Tears</Filter>
+    </ClInclude>
     <ClInclude Include="CBloodTears.h">
+      <Filter>Object\Item\Tears</Filter>
+    </ClInclude>
+    <ClInclude Include="CDoor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CDefaultTears.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="CItemRoom1.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -453,10 +459,16 @@
       <Filter>Object\Item\Tears</Filter>
     </ClCompile>
     <ClCompile Include="CBloodTears.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Object\Item\Tears</Filter>
     </ClCompile>
     <ClCompile Include="CDefaultTears.cpp">
+      <Filter>Object\Item\Tears</Filter>
+    </ClCompile>
+    <ClCompile Include="CDoor.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CItemRoom1.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -471,5 +483,8 @@
     <Image Include="WinApi2D.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
