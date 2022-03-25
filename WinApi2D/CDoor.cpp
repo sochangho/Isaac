@@ -3,11 +3,14 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
+#include "CIsaacPlayer.h"
 #include "CScene.h"
 CDoor::CDoor()
 {
     m_Img = nullptr;
     SetScale(fPoint(100, 100));
+    CreateCollider();
+    GetCollider()->SetScale(fPoint(80, 80));
 }
 
 
@@ -168,8 +171,61 @@ void CDoor::OnCollisionEnter(CCollider* _pOther)
 {
     if (m_doorstate == DOOR_STATE::Open) {
 
-        ChangeScn(goScene);
+      vector<CGameObject*> players = CSceneManager::getInst()->GetCurScene()->GetPlayer();
+      vector<CGameObject*> player2s = CSceneManager::getInst()->GetCurScene()->GetPlayer2();
+      
+      fPoint changePos;
 
+      switch (m_doorDir)
+      {
+      case DOOR_DIR::UP: {
+
+          changePos = fPoint(DOORDOWN_X, DOORDOWN_Y - 100);
+
+      }
+      break;
+      case DOOR_DIR::DOWN: {
+
+          changePos = fPoint(DOORUP_X , DOORUP_Y + 100);
+
+      }
+
+      break;
+      case DOOR_DIR::LEFT: {
+
+          changePos = fPoint(DOORRIGHT_X - 100 , DOORRIGHT_Y  );
+
+      }
+      break;
+      case DOOR_DIR::RIGHT: {
+
+          changePos = fPoint(DOORLEFT_X + 100 , DOORLFET_Y);
+
+      }
+      break;
+      default:
+          break;
+      }
+
+
+      
+
+      for (int i = 0; i < players.size(); i++) {
+
+          CIsaacPlayer* player = dynamic_cast<CIsaacPlayer*>(players[i]);
+
+          if (player != nullptr) {
+
+              player->SetPos(changePos);
+              break;
+          }
+
+      }
+
+      
+      ChangeScn(goScene);
+
+      
     }
 
 

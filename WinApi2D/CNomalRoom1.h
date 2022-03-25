@@ -1,19 +1,16 @@
 #pragma once
 #include "CScene.h"
-class CItemRoom1 : public CScene
+class CNomalRoom1 : public CScene
 {
 private:
-
 public:
-	CItemRoom1();
-	~CItemRoom1();
 
+	CNomalRoom1();
+	~CNomalRoom1();
 
 	virtual void update();
 	virtual void init();
 	virtual void Enter();
 	virtual void Exit();
-
-
 };
 

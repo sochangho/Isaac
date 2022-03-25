@@ -111,6 +111,27 @@ vector<CGameObject*>& CScene::GetTiles()
     return m_arrObj[(UINT)GROUP_GAMEOBJ::TILE];
 }
 
+vector<CGameObject*>& CScene::GetPlayer()
+{
+   
+    return m_arrObj[(UINT)GROUP_GAMEOBJ::PLAYER];
+}
+
+vector<CGameObject*>& CScene::GetPlayer2()
+{
+    return m_arrObj[(UINT)GROUP_GAMEOBJ::PLAYER2];
+}
+
+bool CScene::GetInit()
+{
+    return m_init;
+}
+
+void CScene::SetInit(bool init)
+{
+    this->m_init = init;
+}
+
 bool CScene::GetCrear()
 {
     return clear;
@@ -125,6 +146,7 @@ void CScene::SetName(const wstring& strName)
 {
     m_strName = strName;
 }
+
 
 wstring CScene::GetName()
 {
@@ -151,6 +173,28 @@ void CScene::DeleteAll()
     {
         DeleteGroup((GROUP_GAMEOBJ)i);
     }
+}
+
+void CScene::PlayerDelete()
+{
+    DeleteGroup(GROUP_GAMEOBJ::PLAYER);
+    DeleteGroup(GROUP_GAMEOBJ::PLAYER2);
+}
+
+void CScene::StageChangeDelete()
+{
+
+    
+    for (int i = 0; i < (UINT)GROUP_GAMEOBJ::SIZE; i++)
+    {
+        if (i == (UINT)GROUP_GAMEOBJ::PLAYER || i == (UINT)GROUP_GAMEOBJ::PLAYER2) {
+            continue;
+        }
+        
+            DeleteGroup((GROUP_GAMEOBJ)i);
+        
+    }
+
 }
 
 void CScene::GroupCheckSetting()
@@ -221,3 +265,4 @@ void CScene::SetTileNav(CTileNavMap* nav)
 
     tileNav = nav;
 }
+

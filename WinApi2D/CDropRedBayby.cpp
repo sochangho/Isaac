@@ -55,15 +55,17 @@ void CDropRedBayby::OnCollision(CCollider* pOther)
 void CDropRedBayby::OnCollisionEnter(CCollider* pOther)
 {
     CIsaacPlayer* player = dynamic_cast<CIsaacPlayer*>(pOther->GetObj());
+    
+
 
     if (player != nullptr) {       
-        CRedBaby* redbaby = new CRedBaby;      
+        CRedBaby* redbaby = new CRedBaby;
         player->AddPet(redbaby);
         DeleteObj(this);
     }
 
-
-
+    
+    
 
 }
 

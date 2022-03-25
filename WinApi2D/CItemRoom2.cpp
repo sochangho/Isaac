@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "CItemRoom1.h"
+#include "CItemRoom2.h"
 #include "CBackGround.h"
 #include "CMap.h"
 #include "CIsaacPlayer.h"
@@ -7,22 +7,22 @@
 #include "CIsaacPlayer2.h"
 #include "CDropRedBayby.h"
 #include "CDoor.h"
-CItemRoom1::CItemRoom1()
+#include "CDropLilloki.h"
+CItemRoom2::CItemRoom2()
 {
 }
 
-CItemRoom1::~CItemRoom1()
+CItemRoom2::~CItemRoom2()
 {
 }
 
-void CItemRoom1::update()
+void CItemRoom2::update()
 {
 	CScene::update();
 }
 
-void CItemRoom1::init()
+void CItemRoom2::init()
 {
-	// ¾À ¸Ê ¼³Á¤--------------------------------------------
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\ItemRoom0";
 	LoadTile(path);
@@ -41,33 +41,28 @@ void CItemRoom1::init()
 	map->Load(L"Map_Item", L"texture\\map\\Blue.png");
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
+	CDoor* doorRight = new CDoor;
+	doorRight->SetPos(fPoint(DOORRIGHT_X, DOORRIGHT_Y));
+	doorRight->Load(DOOR_DIR::RIGHT, GROUP_SCENE::STARTROOM);
+	AddObject(doorRight, GROUP_GAMEOBJ::DOOR);
+
+	CDropLilloki* lilloki = new CDropLilloki();
+	lilloki->SetPos(fPoint(MAPCENTER_X, MAPCENTER_Y));
+	AddObject(lilloki, GROUP_GAMEOBJ::DROPITEM);
 
 
-	//
 
-	CDropRedBayby* item = new CDropRedBayby;
-
-	item->SetPos(fPoint(map->GetScale().x / 2, map->GetScale().y / 2));
-	AddObject(item, GROUP_GAMEOBJ::DROPITEM);
-
-	CDoor* doorleft = new CDoor;
-	doorleft->SetPos(fPoint(DOORLEFT_X, DOORLFET_Y));
-	doorleft->Load(DOOR_DIR::LEFT, GROUP_SCENE::STARTROOM);
-	AddObject(doorleft, GROUP_GAMEOBJ::DOOR);
 }
 
-void CItemRoom1::Enter()
+void CItemRoom2::Enter()
 {
-	
-	
 	CIsaacPlayer* player = CGameManager::getInst()->LoadPlayer();
 
 	GroupCheckSetting();
-	CCameraManager::getInst()->SetLookAt(fPoint(MAPCENTER_X , MAPCENTER_Y));
-	
+	CCameraManager::getInst()->SetLookAt(fPoint(MAPCENTER_X, MAPCENTER_Y));
 }
 
-void CItemRoom1::Exit()
+void CItemRoom2::Exit()
 {
 	CGameManager::getInst()->SavePlayer();
 	PlayerDelete();

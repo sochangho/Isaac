@@ -53,16 +53,19 @@ CIsaacPlayer::CIsaacPlayer()
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(20, 20));
 	
-
+	m_item = nullptr;
 }
 
 CIsaacPlayer::~CIsaacPlayer()
 {
+	if (m_item != nullptr) {
+		delete m_item;
+	}
 }
 
 CIsaacPlayer* CIsaacPlayer::Clone()
 {
-	return new CIsaacPlayer(*this);
+	return new CIsaacPlayer();
 }
 
 void CIsaacPlayer::update()
@@ -101,7 +104,9 @@ void CIsaacPlayer::update()
 	}
 	PetUpdate();
 	SetPos(pos);
+
 	GetAnimator()->update();
+	
 	CCharacter::update();
 }
 
@@ -455,19 +460,26 @@ void CIsaacPlayer::Invincibility()
 
 void CIsaacPlayer::CreateWaterballoon(fVec2 dir)
 {
-	fPoint pos = GetPos();
+	if (m_item == nullptr) {
+		fPoint pos = GetPos();
 
-	pos.x += 10 * dir.x;
-	pos.y += 10 * dir.y;
+		pos.x += 10 * dir.x;
+		pos.y += 10 * dir.y;
 
-	CTears* tears = new CTears;
-	tears->SetPos(pos);
-	tears->SetDir(dir);
+		CTears* tears = new CTears;
+		tears->SetPos(pos);
+		tears->SetDir(dir);
 
-	CreateObj(tears, GROUP_GAMEOBJ::TEARS);
+		CreateObj(tears, GROUP_GAMEOBJ::TEARS);
+		
+	}
+	else {
+
+
+		m_item->ItemUse(dir);
+
+	}
 	vector<CCharacter*>& childes = GetChildes();
-
-
 	for (auto iter = childes.begin(); iter != childes.end(); ) {
 
 
@@ -501,6 +513,11 @@ void CIsaacPlayer::CreateBomb()
 	CreateObj(bomb, GROUP_GAMEOBJ::BOMB);
 }
 
+CItem* CIsaacPlayer::GetItem()
+{
+	return m_item;
+}
+
 float CIsaacPlayer::GetVelocity()
 {
 	return m_veclocity;
@@ -518,6 +535,7 @@ CIsaacPlayer::IsaacStateBody CIsaacPlayer::GetBodyState()
 
 void CIsaacPlayer::AddPet(CIsaacPlayer2* character)
 {
+
 	character->SetPos(GetPos());
 	this->AddChilde(character, GROUP_GAMEOBJ::PLAYER2);
 
@@ -571,8 +589,16 @@ void CIsaacPlayer::PetUpdate()
 
 }
 
+void CIsaacPlayer::SetItem(CItem* item)
+{
+	if (this->m_item != nullptr) {
+		delete this->m_item;
+	}
 
+	this->m_item = item;    
+	this->m_item->SetOwnObj(this);
 
+}
 
 void CIsaacPlayer::OnCollision(CCollider* _pOther)
 {

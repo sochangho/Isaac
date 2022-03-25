@@ -5,6 +5,8 @@
 #include "CScene_Tool.h"
 #include "CStartRoom.h"
 #include "CItemRoom1.h"
+#include "CItemRoom2.h"
+#include "CNomalRoom1.h"
 CSceneManager::CSceneManager()
 {
 	// ¾À ¸ñ·Ï ÃÊ±âÈ­
@@ -29,9 +31,21 @@ CSceneManager::~CSceneManager()
 
 void CSceneManager::ChangeScene(GROUP_SCENE scene)
 {
+	
+
 	m_pCurScene->Exit();
 	m_pCurScene = m_arrScene[(UINT)scene];
+	
+
 	m_pCurScene->Enter();
+
+
+	if (!m_pCurScene->GetInit()) {
+
+		m_pCurScene->SetInit(true);
+		m_pCurScene->init();
+
+	}
 }
 
 void CSceneManager::update()
@@ -57,7 +71,14 @@ void CSceneManager::init()
 	m_arrScene[(size_t)GROUP_SCENE::STARTROOM]->SetName(L"StartRoom");
 
 	m_arrScene[(size_t)GROUP_SCENE::ITEMROOM] = new CItemRoom1;
-	m_arrScene[(size_t)GROUP_SCENE::STARTROOM]->SetName(L"ItemRoom1");
+	m_arrScene[(size_t)GROUP_SCENE::ITEMROOM]->SetName(L"ItemRoom1");
+
+	m_arrScene[(size_t)GROUP_SCENE::ITEMROOM1] = new CItemRoom2;
+	m_arrScene[(size_t)GROUP_SCENE::ITEMROOM1]->SetName(L"ItemRoom2");
+
+	m_arrScene[(size_t)GROUP_SCENE::NOMALROOM1] = new CNomalRoom1;
+	m_arrScene[(size_t)GROUP_SCENE::NOMALROOM1]->SetName(L"NomalRoom1");
+
 
 	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::START];
 	m_pCurScene->Enter();

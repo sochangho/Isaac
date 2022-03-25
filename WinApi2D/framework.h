@@ -63,6 +63,8 @@ enum class GROUP_SCENE
 	START,
 	STARTROOM,
 	ITEMROOM,
+	ITEMROOM1,
+	NOMALROOM1,
 	STAGE_01,
 	STAGE_02,
 
@@ -106,6 +108,7 @@ enum class TYPE_EVENT
 #include "CUIManager.h"
 #include "CSoundManager.h"
 #include "CRenderManager.h"
+#include "CGameManager.h"
 
 //========================================
 //##			디파인문				##
@@ -143,6 +146,8 @@ enum class TYPE_EVENT
 #define DOORRIGHT_X 910
 #define DOORRIGHT_Y 468
 
+#define MAPCENTER_X 520
+#define MAPCENTER_Y 468
 //========================================
 //## 전역변수(인스턴스, 윈도우 핸들)	##
 //========================================

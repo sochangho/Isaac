@@ -3,11 +3,14 @@
 #include "CPlayerBody.h"
 #include "CPlayerHead.h"
 #include "CIsaacPlayer2.h"
+#include "CItem.h"
 class CIsaacPlayer : public CCharacter
 {
 	friend class CPlayerBody;
 	friend class CPlayerHead;
 	
+private:
+	CItem* m_item;
 public:
 	enum class IsaacStateHead {
 		IDLE,
@@ -59,6 +62,8 @@ public:
 	void CreateWaterballoon(fVec2 dir );
 	void CreateBomb();
 	
+	CItem* GetItem();
+
 	float GetVelocity();
 	fVec2 GetPlayerDir();
 	IsaacStateBody GetBodyState();
@@ -66,6 +71,8 @@ public:
 
 	void AddPet(CIsaacPlayer2* character);
 	void PetUpdate();
+	void SetItem(CItem* item);
+
 
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);

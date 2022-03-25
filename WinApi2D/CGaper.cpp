@@ -42,7 +42,7 @@ void CGaper::update()
 
 
 	if (!GetStop()) {
-	change	= GoDestition();
+	 change	= GoDestition();
 	}
 
 

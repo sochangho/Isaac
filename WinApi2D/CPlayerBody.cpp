@@ -35,7 +35,9 @@ CPlayerBody::~CPlayerBody()
 
 CPlayerBody* CPlayerBody::Clone()
 {
-    return new CPlayerBody(*this);
+    CPlayerBody* clone = new CPlayerBody(*this);
+    clone->m_pImg = m_pImg;
+    return clone;
 }
 
 void CPlayerBody::update()

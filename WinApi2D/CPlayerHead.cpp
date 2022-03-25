@@ -40,7 +40,9 @@ CPlayerHead::~CPlayerHead()
 
 CPlayerHead* CPlayerHead::Clone()
 {
-    return new CPlayerHead(*this);
+    CPlayerHead* clone = new CPlayerHead(*this);
+    clone->m_pImg = m_pImg;
+    return  clone;
 }
 
 void CPlayerHead::update()

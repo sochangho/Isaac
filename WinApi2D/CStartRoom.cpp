@@ -39,7 +39,7 @@ void CStartRoom::update()
 	}
 
 
-
+	
 
 
 	
@@ -47,20 +47,50 @@ void CStartRoom::update()
 
 void CStartRoom::Enter()
 {
+
+	
+
+	CIsaacPlayer* player;
+	if (!CGameManager::getInst()->GetSaveCheck()) {
+		player = new CIsaacPlayer;
+		player->SetPos(fPoint(MAPCENTER_X, MAPCENTER_Y));
+		AddObject(player, GROUP_GAMEOBJ::PLAYER);
+	}
+	else {
+
+	 player = CGameManager::getInst()->LoadPlayer();
+
+	}
+	
+	
+
+
+	GroupCheckSetting();
+	CCameraManager::getInst()->SetLookAt(fPoint(MAPCENTER_X , MAPCENTER_Y));
+;
+	
+	
+}
+
+void CStartRoom::init()
+{
+
+
+
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\stageRoom01.tile";
 	LoadTile(path);
 
-	
-	
+
+
 	CBackGround* backGround = new CBackGround;
 	backGround->Load(L"BackGround", L"texture\\map\\bgblack.png");
-	//backGround->SetPos(fPoint(-100.f, -500.f));
-	 fPoint scale = backGround->GetScale();
-	 scale.x *= 10;
-	 scale.y *= 10;
+
+	fPoint scale = backGround->GetScale();
+	scale.x *= 10;
+	scale.y *= 10;
 	backGround->SetScale(scale);
-	backGround->SetPos(fPoint(-100.f, 0 ));
+	backGround->SetPos(fPoint(-100.f, 0));
 	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
 
 
@@ -75,69 +105,35 @@ void CStartRoom::Enter()
 	map1->SetPos(fPoint(map->GetScale().x / 6, map->GetScale().y / 3));
 	AddObject(map1, GROUP_GAMEOBJ::MAP);
 
-	CDoor* doorup = new CDoor;
-	doorup->SetPos(fPoint(DOORUP_X , DOORUP_Y));
-	//doorup->Load(DOOR_DIR::UP );
-	AddObject(doorup, GROUP_GAMEOBJ::DOOR);
 
-	CDoor* doordown = new CDoor;
-	doordown->SetPos(fPoint(DOORDOWN_X , DOORDOWN_Y));
-	//doordown->Load(DOOR_DIR::DOWN);
-	AddObject(doordown, GROUP_GAMEOBJ::DOOR);
-
-	CDoor* doorleft = new CDoor;
-	doorleft->SetPos(fPoint(DOORLEFT_X, DOORLFET_Y));
-	//doorleft->Load(DOOR_DIR::LEFT);
-	AddObject(doorleft, GROUP_GAMEOBJ::DOOR);
 
 	CDoor* doorright = new CDoor;
 	doorright->SetPos(fPoint(DOORRIGHT_X, DOORRIGHT_Y));
-	//doorright->Load(DOOR_DIR::RIGHT);
+	doorright->Load(DOOR_DIR::RIGHT, GROUP_SCENE::ITEMROOM);
 	AddObject(doorright, GROUP_GAMEOBJ::DOOR);
 
 
-
-	CIsaacPlayer* player = new CIsaacPlayer;
-	player->SetPos(fPoint(map->GetScale().x / 2, map->GetScale().y / 2));
-	AddObject(player, GROUP_GAMEOBJ::PLAYER);
-
-	CCenterObject* center = new CCenterObject;
-	center->SetPos(player->GetPos());
-	AddObject(center, GROUP_GAMEOBJ::UI);
-
-	CGaper* monster = new CGaper;
-	monster->SetPos(fPoint(map->GetScale().x / 2 + 100, map->GetScale().y / 2 + 100));
-	monster->SetScale(fPoint(50, 50));
-	monster->SetDestinaionObj(player);
-	AddObject(monster, GROUP_GAMEOBJ::MONSTER);
-
-	CGaper* monster1 = new CGaper;
-	monster1->SetPos(fPoint(map->GetScale().x / 2 + 50, map->GetScale().y / 2 + 50));
-	monster1->SetScale(fPoint(50, 50));
-	monster1->SetDestinaionObj(player);
-	AddObject(monster1, GROUP_GAMEOBJ::MONSTER);
-	
-	CDropRedBayby* redbaby = new CDropRedBayby;
-	redbaby->SetPos(fPoint(map->GetScale().x / 2 + 50, map->GetScale().y / 2 + 50));
-	AddObject(redbaby, GROUP_GAMEOBJ::DROPITEM);
+	CDoor* doorleft = new CDoor;
+	doorleft->SetPos(fPoint(DOORLEFT_X, DOORLFET_Y));
+	doorleft->Load(DOOR_DIR::LEFT, GROUP_SCENE::ITEMROOM1);
+	AddObject(doorleft, GROUP_GAMEOBJ::DOOR);
 
 
-	CDropRedBayby* redbaby1 = new CDropRedBayby;
-	redbaby1->SetPos(fPoint(map->GetScale().x / 2 + 100, map->GetScale().y / 2 + 100));
-	AddObject(redbaby1, GROUP_GAMEOBJ::DROPITEM);
+
+	CDoor* doorup = new CDoor;
+	doorup->SetPos(fPoint(DOORUP_X, DOORUP_Y));
+	doorup->Load(DOOR_DIR::UP, GROUP_SCENE::NOMALROOM1);
+	AddObject(doorup, GROUP_GAMEOBJ::DOOR);
 
 
-	GroupCheckSetting();
-	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
-	CCameraManager::getInst()->SetTargetObj(center);
-	
-	
 }
 
 void CStartRoom::Exit()
 {
-	DeleteAll();
+	CGameManager::getInst()->SavePlayer();
 
+	PlayerDelete();
+    
 	CCollisionManager::getInst()->Reset();
 }
 

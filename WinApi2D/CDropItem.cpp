@@ -3,6 +3,7 @@
 #include "CTile.h"
 #include "CIsaacPlayer.h"
 #include "CCollider.h"
+#include "CScene.h"
 CDropItem::CDropItem()
 {
 }
@@ -72,10 +73,13 @@ void CDropItem::OnCollision(CCollider* pOther)
 
 void CDropItem::OnCollisionEnter(CCollider* pOther)
 {
-
+   CScene* curScene =  CSceneManager::getInst()->GetCurScene();
+   
     CIsaacPlayer* isaac = dynamic_cast<CIsaacPlayer*>(pOther->GetObj());
 
     if (isaac != nullptr) {
+
+       
 
         fPoint thisPos = GetPos();
         fPoint playerPos = pOther->GetObj()->GetPos();
@@ -87,6 +91,9 @@ void CDropItem::OnCollisionEnter(CCollider* pOther)
         m_isPlayerCol = true;
 
     }
+
+   
+
 }
 
 void CDropItem::OnCollisionExit(CCollider* pOther)

@@ -82,6 +82,9 @@
     <Filter Include="Object\Item\Tears">
       <UniqueIdentifier>{30ddc3c0-3410-41fa-ba52-56703b15870d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Item\Pet">
+      <UniqueIdentifier>{573a6fff-f172-4c19-9f51-56947198d0d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -267,9 +270,6 @@
     <ClInclude Include="CDropRedBayby.h">
       <Filter>Object\Item\DropItem</Filter>
     </ClInclude>
-    <ClInclude Include="CRedBaby.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CTears.h">
       <Filter>Object\Item\Tears</Filter>
     </ClInclude>
@@ -284,6 +284,27 @@
     </ClInclude>
     <ClInclude Include="CItemRoom1.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CNomalRoom1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedBaby.h">
+      <Filter>Object\Item\Pet</Filter>
+    </ClInclude>
+    <ClInclude Include="CItemRoom2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CDropLilloki.h">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CLilloki.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,9 +473,6 @@
     <ClCompile Include="CDropRedBayby.cpp">
       <Filter>Object\Item\DropItem</Filter>
     </ClCompile>
-    <ClCompile Include="CRedBaby.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CTears.cpp">
       <Filter>Object\Item\Tears</Filter>
     </ClCompile>
@@ -469,6 +487,27 @@
     </ClCompile>
     <ClCompile Include="CItemRoom1.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CNomalRoom1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedBaby.cpp">
+      <Filter>Object\Item\Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="CItemRoom2.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CDropLilloki.cpp">
+      <Filter>Object\Item\DropItem</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CLilloki.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

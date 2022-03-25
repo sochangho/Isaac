@@ -10,9 +10,17 @@ CCharacter::CCharacter()
 
 CCharacter::CCharacter(const CCharacter& other) : CGameObject(other)
 {
+   
+
+    m_fptFinalPos = other.m_fptFinalPos;
+
     for (int i = 0; i < other.m_vecChilde.size(); i++) {
 
+
         m_vecChilde.push_back(other.m_vecChilde[i]->Clone());
+       
+        m_vecChilde[i]->m_parent = this;
+
     }
 }
 

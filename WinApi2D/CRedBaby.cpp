@@ -29,7 +29,8 @@ CRedBaby::~CRedBaby()
 
 CRedBaby* CRedBaby::Clone()
 {
-    return new CRedBaby(*this);
+    
+    return new CRedBaby();
 }
 
 void CRedBaby::update()
