@@ -605,7 +605,7 @@ void CIsaacPlayer::OnCollision(CCollider* _pOther)
 
 	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
 
-	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+	if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL || tile->GetGroup() == GROUP_TILE::GROUND)) {
 
 		m_isColCheck = true;
 
@@ -640,17 +640,18 @@ void CIsaacPlayer::OnCollision(CCollider* _pOther)
 
 void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-	
-	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
 
-	if (tile != nullptr  && tile->GetGroup() == GROUP_TILE::WALL) {
+	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+	CDefaultTears* tears = dynamic_cast<CDefaultTears*>(_pOther->GetObj());
+
+	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
 
 		m_isColCheck = true;
 
 	}
-	
+
 	CMonster* monster = dynamic_cast<CMonster*>(_pOther->GetObj());
-	if (monster != nullptr && !m_isInvincibility) {
+	if ( monster != nullptr && !m_isInvincibility) {
 
 		m_isInvincibility = true;
 		m_isAttacked = true;
@@ -664,6 +665,19 @@ void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 		//HP: °¨¼Ò
 
 	}
+
+	if (tears != nullptr && tears->type == CDefaultTears::AttackType::PLAYER &&!m_isInvincibility) {
+
+		m_isInvincibility = true;
+		m_isAttacked = true;
+		m_veclocity = 100;
+		fPoint pos = GetPos();
+		fPoint tPos = tears->GetPos();
+		m_dirVec2.x = pos.x - tPos.x;
+		m_dirVec2.y = pos.y - tPos.y;
+
+	}
+
 
 
 	CBombRange* bomb = dynamic_cast<CBombRange*>(_pOther->GetObj());
@@ -689,7 +703,7 @@ void CIsaacPlayer::OnCollisionExit(CCollider* _pOther)
 	
 	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
 
-	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+	if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL || tile->GetGroup() == GROUP_TILE::GROUND)) {
 
 		m_isColCheck = false;
 		m_veclocity = 0;

@@ -61,7 +61,7 @@ void CDropItem::OnCollision(CCollider* pOther)
 
     CTile* tile = dynamic_cast<CTile*>(pOther->GetObj());
 
-    if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+    if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL || tile->GetGroup() == GROUP_TILE::GROUND)) {
 
         fPoint thisPos = GetPos();
         fPoint tilePos = pOther->GetObj()->GetPos();

@@ -2,19 +2,22 @@
 #include "CTile.h"
 #include "CGameObject.h"
 #define INF 100000
+union TILE_INDEX
+{
+	struct
+	{
+		UINT x;
+		UINT y;
+	};
+	ULONGLONG ID;
+};
+
+
 class CTileNavMap
 {
 private:
 
-	union TILE_INDEX
-	{
-		struct
-		{
-			UINT x;
-			UINT y;
-		};
-		ULONGLONG ID;
-	};
+	
 
 	struct ASNode
 	{
@@ -78,6 +81,7 @@ public:
 
 
 	bool WallCheck(UINT x, UINT y);
+	void ChanageTileType(GROUP_TILE type , UINT x , UINT y);
 
 };
 

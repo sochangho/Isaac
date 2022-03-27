@@ -116,8 +116,8 @@ fPoint CTileNavMap::CTileNavRandomUpdate(CGameObject* Monster)
 	
 	
 
-	for (int i = -1; i < 3; i++) {
-		for (int j = -1; j < 3; j++) {
+	for (int i = -2; i < 3; i++) {
+		for (int j = -2; j < 3; j++) {
 
 			if (!((i == 0) && (j == 0)) && WallCheck(iPos.x + i, iPos.y + j)) {
 				i_vec.push_back(iPoint(iPos.x + i, iPos.y + j));
@@ -144,6 +144,8 @@ fPoint CTileNavMap::CTileNavRandomUpdate(CGameObject* Monster)
 
 	}
 
+	resultPos.x += CTile::SIZE_TILE / 2;
+	resultPos.y += CTile::SIZE_TILE / 2;
 
 	return resultPos;
 
@@ -210,6 +212,10 @@ void CTileNavMap::CTileNavAstarUpdate(CGameObject* objdestination, CGameObject* 
 
 						pPathNode->point.x *= CTile::SIZE_TILE;
 						pPathNode->point.y *= CTile::SIZE_TILE;
+
+						pPathNode->point.x += CTile::SIZE_TILE/2;
+						pPathNode->point.y += CTile::SIZE_TILE/2;
+
 						path.push_front(pPathNode->point);
 						pPathNode = pPathNode->connect;
 
@@ -307,22 +313,25 @@ bool CTileNavMap::WallCheck(UINT x, UINT y)
 		return true;
 	}
 
-
-	/*for (int i = 0; i < m_tileNavVec.size(); i++) {
-
-		if (m_tileNavVec[i]->GetX() == x && m_tileNavVec[i]->GetY() == y) {
-
-			if (m_tileNavVec[i]->GetGroup() == GROUP_TILE::WALL) {
-
-				return false;
-			}
-			else if (m_tileNavVec[i]->GetGroup() == GROUP_TILE::ROAD) {
-
-				return true;
-			}
-		
-		}
-	}
-    
-	return false;*/
 }
+
+void CTileNavMap::ChanageTileType(GROUP_TILE type, UINT x, UINT y)
+{
+	TILE_INDEX tileindex;
+	tileindex.x = x;
+	tileindex.y = y;
+	map<ULONGLONG, GROUP_TILE>::iterator iter = tileMap.find(tileindex.ID);
+
+
+	if (tileMap.end() == iter) {
+		return;
+	}
+
+
+	iter->second = type;
+
+
+}
+
+
+

@@ -8,7 +8,8 @@ class CMonster : public CCharacter
 
 private:
 
-	
+	float m_moveDuration = 2.f;
+	float m_time = 0.f;
 
 	fVec2 m_dirVec2;
 	fVec2 m_Anidir;
@@ -33,7 +34,7 @@ private:
 	
 public:
 	float m_veclocity = 40.f;
-	float m_attackedV = 100.f;
+	float m_attackedV = 30.f;
 	CMonster();
 	virtual ~CMonster();
 
@@ -52,8 +53,10 @@ public:
 	fVec2 GetMonsterDir();
 	bool GetStop();
 
-	void Attacked();
 
+	void ChangeDir(fPoint startPoint);
+	void Attacked();
+	void MonsterRandomPosInit();
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);
 	virtual void OnCollisionExit(CCollider* _pOther);

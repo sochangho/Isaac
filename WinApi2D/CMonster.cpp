@@ -15,6 +15,7 @@ CMonster::CMonster()
 
 
 	SetName(L"Monster");
+	MonsterRandomPosInit();
 
 }
 
@@ -153,45 +154,48 @@ bool CMonster::GoDestition()
 
 bool CMonster::GoRandom()
 {
-	CScene* curScene = CSceneManager::getInst()->GetCurScene();
-	fPoint monsterPos = GetPos();
+	random_device rd;
+	mt19937_64 gen(rd());
 
-	if (curScene->GettileNav() == nullptr) {
-		CSceneManager::getInst()->GetCurScene()->SetTileNav(new CTileNavMap);
-	}
 
 	if (!is_init) {
-
-	    randomDestonaion = curScene->GettileNav()->CTileNavRandomUpdate(this);
+		
+		uniform_int_distribution<int> dis(0, 360);
+		
+		m_dirVec2.x = (float)cos(dis(gen));
+		m_dirVec2.y = (float)sin(dis(gen));
+		m_Anidir.x = m_dirVec2.x;
+		m_Anidir.y = m_dirVec2.y;
 		is_init = true;
+
 	}
 
+	if (m_time < m_moveDuration) {
 
-	m_dirVec2.x = randomDestonaion.x - monsterPos.x;
-	m_dirVec2.y = randomDestonaion.y - monsterPos.y;
-
-
-	if (m_dirVec2.Length() > 0.1f) {
-
-
-		monsterPos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
-		monsterPos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
-		SetPos(monsterPos);
+		fPoint pos = GetPos();
+		pos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
+		pos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
+		SetPos(pos);
+		m_time += fDT;
 
 	}
 	else {
 
 
-		randomDestonaion = curScene->GettileNav()->CTileNavRandomUpdate(this);
+		uniform_int_distribution<int> dis(0, 360);
 
-		m_Anidir.x = randomDestonaion.x - monsterPos.x;
-		m_Anidir.y = randomDestonaion.y - monsterPos.y;
-
+		m_dirVec2.x = (float)cos(dis(gen));
+		m_dirVec2.y = (float)sin(dis(gen));
+		m_Anidir.x = m_dirVec2.x;
+		m_Anidir.y = m_dirVec2.y;
+		m_time = 0;
 		return true;
 	}
 
+	
 
 	return false;
+
 }
 
 fVec2 CMonster::GetMonsterDir()
@@ -202,6 +206,17 @@ fVec2 CMonster::GetMonsterDir()
 bool CMonster::GetStop()
 {
 	return is_stop;
+}
+
+void CMonster::ChangeDir(fPoint startPoint)
+{
+	fPoint pos = GetPos();
+	fVec2 dir;
+	dir.x = pos.x - startPoint.x;
+	dir.y = pos.y - startPoint.y;
+	m_dirVec2 = dir;
+	m_Anidir = dir;
+
 }
 
 void CMonster::Attacked()
@@ -225,6 +240,48 @@ void CMonster::Attacked()
 
 }
 
+void CMonster::MonsterRandomPosInit()
+{
+	CScene* curScene = CSceneManager::CSceneManager::getInst()->GetCurScene();
+	
+	if (curScene == nullptr) {
+
+		assert(nullptr);
+	}
+
+	vector<CGameObject*>& tiles = curScene->GetTiles();
+
+	vector<pair<int, int>> vec;
+
+	for (int i = 0; i < tiles.size(); i++) {
+
+		CTile* tile = dynamic_cast<CTile*>(tiles[i]);
+
+		if (tile->GetGroup() == GROUP_TILE::ROAD) {
+			vec.push_back(make_pair(tile->GetX(), tile->GetY()));
+		}
+	}
+
+	if (vec.size() == 0) {
+
+		assert(nullptr);
+	}
+
+	random_device rd;
+	mt19937_64 gen(rd());
+	uniform_int_distribution<int> dis(0, vec.size() - 1);
+
+
+	fPoint randomTilePos;
+	randomTilePos.x = vec[dis(gen)].first * CTile::SIZE_TILE;
+	randomTilePos.y = vec[dis(gen)].second * CTile::SIZE_TILE;
+
+	//randomTilePos.x +=CTile::SIZE_TILE/2;
+	//randomTilePos.y +=CTile::SIZE_TILE/2;
+
+	SetPos(randomTilePos);
+}
+
 void CMonster::OnCollision(CCollider* _pOther)
 {
 }
@@ -235,7 +292,7 @@ void CMonster::OnCollisionEnter(CCollider* _pOther)
 	CDefaultTears* tears = dynamic_cast<CDefaultTears*>(_pOther->GetObj());
 	CBombRange* range = dynamic_cast<CBombRange*>(_pOther->GetObj());
 
-	if (tears != nullptr ) {
+	if (tears != nullptr && tears->type == CDefaultTears::AttackType::MONSATER) {
 
 		is_stop = true;
 		is_attacked = true;

@@ -85,6 +85,12 @@
     <Filter Include="Object\Item\Pet">
       <UniqueIdentifier>{573a6fff-f172-4c19-9f51-56947198d0d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Item\EquItem">
+      <UniqueIdentifier>{842ba579-d24e-4258-995a-bb960cf176de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Pet">
+      <UniqueIdentifier>{d6071ba5-17a6-4b23-9168-da13796f6bda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -264,9 +270,6 @@
     <ClInclude Include="CBomb.h">
       <Filter>Object\Item\DropItem</Filter>
     </ClInclude>
-    <ClInclude Include="CIsaacPlayer2.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CDropRedBayby.h">
       <Filter>Object\Item\DropItem</Filter>
     </ClInclude>
@@ -288,9 +291,6 @@
     <ClInclude Include="CGameManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CNomalRoom1.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CRedBaby.h">
       <Filter>Object\Item\Pet</Filter>
     </ClInclude>
@@ -300,10 +300,31 @@
     <ClInclude Include="CDropLilloki.h">
       <Filter>Object\Item\DropItem</Filter>
     </ClInclude>
+    <ClInclude Include="CLilloki.h">
+      <Filter>Object\Item\EquItem</Filter>
+    </ClInclude>
     <ClInclude Include="CItem.h">
+      <Filter>Object\Item\EquItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CNomalRoom1.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CNomalRoom2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CGaperBodyMonster.h">
+      <Filter>Object\Character\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CBloodTearsEffect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CIsaacPlayer2.h">
+      <Filter>Object\Item\Pet</Filter>
+    </ClInclude>
+    <ClInclude Include="CRock.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CLilloki.h">
+    <ClInclude Include="CDestoryRock.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -467,9 +488,6 @@
     <ClCompile Include="CBomb.cpp">
       <Filter>Object\Item\DropItem</Filter>
     </ClCompile>
-    <ClCompile Include="CIsaacPlayer2.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CDropRedBayby.cpp">
       <Filter>Object\Item\DropItem</Filter>
     </ClCompile>
@@ -491,9 +509,6 @@
     <ClCompile Include="CGameManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CNomalRoom1.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CRedBaby.cpp">
       <Filter>Object\Item\Pet</Filter>
     </ClCompile>
@@ -504,9 +519,30 @@
       <Filter>Object\Item\DropItem</Filter>
     </ClCompile>
     <ClCompile Include="CItem.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Object\Item\EquItem</Filter>
     </ClCompile>
     <ClCompile Include="CLilloki.cpp">
+      <Filter>Object\Item\EquItem</Filter>
+    </ClCompile>
+    <ClCompile Include="CNomalRoom1.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CNomalRoom2.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CGaperBodyMonster.cpp">
+      <Filter>Object\Character\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CBloodTearsEffect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CIsaacPlayer2.cpp">
+      <Filter>Object\Item\Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="CRock.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CDestoryRock.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

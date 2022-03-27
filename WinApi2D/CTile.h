@@ -36,7 +36,11 @@ public:
 	int GetY();
 	GROUP_TILE GetGroup();
 
+	void WallTileDestory();
+
+
 	virtual void Save(FILE* pFile);
 	virtual void Load(FILE* pFile);
+	virtual void OnCollisionEnter(CCollider* _pOther);
 };
 

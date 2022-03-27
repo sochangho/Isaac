@@ -9,6 +9,9 @@
 #include "CPanelUI.h"
 #include "CButtonUI.h"
 #include "CTileButton.h"
+#include "CRock.h"
+#include "CGaper.h"
+#include "CGaperBodyMonster.h"
 
 INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -54,8 +57,15 @@ void CScene_Tool::update()
 		CCameraManager::getInst()->Scroll(fVec2(0, 1), m_velocity);
 	}
 
-	SetTileIdx();
-	SetTileGroup();
+	//SetTileIdx();
+    
+	if (m_gObject == GROUP_OBJECT::NONE) {
+		SetTileGroup();
+	}
+
+	if (m_gTile == GROUP_TILE::NONE) {
+		SetObjectGroup();
+	}
 }
 
 void CScene_Tool::render()
@@ -75,6 +85,14 @@ void CScene_Tool::render()
 	{
 		vecUI[i]->render();
 	}
+
+	const vector<CGameObject*>& vecRock = GetGroupObject(GROUP_GAMEOBJ::ROCK);
+	for (int i = 0; i < vecRock.size(); i++) {
+
+		vecRock[i]->render();
+	}
+
+
 }
 
 void CScene_Tool::Enter()
@@ -134,30 +152,70 @@ void CScene_Tool::SetGroup(GROUP_TILE group)
 
 void CScene_Tool::SetTileGroup()
 {
-	if (Key(VK_LBUTTON) || Key(VK_RBUTTON))
+	
+
+
+
+		if (Key(VK_LBUTTON) || Key(VK_RBUTTON))
+		{
+			fPoint fptMousePos = MousePos();
+			fptMousePos = CCameraManager::getInst()->GetRealPos(fptMousePos);
+
+			int iTileX = m_iTileX;
+			int iTileY = m_iTileY;
+
+			int iCol = (int)fptMousePos.x / CTile::SIZE_TILE;
+			int iRow = (int)fptMousePos.y / CTile::SIZE_TILE;
+
+			if (fptMousePos.x < 0.f || iTileX <= iCol ||
+				fptMousePos.y < 0.f || iTileY <= iRow)
+			{
+				return;		// 타일이 없는 위치 무시
+			}
+
+			UINT iIdx = iRow * iTileX + iCol;
+			const vector<CGameObject*>& vecTile = GetGroupObject(GROUP_GAMEOBJ::TILE);
+			if (Key(VK_LBUTTON))
+				((CTile*)vecTile[iIdx])->SetGroup(m_gTile);
+			else if (Key(VK_RBUTTON))
+				((CTile*)vecTile[iIdx])->SetGroup(GROUP_TILE::NONE);
+		}
+	
+}
+
+void CScene_Tool::SetObjectGroup()
+{
+	if (KeyDown(VK_LBUTTON) || KeyDown(VK_RBUTTON))
 	{
 		fPoint fptMousePos = MousePos();
 		fptMousePos = CCameraManager::getInst()->GetRealPos(fptMousePos);
 
-		int iTileX = m_iTileX;
-		int iTileY = m_iTileY;
+		 const vector<CGameObject*>& ui = GetGroupObject(GROUP_GAMEOBJ::UI);
 
-		int iCol = (int)fptMousePos.x / CTile::SIZE_TILE;
-		int iRow = (int)fptMousePos.y / CTile::SIZE_TILE;
+		 if (!(ui[0]->GetPos().x < fptMousePos.x && ui[0]->GetPos().x + ui[0]->GetScale().x > fptMousePos.x
+			 && ui[0]->GetPos().y < fptMousePos.y && ui[0]->GetPos().y + ui[0]->GetScale().y > fptMousePos.y
+			 )) {
 
-		if (fptMousePos.x < 0.f || iTileX <= iCol ||
-			fptMousePos.y < 0.f || iTileY <= iRow)
-		{
-			return;		// 타일이 없는 위치 무시
-		}
+			 if (m_gObject == GROUP_OBJECT::ROCK) {
 
-		UINT iIdx = iRow * iTileX + iCol;
-		const vector<CGameObject*>& vecTile = GetGroupObject(GROUP_GAMEOBJ::TILE);
-		if (Key(VK_LBUTTON))
-			((CTile*)vecTile[iIdx])->SetGroup(m_gTile);
-		else if (Key(VK_RBUTTON))
-			((CTile*)vecTile[iIdx])->SetGroup(GROUP_TILE::NONE);
+				 CRock* rock = new CRock;
+				 rock->SetFrame(rockFrame.startX, rockFrame.startY, rockFrame.endX, rockFrame.endY);
+				 rock->SetPos(fptMousePos);
+
+				 CreateObj(rock, GROUP_GAMEOBJ::ROCK);
+			 }
+			 else if (m_gObject == GROUP_OBJECT::HART) {
+
+
+
+			 }
+		 }
+
+	
 	}
+
+
+
 }
 
 void CScene_Tool::CreateTile(UINT xSize, UINT ySize)
@@ -214,13 +272,47 @@ void CScene_Tool::SaveTile(const wstring& strPath)
 			((CTile*)vecTile[i])->Save(pFile);
 	}
 
+
+
+
+	const vector<CGameObject*>& rocks = GetGroupObject(GROUP_GAMEOBJ::ROCK);
+
+	UINT rockObjCount = 0;
+
+	for (UINT i = 0; i < rocks.size(); i++) {
+		rockObjCount++;
+	}
+	fwrite(&rockObjCount, sizeof(UINT), 1, pFile);
+	for (int i = 0; i < rocks.size(); i++) {
+
+		CRock* rock = dynamic_cast<CRock*>(rocks[i]);
+
+		if (rock != nullptr) {
+			assert(rock);
+		}
+
+		UINT x = rock->GetPos().x;
+		UINT y = rock->GetPos().y;
+		UINT startX = rock->GetFrame().startX;
+		UINT startY = rock->GetFrame().startY;
+		UINT endX = rock->GetFrame().endX;
+		UINT endY = rock->GetFrame().endY;
+		fwrite(&x, sizeof(UINT), 1, pFile);
+		fwrite(&y, sizeof(UINT), 1, pFile);
+		fwrite(&startX, sizeof(UINT), 1, pFile);
+		fwrite(&startY, sizeof(UINT), 1, pFile);
+		fwrite(&endX, sizeof(UINT), 1, pFile);
+		fwrite(&endY, sizeof(UINT), 1, pFile);
+
+	}
+
 	fclose(pFile);
 }
 
 void CScene_Tool::LoadTile(const wstring& strPath)
 {
 	DeleteGroup(GROUP_GAMEOBJ::TILE);
-
+	DeleteGroup(GROUP_GAMEOBJ::ROCK);
 	FILE* pFile = nullptr;
 
 	_wfopen_s(&pFile, strPath.c_str(), L"rb");      // w : write, b : binary
@@ -249,6 +341,36 @@ void CScene_Tool::LoadTile(const wstring& strPath)
 		((CTile*)vecTile[iIdx])->SetImgIdx(pTile->GetIdx());
 		((CTile*)vecTile[iIdx])->SetGroup(pTile->GetGroup());
 	}
+
+	UINT rockCount = 0;
+	fread(&rockCount, sizeof(UINT), 1, pFile);
+
+	for (int i = 0; i < rockCount; i++) {
+
+		UINT x;
+		UINT y;
+		UINT startX;
+		UINT startY;
+		UINT endX;
+		UINT endY;
+
+
+		fread(&x, sizeof(UINT), 1, pFile);
+		fread(&y, sizeof(UINT), 1, pFile);
+		fread(&startX, sizeof(UINT), 1, pFile);
+		fread(&startY, sizeof(UINT), 1, pFile);
+		fread(&endX, sizeof(UINT), 1, pFile);
+		fread(&endY, sizeof(UINT), 1, pFile);
+
+		CRock* rock = new CRock();
+		rock->SetPos(fPoint(x, y));
+		rock->SetFrame(startX, startY, endX, endY);
+		AddObject(rock, GROUP_GAMEOBJ::ROCK);
+	}
+
+
+
+
 
 	fclose(pFile);
 }
@@ -333,6 +455,40 @@ void ClickTileGroupButton(DWORD_PTR param1, DWORD_PTR param2)
 	CButtonUI* button = (CButtonUI*)param2;
 	scene_tool->ClickTileGroup(button);
 }
+
+void ClickObjectGroupButton(DWORD_PTR param1, DWORD_PTR param2) {
+
+	CScene_Tool* scene_tool = (CScene_Tool*)param1;
+	CButtonUI* button = (CButtonUI*)param2;
+	scene_tool->ClickObjectGroup(button);
+}
+
+void CScene_Tool::ClickObjectGroup(CButtonUI* button)
+{
+	if (m_gObject == GROUP_OBJECT::NONE)
+	{
+		m_gObject = GROUP_OBJECT::ROCK;
+		
+		button->SetText(L"ROCK");
+	}
+	else if (m_gObject == GROUP_OBJECT::ROCK)
+	{
+		m_gObject = GROUP_OBJECT::HART;
+			
+		button->SetText(L"HART");
+	}
+	else if (m_gObject == GROUP_OBJECT::HART)
+	{
+		m_gObject = GROUP_OBJECT::NONE;
+
+		button->SetText(L"NONE");
+	}
+
+
+
+
+}
+
 void CScene_Tool::ClickTileGroup(CButtonUI* button)
 {
 	if (m_gTile == GROUP_TILE::NONE)
@@ -367,9 +523,34 @@ void ClickTileButton(DWORD_PTR param1, DWORD_PTR param2)
 	scene_tool->ClickTile(button);
 }
 
+
+void ClickRockTileBotton(DWORD_PTR param1, DWORD_PTR param2) {
+
+	CScene_Tool* scene_tool = (CScene_Tool*)param1;
+	CTileButton* button = (CTileButton*)param2;
+
+	fPoint pos = button->GetPos();
+	fPoint scale = button->GetScale();
+	scene_tool->SetRockFrame(pos.x  , pos.y , pos.x + scale.x , pos.y +scale.y);
+
+}
+
 void CScene_Tool::ClickTile(CTileButton* button)
 {
 	SetIdx(button->GetIdx());
+}
+
+RockFrame CScene_Tool::GetRockFrame()
+{
+	return rockFrame;
+}
+
+void CScene_Tool::SetRockFrame(UINT x, UINT y, UINT w, UINT H)
+{
+	rockFrame.startX = x;
+	rockFrame.startY = y;
+	rockFrame.endX = w;
+	rockFrame.endY = H;
 }
 
 void CScene_Tool::CreateTilePanel()
@@ -379,21 +560,21 @@ void CScene_Tool::CreateTilePanel()
 	panelTile->SetScale(fPoint(400.f, 600.f));
 	panelTile->SetPos(fPoint(WINSIZEX - 450.f, 50.f));
 
-	//CD2DImage* pImg = CResourceManager::getInst()->LoadD2DImage(L"Tile", L"texture\\tile\\tilemap.bmp");
-	//for (UINT y = 0; y < 12; y++)
-	//{
-	//	for (UINT x = 0; x < 12; x++)
-	//	{
-	//		CTileButton* btnTile = new CTileButton;
-	//		btnTile->SetScale(fPoint(CTile::SIZE_TILE, CTile::SIZE_TILE));
-	//		btnTile->SetPos(fPoint((float)x * CTile::SIZE_TILE, (float)y * CTile::SIZE_TILE));
-	//		btnTile->SetPos(btnTile->GetPos() + fPoint(8.f, 8.f));
-	//		btnTile->SetImage(pImg);
-	//		btnTile->SetIdx(y * 12 + x);
-	//		btnTile->SetClickedCallBack(ClickTileButton, (DWORD_PTR)this, (DWORD_PTR)btnTile);
-	//		panelTile->AddChild(btnTile);
-	//	}
-	//}
+	CD2DImage* pImg = CResourceManager::getInst()->LoadD2DImage(L"Rock", L"texture\\map\\rocks_basement.png");
+	for (UINT y = 0; y < 8; y++)
+	{
+		for (UINT x = 0; x < 4; x++)
+		{
+			CTileButton* btnTile = new CTileButton;
+			btnTile->SetScale(fPoint(CTile::SIZE_TILE, CTile::SIZE_TILE));
+			btnTile->SetPos(fPoint((float)x * CTile::SIZE_TILE, (float)y * CTile::SIZE_TILE));
+			//btnTile->SetPos(btnTile->GetPos() + fPoint(8.f, 8.f));
+			btnTile->SetImage(pImg);
+			btnTile->SetIdx(y * 4 + x);
+			btnTile->SetClickedCallBack(ClickRockTileBotton, (DWORD_PTR)this, (DWORD_PTR)btnTile);
+			panelTile->AddChild(btnTile);
+		}
+	}
 
 	CButtonUI* btnTileGroup = new CButtonUI;
 	btnTileGroup->SetScale(fPoint(100.f, 50.f));
@@ -401,6 +582,17 @@ void CScene_Tool::CreateTilePanel()
 	btnTileGroup->SetText(L"NONE");
 	btnTileGroup->SetClickedCallBack(ClickTileGroupButton, (DWORD_PTR)this, (DWORD_PTR)btnTileGroup);
 	panelTile->AddChild(btnTileGroup);
+
+
+	CButtonUI* btnTileGroup1 = new CButtonUI;
+	btnTileGroup1->SetScale(fPoint(100.f, 50.f));
+	btnTileGroup1->SetPos(fPoint(200.f, 500.f));
+	btnTileGroup1->SetText(L"NONE");
+	btnTileGroup1->SetClickedCallBack(ClickObjectGroupButton, (DWORD_PTR)this, (DWORD_PTR)btnTileGroup1);
+	panelTile->AddChild(btnTileGroup1);
+
+
+
 
 	AddObject(panelTile, GROUP_GAMEOBJ::UI);
 }

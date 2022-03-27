@@ -2,6 +2,8 @@
 #include "CGaperBody.h"
 #include "CAnimation.h"
 #include "CAnimator.h"
+#include "CBloodTears.h";
+
 
 CGaperBody::CGaperBody()
 {

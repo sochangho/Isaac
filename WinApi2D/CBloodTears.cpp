@@ -3,7 +3,7 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 #include "CCollider.h"
-#include "CTearsEffect.h"
+#include "CBloodTearsEffect.h"
 #include "CTile.h"
 CBloodTears::CBloodTears()
 {
@@ -17,7 +17,7 @@ CBloodTears::CBloodTears()
 	GetAnimator()->Play(L"IDLE");
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(20, 20));
-	SetEffect(new CTearsEffect);
+	SetEffect(new CBloodTearsEffect);
 	m_dmg = 30.f;
 }
 

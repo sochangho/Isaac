@@ -7,6 +7,7 @@
 #include "CItemRoom1.h"
 #include "CItemRoom2.h"
 #include "CNomalRoom1.h"
+#include "CNomalRoom2.h"
 CSceneManager::CSceneManager()
 {
 	// ¾À ¸ñ·Ï ÃÊ±âÈ­
@@ -79,6 +80,8 @@ void CSceneManager::init()
 	m_arrScene[(size_t)GROUP_SCENE::NOMALROOM1] = new CNomalRoom1;
 	m_arrScene[(size_t)GROUP_SCENE::NOMALROOM1]->SetName(L"NomalRoom1");
 
+	m_arrScene[(size_t)GROUP_SCENE::NOMALROOM2] = new CNomalRoom2;
+	m_arrScene[(size_t)GROUP_SCENE::NOMALROOM2]->SetName(L"NomalRoom2");
 
 	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::START];
 	m_pCurScene->Enter();

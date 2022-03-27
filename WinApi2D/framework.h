@@ -40,6 +40,7 @@ enum class GROUP_GAMEOBJ
 	DEFAULT,
 	BACKGROUND,
 	MAP,
+	ROCK,
 	TILE,
 	DOOR,
 	BOMB,
@@ -65,6 +66,7 @@ enum class GROUP_SCENE
 	ITEMROOM,
 	ITEMROOM1,
 	NOMALROOM1,
+	NOMALROOM2,
 	STAGE_01,
 	STAGE_02,
 
@@ -80,6 +82,13 @@ enum class GROUP_TILE
 	SLOPE,
     ROAD,
 	SIZE,
+};
+
+enum class GROUP_OBJECT {
+	NONE,
+	ROCK,
+	HART,
+	SIZE
 };
 
 //========================================

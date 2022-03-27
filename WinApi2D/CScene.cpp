@@ -3,7 +3,9 @@
 #include "CGameObject.h"
 #include "CTile.h"
 #include "CCollider.h"
-
+#include "CMonster.h"
+#include "CScene_Tool.h"
+#include "CRock.h"
 CScene::CScene()
 {
     m_strName = L"";
@@ -38,8 +40,10 @@ void CScene::update()
     {
         for (int j = 0; j < m_arrObj[i].size(); j++)
         {
-            if (!m_arrObj[i][j]->isDead())
+                        
+            if (!m_arrObj[i][j]->isDead() ) {
                 m_arrObj[i][j]->update();
+            }
         }
     }
 
@@ -203,13 +207,16 @@ void CScene::GroupCheckSetting()
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::BOMB);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TEARS);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::BOMB, GROUP_GAMEOBJ::TILE);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TEARS, GROUP_GAMEOBJ::TILE);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::PLAYER);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::MONSTER);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::DROPITEM, GROUP_GAMEOBJ::PLAYER);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::DOOR, GROUP_GAMEOBJ::PLAYER);
-
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MONSTER, GROUP_GAMEOBJ::TILE);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::TILE);
+    CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::ROCK);
 }
 
 void CScene::LoadTile(const wstring& strPath)
@@ -251,8 +258,47 @@ void CScene::LoadTile(const wstring& strPath)
 
         AddObject(newTile, GROUP_GAMEOBJ::TILE);
     }
+    UINT rockCount = 0;
+    fread(&rockCount, sizeof(UINT), 1, pFile);
+
+    for (int i = 0; i < rockCount; i++) {
+
+        UINT x;
+        UINT y;
+        UINT startX;
+        UINT startY;
+        UINT endX;
+        UINT endY;
+
+
+        fread(&x, sizeof(UINT), 1, pFile);
+        fread(&y, sizeof(UINT), 1, pFile);
+        fread(&startX, sizeof(UINT), 1, pFile);
+        fread(&startY, sizeof(UINT), 1, pFile);
+        fread(&endX, sizeof(UINT), 1, pFile);
+        fread(&endY, sizeof(UINT), 1, pFile);
+
+        CRock* rock = new CRock();
+        rock->SetPos(fPoint(x, y));
+        rock->SetFrame(startX, startY, endX, endY);
+        AddObject(rock, GROUP_GAMEOBJ::ROCK);
+    }
+    
 
     fclose(pFile);
+}
+
+void CScene::CurSceneMonsterAllStop(bool stop)
+{
+    
+
+    for (int i = 0; i < m_arrObj[(UINT)GROUP_GAMEOBJ::MONSTER].size(); i++) {
+        CMonster* monster = dynamic_cast<CMonster*>(m_arrObj[(UINT)GROUP_GAMEOBJ::MONSTER][i]);
+        if (monster != nullptr) {
+
+            monster->SetStop(stop);
+        }
+    }
 }
 
 CTileNavMap* CScene::GettileNav()

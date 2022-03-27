@@ -154,6 +154,7 @@
     <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CBloodEffect.h" />
     <ClInclude Include="CBloodTears.h" />
+    <ClInclude Include="CBloodTearsEffect.h" />
     <ClInclude Include="CBomb.h" />
     <ClInclude Include="CBombEffect.h" />
     <ClInclude Include="CBombRange.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CDefaultTears.h" />
+    <ClInclude Include="CDestoryRock.h" />
     <ClInclude Include="CDoor.h" />
     <ClInclude Include="CDropItem.h" />
     <ClInclude Include="CDropLilloki.h" />
@@ -176,6 +178,7 @@
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGaper.h" />
     <ClInclude Include="CGaperBody.h" />
+    <ClInclude Include="CGaperBodyMonster.h" />
     <ClInclude Include="CGaperHead.h" />
     <ClInclude Include="CIsaacPlayer.h" />
     <ClInclude Include="CIsaacPlayer2.h" />
@@ -187,6 +190,7 @@
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CNomalRoom1.h" />
+    <ClInclude Include="CNomalRoom2.h" />
     <ClInclude Include="CPanelUI.h" />
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CPlayer.h" />
@@ -196,6 +200,7 @@
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
+    <ClInclude Include="CRock.h" />
     <ClInclude Include="CScaleAnimation.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneManager.h" />
@@ -229,6 +234,7 @@
     <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CBloodEffect.cpp" />
     <ClCompile Include="CBloodTears.cpp" />
+    <ClCompile Include="CBloodTearsEffect.cpp" />
     <ClCompile Include="CBomb.cpp" />
     <ClCompile Include="CBombEffect.cpp" />
     <ClCompile Include="CBombRange.cpp" />
@@ -241,6 +247,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CDefaultTears.cpp" />
+    <ClCompile Include="CDestoryRock.cpp" />
     <ClCompile Include="CDoor.cpp" />
     <ClCompile Include="CDropItem.cpp" />
     <ClCompile Include="CDropLilloki.cpp" />
@@ -251,6 +258,7 @@
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGaper.cpp" />
     <ClCompile Include="CGaperBody.cpp" />
+    <ClCompile Include="CGaperBodyMonster.cpp" />
     <ClCompile Include="CGaperHead.cpp" />
     <ClCompile Include="CIsaacPlayer.cpp" />
     <ClCompile Include="CIsaacPlayer2.cpp" />
@@ -262,6 +270,7 @@
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CNomalRoom1.cpp" />
+    <ClCompile Include="CNomalRoom2.cpp" />
     <ClCompile Include="CPanelUI.cpp" />
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
@@ -271,6 +280,7 @@
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />
+    <ClCompile Include="CRock.cpp" />
     <ClCompile Include="CScaleAnimation.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />

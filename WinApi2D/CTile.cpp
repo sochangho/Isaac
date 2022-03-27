@@ -1,6 +1,10 @@
 #include "framework.h"
 #include "CTile.h"
 #include "CD2DImage.h"
+#include "CBombRange.h"
+#include "CCollider.h"
+#include "CScene.h"
+#include "CTileNavMap.h"
 
 CTile::CTile()
 {
@@ -59,7 +63,9 @@ void CTile::render()
 		);
 	}
 
-	component_render();
+	if (GROUP_TILE::WALL == m_group || GROUP_TILE::GROUND == m_group) {
+		component_render();
+	}
 }
 
 void CTile::SetD2DImage(CD2DImage* pImg)
@@ -107,6 +113,21 @@ GROUP_TILE CTile::GetGroup()
 	return m_group;
 }
 
+void CTile::WallTileDestory()
+{
+	CScene* curScene =  CSceneManager::getInst()->GetCurScene();
+	CTileNavMap* tilemapNav = curScene->GettileNav();
+	m_group = GROUP_TILE::ROAD;
+	if (tilemapNav != nullptr) {
+
+		curScene->CurSceneMonsterAllStop(true);
+		tilemapNav->ChanageTileType(GROUP_TILE::ROAD, GetX(), GetY());
+		curScene->CurSceneMonsterAllStop(false);
+    }
+
+	
+}
+
 void CTile::Save(FILE* pFile)
 {
 	fwrite(&m_iX, sizeof(int), 1, pFile);
@@ -126,4 +147,18 @@ void CTile::Load(FILE* pFile)
 	int group;
 	fread(&group, sizeof(int), 1, pFile);
 	m_group = (GROUP_TILE)group;
+}
+
+void CTile::OnCollisionEnter(CCollider* _pOther)
+{
+	CBombRange* range = dynamic_cast<CBombRange*>(_pOther->GetObj());
+
+	if (range != nullptr && this->m_group == GROUP_TILE::WALL) {
+
+       //Å¸ÀÏ ÆÄ±«
+		WallTileDestory();
+
+	}
+
+
 }

@@ -199,7 +199,7 @@
   <Class Name="CIsaacPlayer" Collapsed="true">
     <Position X="32" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAADIEQIMACASIAAIAgAEAAAIkEAGYsIQgAgAiUoFI=</HashCode>
+      <HashCode>AAAADIEQIMACBWIAAIAgAEAAAIkEAGYsIQoAgAiUoFI=</HashCode>
       <FileName>CIsaacPlayer.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -255,7 +255,7 @@
   <Class Name="CMonster" Collapsed="true">
     <Position X="29.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gBABDAAAAABEAAAAwACEAAAAAAhAACAMIJoAAgIUQAA=</HashCode>
+      <HashCode>gBABDAAAAABEAIAAwACEAAAAAAhAACAMIJoAAgIUQAA=</HashCode>
       <FileName>CMonster.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -360,21 +360,14 @@
   <Class Name="CDefaultTears" Collapsed="true">
     <Position X="10.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACACQAGCBgAAAAgAAAAAAAAAAHAQIAAAAAAAUABA=</HashCode>
+      <HashCode>AAAACACQAGCBgAAAAgAAAAAAAAABHAQIAAAAAAAUABA=</HashCode>
       <FileName>CDefaultTears.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="CBloodTears" Collapsed="true">
-    <Position X="11.75" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAABg=</HashCode>
-      <FileName>CBloodTears.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CScene" Collapsed="true">
     <Position X="2.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAwAAAAAAAhAAAAAAAAFAAEACAAIAgQQAAVRDg=</HashCode>
+      <HashCode>BEAAAAAwAAAAAAAhIAEAAAAQFAgFgCIAIAgQQEQVRDg=</HashCode>
       <FileName>CScene.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -395,7 +388,7 @@
   <Class Name="CStartRoom" Collapsed="true">
     <Position X="5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAABAAAAAAAAAAAAAEAAAAICAAAACEAAA=</HashCode>
+      <HashCode>AAAAAAAQAAAAABAAAAAAAAAAAAAEAAIAICAAAACEAAA=</HashCode>
       <FileName>CStartRoom.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -430,7 +423,7 @@
   <Class Name="CDoor" Collapsed="true">
     <Position X="41" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAACBAAAAAAAAQAUABA=</HashCode>
+      <HashCode>AAAAgAAAgAAAgBAAAAAAAAAAAAAShAAIAAAAAQAUABA=</HashCode>
       <FileName>CDoor.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -500,7 +493,7 @@
   <Enum Name="GROUP_SCENE" Collapsed="true">
     <Position X="62.75" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAACAAAAAAAAAABAAAAAAAgAAAAAAAAAgAAgA=</HashCode>
+      <HashCode>EhAAAAIAACAAAAAAAAAABAAAAAAAgAAAAAAAAAgAAgA=</HashCode>
       <FileName>framework.h</FileName>
     </TypeIdentifier>
   </Enum>

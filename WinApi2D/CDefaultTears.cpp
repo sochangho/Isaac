@@ -4,6 +4,8 @@
 #include "CAnimation.h"
 #include "CCollider.h"
 #include "CTile.h"
+#include "CMonster.h"
+#include "CIsaacPlayer.h"
 CDefaultTears::CDefaultTears()
 {
 }
@@ -42,25 +44,27 @@ void CDefaultTears::render()
 
 void CDefaultTears::OnCollisionEnter(CCollider* pOther)
 {
-
-	if (pOther->GetObj()->GetName() == L"Monster") {
-
-
+	CMonster* monster = dynamic_cast<CMonster*>(pOther->GetObj());
+	if ((type == AttackType::MONSATER) && monster != nullptr) {
 
 		m_effect->SetPos(GetPos());
 		CreateObj(m_effect, GROUP_GAMEOBJ::EFFECT);
 
 		DeleteObj(this);
-
-
-
-
 	}
 
+	CIsaacPlayer* player = dynamic_cast<CIsaacPlayer*>(pOther->GetObj());
+	if ((type == AttackType::PLAYER) && player != nullptr) {
+
+		m_effect->SetPos(GetPos());
+		CreateObj(m_effect, GROUP_GAMEOBJ::EFFECT);
+
+		DeleteObj(this);
+	}
+
+
 	CTile* tile = dynamic_cast<CTile*>(pOther->GetObj());
-
-
-	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::WALL) {
+	if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL|| tile->GetGroup() == GROUP_TILE::GROUND)) {
 
 		m_effect->SetPos(GetPos());
 		CreateObj(m_effect, GROUP_GAMEOBJ::EFFECT);

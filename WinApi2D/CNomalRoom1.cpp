@@ -8,6 +8,7 @@
 #include "CDropRedBayby.h"
 #include "CDoor.h"
 #include "CGaper.h"
+#include "CRock.h"
 CNomalRoom1::CNomalRoom1()
 {
 }
@@ -24,7 +25,7 @@ void CNomalRoom1::update()
 void CNomalRoom1::init()
 {
 	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"tile\\NomalRoom1";
+	path += L"tile\\ROOM1";
 	LoadTile(path);
 
 	CBackGround* backGround = new CBackGround;
@@ -46,6 +47,62 @@ void CNomalRoom1::init()
 	doorDown->Load(DOOR_DIR::DOWN, GROUP_SCENE::STARTROOM);
 	AddObject(doorDown, GROUP_GAMEOBJ::DOOR);
 
+	CDoor* doorup = new CDoor;
+	doorup->SetPos(fPoint(DOORUP_X, DOORUP_Y));
+	doorup->Load(DOOR_DIR::UP, GROUP_SCENE::NOMALROOM2);
+	AddObject(doorup, GROUP_GAMEOBJ::DOOR);
+
+
+
+
+	/*CRock* rock = new CRock;
+	rock->SetPos(fPoint(MAPCENTER_X, MAPCENTER_Y));
+	AddObject(rock, GROUP_GAMEOBJ::ROCK);
+
+	CRock* rock1 = new CRock;
+	rock1->SetPos(fPoint(MAPCENTER_X + 40, MAPCENTER_Y));
+	AddObject(rock1, GROUP_GAMEOBJ::ROCK);
+	CRock* rock2 = new CRock;
+	rock2->SetPos(fPoint(MAPCENTER_X - 45, MAPCENTER_Y));
+	AddObject(rock2, GROUP_GAMEOBJ::ROCK);
+
+	CRock* rock3 = new CRock;
+	rock3->SetPos(fPoint(MAPCENTER_X - 45, MAPCENTER_Y - 40));
+	AddObject(rock3, GROUP_GAMEOBJ::ROCK);
+	
+	CRock* rock5 = new CRock;
+	rock5->SetPos(fPoint(MAPCENTER_X - 90, MAPCENTER_Y - 100));
+	AddObject(rock5, GROUP_GAMEOBJ::ROCK);
+
+	CRock* rock6 = new CRock;
+	rock6->SetPos(fPoint(MAPCENTER_X - 50, MAPCENTER_Y - 100));
+	AddObject(rock6, GROUP_GAMEOBJ::ROCK);
+
+	CRock* rock7 = new CRock;
+	rock7->SetPos(fPoint(MAPCENTER_X , MAPCENTER_Y - 100));
+	AddObject(rock7, GROUP_GAMEOBJ::ROCK);
+
+	
+	CRock* rock8 = new CRock;
+	rock8->SetPos(fPoint(MAPCENTER_X + 40, MAPCENTER_Y - 100));
+	AddObject(rock8, GROUP_GAMEOBJ::ROCK);
+
+	CRock* rock9 = new CRock;
+	rock9->SetPos(fPoint(MAPCENTER_X + 40, MAPCENTER_Y - 70));
+	AddObject(rock9, GROUP_GAMEOBJ::ROCK);
+
+	CRock* rock10 = new CRock;
+	rock10->SetPos(fPoint(MAPCENTER_X + 40, MAPCENTER_Y - 40));
+	AddObject(rock10, GROUP_GAMEOBJ::ROCK);
+
+
+	CRock* rock4 = new CRock;
+	rock4->SetPos(fPoint(MAPCENTER_X - 90, MAPCENTER_Y - 70));
+	AddObject(rock4, GROUP_GAMEOBJ::ROCK);*/
+
+
+
+
 	vector<CGameObject*>& players = GetPlayer();
 
 	CIsaacPlayer* isaacplayer = nullptr;
@@ -61,27 +118,26 @@ void CNomalRoom1::init()
 	}
 
 	if (isaacplayer != nullptr) {
-		CGaper* gaper1 = new CGaper;
-		gaper1->SetPos(fPoint(MAPCENTER_X, MAPCENTER_Y));
-		gaper1->SetScale(fPoint(50, 50));
-		AddObject(gaper1, GROUP_GAMEOBJ::MONSTER);
-		gaper1->SetDestinaionObj(isaacplayer);
 
-
-
-		CGaper* gaper2 = new CGaper;
-		gaper2->SetPos(fPoint(MAPCENTER_X - 100, MAPCENTER_Y));
-		gaper2->SetScale(fPoint(50, 50));
-		AddObject(gaper2, GROUP_GAMEOBJ::MONSTER);
-		gaper2->SetDestinaionObj(isaacplayer);
-
-
-		CGaper* gaper3 = new CGaper;
-		gaper3->SetPos(fPoint(MAPCENTER_X - 150, MAPCENTER_Y));
-		gaper3->SetScale(fPoint(50, 50));
-		AddObject(gaper3, GROUP_GAMEOBJ::MONSTER);
-		gaper3->SetDestinaionObj(isaacplayer);
+		vector<CGaper*> gapers;
 		
+		for (int i = 0; i < 7; i++) {
+
+			gapers.push_back(new CGaper);
+		}
+
+
+		for (int i = 0; i < gapers.size(); i++) {
+
+			gapers[i]->SetScale(fPoint(50, 50));
+			AddObject(gapers[i], GROUP_GAMEOBJ::MONSTER);
+			gapers[i]->SetDestinaionObj(isaacplayer);
+		}
+
+		
+	}
+	else {
+		assert(nullptr);
 	}
 }
 

@@ -99,7 +99,19 @@ struct fPoint
 	{
 		return (float)sqrt((double)x * x + (double)y * y);
 	}
+
+
+
 };
 
 typedef iPoint iVec2;
 typedef fPoint fVec2;
+
+struct RockFrame {
+
+	UINT startX;
+	UINT startY;
+	UINT endX;
+	UINT endY;
+
+};

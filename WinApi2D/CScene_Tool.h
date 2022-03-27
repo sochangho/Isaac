@@ -5,6 +5,8 @@ class CD2DImage;
 class CButtonUI;
 class CTileButton;
 
+
+
 class CScene_Tool : public CScene
 {
 private:
@@ -13,10 +15,13 @@ private:
 	HWND m_hWnd;
 	UINT m_iIdx;
 	GROUP_TILE m_gTile;
+	GROUP_OBJECT m_gObject;
 	float m_velocity;
 
 	UINT m_iTileX;
 	UINT m_iTileY;
+
+	RockFrame rockFrame;
 
 public:
 	CScene_Tool();
@@ -32,17 +37,23 @@ public:
 	void SetTileIdx();		// 마우스와 상호작용해서 타일을 바꿈.
 	void SetGroup(GROUP_TILE group);
 	void SetTileGroup();
+	void SetObjectGroup();
 
 	void CreateTile(UINT xSize, UINT ySize);
 	void SaveTile(const wstring& strPath);
 	void LoadTile(const wstring& strPath);
+	
 	void SaveTileData();
 	void LoadTileData();
 	void LoadMap();
 
+	void ClickObjectGroup(CButtonUI* button);
 	void ClickTileGroup(CButtonUI* button);
 	void ClickTile(CTileButton* button);
 
+	RockFrame GetRockFrame();
+	void SetRockFrame(UINT x , UINT y , UINT w, UINT  H);
+	
 private:
 	void CreateTilePanel();
 

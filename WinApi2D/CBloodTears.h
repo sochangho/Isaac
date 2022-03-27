@@ -2,6 +2,9 @@
 #include "CDefaultTears.h"
 class CBloodTears :public CDefaultTears
 {
+private:
+
+
 public:
 	CBloodTears();
 	~CBloodTears();

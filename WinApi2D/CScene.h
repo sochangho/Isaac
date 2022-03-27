@@ -53,7 +53,7 @@ public:
 	void StageChangeDelete();
 	void GroupCheckSetting();
 	void LoadTile(const wstring& strPath);
-	
+	void CurSceneMonsterAllStop(bool stop);
 
 
 	CTileNavMap* GettileNav();

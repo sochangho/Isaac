@@ -9,6 +9,8 @@ class CDefaultTears : public CGameObject
 {
 
 private:
+
+
 	fVec2 m_fvDir;
 	float m_velocity = 400.f;
 	float m_lifeTime = 0.f;
@@ -16,6 +18,16 @@ private:
 	CD2DImage* m_pImg;
 	CEffect* m_effect;
 public:
+
+	enum class AttackType {
+
+		PLAYER, MONSATER
+
+	};
+
+	AttackType type = AttackType::MONSATER;
+
+
 	float m_dmg = 10.f;
 
 	CDefaultTears();
