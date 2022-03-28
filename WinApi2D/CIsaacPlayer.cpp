@@ -664,6 +664,15 @@ void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 
 		//HP: °¨¼Ò
 
+		if (CGameManager::getInst()->GetHart() > 0) {
+
+			CGameManager::getInst()->SetHart(CGameManager::getInst()->GetHart() - 1);
+
+
+		}
+
+
+
 	}
 
 	if (tears != nullptr && tears->type == CDefaultTears::AttackType::PLAYER &&!m_isInvincibility) {

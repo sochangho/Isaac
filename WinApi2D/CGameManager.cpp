@@ -4,6 +4,8 @@
 #include "CIsaacPlayer.h"
 #include "CIsaacPlayer2.h"
 #include "CScene.h"
+#include "CPlayerStateHart.h"
+
 CGameManager::CGameManager() {
 
 
@@ -23,8 +25,78 @@ CGameManager::~CGameManager() {
 	}
 
 	player2Save.clear();
+
+
+	for (int i = 0; i < hartVec.size(); i++) {
+
+		delete hartVec[i];
+	}
+
+	hartVec.clear();
 }
 
+
+void CGameManager::init()
+{
+	hp = 6;
+	bombCount = 1;
+	coin = 0;
+	hartcount = hp/2;
+
+	int size = 50;
+
+	for (int i = 0; i < hartcount; i++) {
+
+		float tum = size * i;
+		hartVec.push_back(new CPlayerStateHart);
+		hartVec[i]->SetPos(fPoint(50 + tum, 50));
+		hartVec[i]->SetScale(fPoint(20 , 20));
+
+	}
+
+}
+
+void CGameManager::render()
+{
+	int count = 0;
+	int life = hp / 2;
+	int lifeHarf = hp % 2;
+
+		for (int i = 0; i < life; i++) {
+
+			if (hartVec.size() > count) {
+
+				hartVec[count]->SetState(HARTSTATE::DEFAULT);
+				hartVec[count]->render();
+				count++;
+			}
+		}
+
+		if (hartVec.size() > count) {
+
+			if (lifeHarf == 0) {
+				hartVec[count]->SetState(HARTSTATE::NONE);
+				hartVec[count]->render();
+			}
+			else {
+
+				hartVec[count]->SetState(HARTSTATE::HALF);
+				hartVec[count]->render();
+
+			}
+			count++;
+		}
+}
+
+int CGameManager::GetHart()
+{
+	return hp;
+}
+
+void CGameManager::SetHart(int hart)
+{
+	hp = hart;
+}
 
 void CGameManager::SavePlayer()
 {

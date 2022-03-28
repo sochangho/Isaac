@@ -196,6 +196,7 @@
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayerBody.h" />
     <ClInclude Include="CPlayerHead.h" />
+    <ClInclude Include="CPlayerStateHart.h" />
     <ClInclude Include="CRedBaby.h" />
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
@@ -277,6 +278,7 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayerBody.cpp" />
     <ClCompile Include="CPlayerHead.cpp" />
+    <ClCompile Include="CPlayerStateHart.cpp" />
     <ClCompile Include="CRedBaby.cpp" />
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />

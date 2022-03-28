@@ -75,7 +75,7 @@ void CStartRoom::Enter()
 void CStartRoom::init()
 {
 
-
+	CGameManager::getInst()->init();
 
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\stageRoom01.tile";
