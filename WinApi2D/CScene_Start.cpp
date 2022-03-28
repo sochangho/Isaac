@@ -13,8 +13,7 @@
 
 #include "CIsaacPlayer.h"
 #include "CTestObject.h"
-#include "CCollider.h"
-
+#include "CTitle.h"
 CScene_Start::CScene_Start()
 {
 }
@@ -54,6 +53,12 @@ void CScene_Start::update()
 void CScene_Start::Enter()
 {
 	
+	CTitle* title = new CTitle;
+	title->SetPos(fPoint(WINSIZEX / 2, WINSIZEY / 2));
+	title->SetScale(fPoint(WINSIZEX / 2, WINSIZEY / 2));
+	AddObject(title, GROUP_GAMEOBJ::UI);
+
+	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
 }
 
 void CScene_Start::Exit()

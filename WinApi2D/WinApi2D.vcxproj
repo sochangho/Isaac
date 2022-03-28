@@ -217,6 +217,7 @@
     <ClInclude Include="CTileButton.h" />
     <ClInclude Include="CTileNavMap.h" />
     <ClInclude Include="CTimeManager.h" />
+    <ClInclude Include="CTitle.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="framework.h" />
@@ -297,6 +298,7 @@
     <ClCompile Include="CTileButton.cpp" />
     <ClCompile Include="CTileNavMap.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
+    <ClCompile Include="CTitle.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CMap.cpp" />
