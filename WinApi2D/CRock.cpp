@@ -6,9 +6,9 @@
 CRock::CRock()
 {
     m_pImg = CResourceManager::getInst()->LoadD2DImage(L"Rock", L"texture\\map\\rocks_basement.png");
-    SetScale(fPoint(50, 50));
+    SetScale(fPoint(60, 60));
     CreateCollider();
-    GetCollider()->SetScale(fPoint(30, 30));
+    GetCollider()->SetScale(fPoint(50, 50));
 }
 
 CRock::~CRock()

@@ -52,7 +52,7 @@ public:
 
 	fVec2 GetMonsterDir();
 	bool GetStop();
-
+	CGameObject* getDestination();
 
 	void ChangeDir(fPoint startPoint);
 	void Attacked();

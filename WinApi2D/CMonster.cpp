@@ -115,7 +115,7 @@ bool CMonster::GoDestition()
 	}
 
 
-	if ( m_dirVec2.Length() >= 0.1f) {
+	if ( m_dirVec2.Length() >= 0.2f) {
 	
 		monsterPos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
 		monsterPos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
@@ -206,6 +206,11 @@ fVec2 CMonster::GetMonsterDir()
 bool CMonster::GetStop()
 {
 	return is_stop;
+}
+
+CGameObject * CMonster::getDestination()
+{
+	return m_destitionobj;
 }
 
 void CMonster::ChangeDir(fPoint startPoint)

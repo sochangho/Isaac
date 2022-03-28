@@ -158,24 +158,24 @@ void CTileNavMap::CTileNavAstarUpdate(CGameObject* objdestination, CGameObject* 
 	idtPos.x = fdtPos.x / CTile::SIZE_TILE;
 	idtPos.y = fdtPos.y / CTile::SIZE_TILE;
 	
-	if (!WallCheck(idtPos.x, idtPos.y)) {
+	//if (!WallCheck(idtPos.x, idtPos.y)) {
 
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
+	//	for (int i = -1; i < 2; i++) {
+	//		for (int j = -1; j < 2; j++) {
 
-				if (
-				
-					!((i == 0) && (j == 0)) && WallCheck(idtPos.x + i, idtPos.y + j)) {					
-					idtPos.x += i;
-					idtPos.y += j;
-				}
+	//			if (
+	//			
+	//				!((i == 0) && (j == 0)) && WallCheck(idtPos.x + i, idtPos.y + j)) {					
+	//				idtPos.x += i;
+	//				idtPos.y += j;
+	//			}
 
-			}
+	//		}
 
-		}
+	//	}
 
 
-	}
+	//}
 
 
 			

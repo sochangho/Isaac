@@ -44,7 +44,24 @@ void CGaper::update()
 	if (!GetStop()) {
 	 change	= GoDestition();
 	}
+	//change = GoDestition();
+	//CGameObject* player = getDestination();
+	//if (player != nullptr) {
+	//	fPoint thispos = GetPos();
+	//	fPoint point = player->GetPos() - thispos;
+	//	
+	//	if (point.Length() > 0.1f) {
 
+	//		
+	//		thispos.x += point.normalize().x * 50 * fDT;
+
+	//		thispos.y += point.normalize().y * 50 * fDT;
+
+	//		SetPos(thispos);
+
+	//	}
+	//}
+	
 
 
 	CMonster::update();
