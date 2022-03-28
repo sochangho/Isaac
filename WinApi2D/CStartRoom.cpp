@@ -67,7 +67,7 @@ void CStartRoom::Enter()
 
 	GroupCheckSetting();
 	CCameraManager::getInst()->SetLookAt(fPoint(MAPCENTER_X , MAPCENTER_Y));
-;
+
 	
 	
 }

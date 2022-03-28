@@ -327,6 +327,9 @@
     <ClInclude Include="CDestoryRock.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CTitle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -543,6 +546,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CDestoryRock.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
