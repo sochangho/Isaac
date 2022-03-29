@@ -64,7 +64,7 @@ void CSceneManager::init()
 {
 	m_arrScene[(size_t)GROUP_SCENE::START] = new CScene_Start;
 	m_arrScene[(size_t)GROUP_SCENE::START]->SetName(L"Start_Scene");
-
+	
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
 
@@ -90,4 +90,31 @@ void CSceneManager::init()
 CScene* CSceneManager::GetCurScene()
 {
 	return m_pCurScene;
+}
+
+void CSceneManager::GameEnd(GROUP_SCENE scene)
+{
+	
+	for (int i = 0; i < (size_t)GROUP_SCENE::SIZE; i++) {
+
+		if (m_arrScene[i] != nullptr && i != (size_t)scene) {
+
+			m_arrScene[i]->SetInit(false);
+			m_arrScene[i]->SetCrear(false);
+			m_arrScene[i]->DeleteAll();
+
+		}
+   }
+
+
+
+	m_pCurScene = m_arrScene[(size_t)scene];
+	m_pCurScene->Enter();
+
+	CGameManager::getInst()->Reset();
+	CCollisionManager::getInst()->Reset();
+	
+	
+
+
 }

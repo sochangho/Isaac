@@ -4,6 +4,7 @@ class CIsaacPlayer;
 class CIsaacPlayer2;
 class CItem;
 class CPlayerStateHart;
+class CBombImg;
 class CGameManager
 {
 	SINGLETON(CGameManager);
@@ -20,6 +21,7 @@ private:
 	CIsaacPlayer* player;
 	vector<CIsaacPlayer2*> player2Save;
 	vector<CPlayerStateHart*> hartVec;
+	CBombImg* bombImg;
 	CItem* item;
 public:
 	
@@ -29,11 +31,18 @@ public:
 	void render();
 
 	int GetHart();
+	int GetBombCount();
+
 	void SetHart(int hart);
+	void SetBombCount(int count);
+
+
 
 	void SavePlayer();
 	CIsaacPlayer* LoadPlayer();
 	bool GetSaveCheck();
+
+	void Reset();
 
 };
 

@@ -28,9 +28,9 @@ CCharacter::~CCharacter()
 {
     for (int i = 0; i < m_vecChilde.size(); i++) {
 
-        if (m_vecChilde[i]->m_parent != nullptr) {
+        if (m_vecChilde[i] != nullptr) {
 
-            m_vecChilde[i]->m_parent = nullptr;
+            m_vecChilde[i] = nullptr;
         }    
     }
 

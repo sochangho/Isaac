@@ -5,7 +5,7 @@
 #include "CIsaacPlayer2.h"
 #include "CScene.h"
 #include "CPlayerStateHart.h"
-
+#include "CBombImg.h"
 CGameManager::CGameManager() {
 
 
@@ -33,6 +33,8 @@ CGameManager::~CGameManager() {
 	}
 
 	hartVec.clear();
+
+	delete bombImg;
 }
 
 
@@ -54,10 +56,17 @@ void CGameManager::init()
 
 	}
 
+	bombImg = new CBombImg;
+	bombImg->SetScale(fPoint(20, 20));
+	bombImg->SetPos(fPoint(40, 108));
+
 }
 
 void CGameManager::render()
 {
+	
+
+
 	int count = 0;
 	int life = hp / 2;
 	int lifeHarf = hp % 2;
@@ -72,20 +81,33 @@ void CGameManager::render()
 			}
 		}
 
-		if (hartVec.size() > count) {
 
-			if (lifeHarf == 0) {
+		
+
+		if (lifeHarf == 1) {
+				if (hartVec.size() > count) {
+
+					hartVec[count]->SetState(HARTSTATE::HALF);
+					hartVec[count]->render();
+					count++;
+				}
+		}
+			
+		while(hartVec.size() > count){
+
 				hartVec[count]->SetState(HARTSTATE::NONE);
 				hartVec[count]->render();
-			}
-			else {
-
-				hartVec[count]->SetState(HARTSTATE::HALF);
-				hartVec[count]->render();
-
-			}
-			count++;
+				count++;
 		}
+
+			if (hartVec.size() > 0) {
+				
+				bombImg->render();				
+				WCHAR strFPS[6];
+				swprintf_s(strFPS, L"%5d", bombCount);
+				CRenderManager::getInst()->RenderText(strFPS, 70, 150, 50, 50, 12, RGB(255, 255, 255));
+			}
+		
 }
 
 int CGameManager::GetHart()
@@ -93,9 +115,19 @@ int CGameManager::GetHart()
 	return hp;
 }
 
+int CGameManager::GetBombCount()
+{
+	return bombCount;
+}
+
 void CGameManager::SetHart(int hart)
 {
 	hp = hart;
+}
+
+void CGameManager::SetBombCount(int count)
+{
+	bombCount = count;
 }
 
 void CGameManager::SavePlayer()
@@ -160,4 +192,40 @@ CIsaacPlayer* CGameManager::LoadPlayer()
 bool CGameManager::GetSaveCheck()
 {
 	return savePlayer;
+}
+
+void CGameManager::Reset()
+{
+	hp = 0;
+	bombCount = 0;
+	coin = 0;
+	hartcount = 0;
+
+	bool savePlayer = false;
+
+	if (player != nullptr) {
+
+		player = nullptr;
+	}
+
+
+	for (int i = 0; i < player2Save.size(); i++) {
+
+		player2Save[i] = nullptr;
+	}
+
+	player2Save.clear();
+
+
+	for (int i = 0; i < hartVec.size(); i++) {
+
+		delete hartVec[i];
+	}
+
+	hartVec.clear();
+
+	delete bombImg;
+
+	bombImg = nullptr;
+
 }

@@ -53,15 +53,15 @@ void CPlayerStateHart::render()
 
 		startX = 16.f;
 		startY = 0.f;
-		endX = 38.f;
+		endX = 32.f;
 		endY = 15.f;
 
 
 	}
 	else if (state == HARTSTATE::NONE) {
-		startX = 38.f;
+		startX = 32.f;
 		startY = 0.f;
-		endX = 54.f;
+		endX = 48.f;
 		endY = 15.f;
 
 	}

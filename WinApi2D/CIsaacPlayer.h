@@ -24,6 +24,8 @@ public:
 		UP_ATTACK,
 		DOWN_ATTACK,
 
+		ITEM,
+
 	};
 
 	enum class IsaacStateBody {
@@ -33,6 +35,7 @@ public:
 		UP_MOVE,
 		DOWN_MOVE,
 
+		ITEM,
 
 	};
 
@@ -67,12 +70,12 @@ public:
 	float GetVelocity();
 	fVec2 GetPlayerDir();
 	IsaacStateBody GetBodyState();
-
+	bool GetIsItem();
 
 	void AddPet(CIsaacPlayer2* character);
 	void PetUpdate();
 	void SetItem(CItem* item);
-
+	void SetIsItem(bool isitem);
 
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);
@@ -96,13 +99,17 @@ private:
 	float m_invincibilityD = 2.f;
 	float m_invincibilityT = 0.f;
 
+	float m_itemAniDuration = 1.f;
+	float m_itemAniTime = 0.f;
+
+
 	bool  m_isColCheck = false;
 	bool  m_isMove;
 	bool  m_isAttack = false;
 	bool  m_isAttackKey = false;
 	bool  m_isAttacked = false;
 	bool  m_isInvincibility = false;
-
+	bool  m_isItem = false;
 
 	IsaacStateHead m_stHead;
 	IsaacStateBody m_stBody;

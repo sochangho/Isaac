@@ -24,5 +24,6 @@ public:
 	void init();
 
 	CScene* GetCurScene();							//현재 씬 반환
+	void GameEnd(GROUP_SCENE scene);
 };
 

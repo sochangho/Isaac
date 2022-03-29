@@ -30,6 +30,11 @@ CPlayerHead::CPlayerHead()
 
    
 
+    //¾ÆÀÌÅÛ È¹µæ 
+    m_pImg = CResourceManager::getInst()->
+        LoadD2DImage(L"itemacheiveHead", L"texture\\Animation\\character_001_isaac.png");
+    GetAnimator()->CreateAnimation(L"ITEM", m_pImg, fPoint(32.f * 8 , 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 0.5f, 1);
+
     GetAnimator()->Play(L"IDLE");
 
 }

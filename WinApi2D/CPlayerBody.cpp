@@ -23,7 +23,11 @@ CPlayerBody::CPlayerBody()
     GetAnimator()->CreateAnimation(L"DOWN_MOVE", m_pImg, fPoint(0.f, 31.6f), fPoint(28.37f, 31.6f), fPoint(28.37f, 0.f), 0.1f, 5);
 
   
+    m_pImg = CResourceManager::getInst()->
+        LoadD2DImage(L"itemacheiveHead", L"texture\\Animation\\character_001_isaac.png");
 
+    GetAnimator()->CreateAnimation(L"ITEM", m_pImg, fPoint(32.f*8, 32.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 0.1f, 1);
+    GetAnimator()->FindAnimation(L"ITEM")->GetFrame(0).fptOffset = fPoint(0.f , -12.f);
     GetAnimator()->Play(L"IDLE");
 
   

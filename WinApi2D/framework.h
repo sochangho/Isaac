@@ -100,7 +100,7 @@ enum class TYPE_EVENT
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	CHANGE_SCENE,
-
+	GAMEEND_SCENE,
 	SIZE,
 };
 
@@ -141,7 +141,7 @@ enum class TYPE_EVENT
 #define CreateObj(pObj, group)	CEventManager::getInst()->EventCreateObject(pObj, group)
 #define DeleteObj(pObj)			CEventManager::getInst()->EventDeleteObject(pObj)
 #define ChangeScn(scene)		CEventManager::getInst()->EventChangeScene(scene)
-
+#define GameEndScn(scene)       CEventManager::getInst()->EventGameEnd(scene)
 
 #define DOORUP_X 520
 #define DOORUP_Y 218

@@ -70,40 +70,45 @@ CIsaacPlayer* CIsaacPlayer::Clone()
 
 void CIsaacPlayer::update()
 {
-   
 	
-	Attack();
+		Attack();
 
-	if (!m_isColCheck && !m_isAttacked ) {
-		Move();
-	}
+		if (!m_isColCheck && !m_isAttacked) {
+			Move();
+		}
 
-	if (m_isAttacked) {
-		AttackedMove();
-	}
+		if (m_isAttacked) {
+			AttackedMove();
+		}
 
-	if (m_isInvincibility) {
+		if (m_isInvincibility) {
 
-		Invincibility();
-	}
+			Invincibility();
+		}
 
 
 
-	if (KeyDown('E')) {
+		if (KeyDown('E')) {
 
-		CreateBomb();
-	}
+			CreateBomb();
+		}
 
-	fPoint pos = GetPos();
-	if (!m_isAttacked ) {
+	
+	
 
-		
-		pos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
-		pos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
-		
-	}
-	PetUpdate();
-	SetPos(pos);
+		fPoint pos = GetPos();
+		if (!m_isAttacked) {
+
+
+			pos.x += m_dirVec2.normalize().x * m_veclocity * fDT;
+			pos.y += m_dirVec2.normalize().y * m_veclocity * fDT;
+
+		}
+		PetUpdate();
+		SetPos(pos);
+
+	
+	
 
 	GetAnimator()->update();
 	
@@ -169,6 +174,9 @@ void CIsaacPlayer::HeadState(IsaacStateHead head)
 		case CIsaacPlayer::IsaacStateHead::DOWN_ATTACK:
 			childe->GetAnimator()->Play(L"DOWN_ATTACK");
 			break;
+		case CIsaacPlayer::IsaacStateHead::ITEM:
+			childe->GetAnimator()->Play(L"ITEM");
+			break;
 		default:
 			break;
 		}
@@ -219,6 +227,9 @@ void CIsaacPlayer::BodyState(IsaacStateBody body)
 			break;
 		case CIsaacPlayer::IsaacStateBody::DOWN_MOVE:
 			childe->GetAnimator()->Play(L"DOWN_MOVE");
+			break;
+		case CIsaacPlayer::IsaacStateBody::ITEM:
+			childe->GetAnimator()->Play(L"ITEM");
 			break;
 		default:
 			break;
@@ -295,23 +306,28 @@ void CIsaacPlayer::Attack()
 
 void CIsaacPlayer::Move()
 {
+	
 
 	if (Key('W')) {
 
 		m_dirVec2.y = -1;
 
-		if (!m_isAttackKey) {
-			HeadState(IsaacStateHead::UP_MOVE);
+		if (!m_isItem) {
+			if (!m_isAttackKey) {
+				HeadState(IsaacStateHead::UP_MOVE);
+			}
+			BodyState(IsaacStateBody::UP_MOVE);
 		}
-		BodyState(IsaacStateBody::UP_MOVE);
 	}
 	else if (Key('S') ) {
 		m_dirVec2.y = 1;
 
-		if (!m_isAttackKey) {
-			HeadState(IsaacStateHead::DOWN_MOVE);
+		if (!m_isItem) {
+			if (!m_isAttackKey) {
+				HeadState(IsaacStateHead::DOWN_MOVE);
+			}
+			BodyState(IsaacStateBody::DOWN_MOVE);
 		}
-		BodyState(IsaacStateBody::DOWN_MOVE);
 	}
 
 
@@ -321,42 +337,70 @@ void CIsaacPlayer::Move()
 
 		m_dirVec2.x = -1;
 
-		if (!m_isAttackKey) {
-			if (Key('S')) {
+		if (!m_isItem) {
+			if (!m_isAttackKey) {
+				if (Key('S')) {
 
-				HeadState(IsaacStateHead::DOWN_MOVE);
-			}
-			else if (Key('W')) {
+					HeadState(IsaacStateHead::DOWN_MOVE);
+				}
+				else if (Key('W')) {
 
-				HeadState(IsaacStateHead::UP_MOVE);
+					HeadState(IsaacStateHead::UP_MOVE);
+				}
+				else {
+					HeadState(IsaacStateHead::LEFT_MOVE);
+				}
 			}
-			else {
-				HeadState(IsaacStateHead::LEFT_MOVE);
-			}
+			BodyState(IsaacStateBody::LEFT_MOVE);
 		}
-		BodyState(IsaacStateBody::LEFT_MOVE);
 	}
 	else if (Key('D')) {
 
 
 		m_dirVec2.x = 1;
 		
-		if (!m_isAttackKey) {
-			if (Key('S')) {
+		if (!m_isItem) {
+			if (!m_isAttackKey) {
+				if (Key('S')) {
 
-				HeadState(IsaacStateHead::DOWN_MOVE);
-			}
-			else if (Key('W')) {
+					HeadState(IsaacStateHead::DOWN_MOVE);
+				}
+				else if (Key('W')) {
 
-				HeadState(IsaacStateHead::UP_MOVE);
+					HeadState(IsaacStateHead::UP_MOVE);
+				}
+				else {
+					HeadState(IsaacStateHead::RIGHT_MOVE);
+				}
 			}
-			else {
-				HeadState(IsaacStateHead::RIGHT_MOVE);
-			}
+			BodyState(IsaacStateBody::RIGHT_MOVE);
 		}
-		BodyState(IsaacStateBody::RIGHT_MOVE);
+	}
+
+	if(m_isItem)
+	{
+
+		HeadState(IsaacStateHead::ITEM);
+		BodyState(IsaacStateBody::ITEM);
+
+		if (m_itemAniTime < m_itemAniDuration) {
+
+			m_itemAniTime += fDT;
+
+
+		}
+		else {
+
+			m_itemAniTime = 0.f;
+			m_isItem = false;
+			HeadState(IsaacStateHead::IDLE);
+			BodyState(IsaacStateBody::IDLE);
+
+		}
 
 	}
+
+
 
 
 	if (Key('W') || Key('A') || Key('S') || Key('D')) {
@@ -387,7 +431,7 @@ void CIsaacPlayer::Move()
 
 	}
 
-	if (!m_isMove) {
+	if (!m_isMove && !m_isItem) {
 
 		if (!m_isAttackKey) {
 
@@ -505,12 +549,18 @@ void CIsaacPlayer::CreateWaterballoon(fVec2 dir)
 
 void CIsaacPlayer::CreateBomb()
 {
-	fPoint pos = GetPos();
+	if (CGameManager::getInst()->GetBombCount() > 0) {
 
-	CBomb* bomb = new CBomb;
-	pos.y -= 30;
-	bomb->SetPos(pos);
-	CreateObj(bomb, GROUP_GAMEOBJ::BOMB);
+
+		fPoint pos = GetPos();
+
+		CBomb* bomb = new CBomb;
+		pos.y -= 30;
+		bomb->SetPos(pos);
+		CreateObj(bomb, GROUP_GAMEOBJ::BOMB);
+
+		CGameManager::getInst()->SetBombCount(CGameManager::getInst()->GetBombCount() - 1);
+	}
 }
 
 CItem* CIsaacPlayer::GetItem()
@@ -531,6 +581,11 @@ fVec2 CIsaacPlayer::GetPlayerDir()
 CIsaacPlayer::IsaacStateBody CIsaacPlayer::GetBodyState()
 {
 	return m_stBody;
+}
+
+bool CIsaacPlayer::GetIsItem()
+{
+	return m_isItem;
 }
 
 void CIsaacPlayer::AddPet(CIsaacPlayer2* character)
@@ -591,6 +646,7 @@ void CIsaacPlayer::PetUpdate()
 
 void CIsaacPlayer::SetItem(CItem* item)
 {
+	m_isItem = true;
 	if (this->m_item != nullptr) {
 		delete this->m_item;
 	}
@@ -598,6 +654,11 @@ void CIsaacPlayer::SetItem(CItem* item)
 	this->m_item = item;    
 	this->m_item->SetOwnObj(this);
 
+}
+
+void CIsaacPlayer::SetIsItem(bool isitem)
+{
+	m_isItem = isitem;
 }
 
 void CIsaacPlayer::OnCollision(CCollider* _pOther)
@@ -685,6 +746,17 @@ void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 		m_dirVec2.x = pos.x - tPos.x;
 		m_dirVec2.y = pos.y - tPos.y;
 
+
+
+		if (CGameManager::getInst()->GetHart() > 0) {
+
+			CGameManager::getInst()->SetHart(CGameManager::getInst()->GetHart() - 1);
+
+
+		}
+
+
+
 	}
 
 
@@ -700,6 +772,13 @@ void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 		fPoint bombPos = bomb->GetPos();
 		m_dirVec2.x = pos.x - bombPos.x;
 		m_dirVec2.y = pos.y - bombPos.y;
+
+		if (CGameManager::getInst()->GetHart() > 0) {
+
+			CGameManager::getInst()->SetHart(CGameManager::getInst()->GetHart() - 1);
+
+
+		}
 	}
 
 

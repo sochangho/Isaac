@@ -51,6 +51,13 @@ void CEventManager::Execute(const tEvent& event)
 		CSceneManager::getInst()->ChangeScene(scene);
 	}
 		break;
+	case TYPE_EVENT::GAMEEND_SCENE: {
+
+		GROUP_SCENE scene = (GROUP_SCENE)event.lParam;
+		CSceneManager::getInst()->GameEnd(scene);
+		CCameraManager::getInst()->SetTargetObj(nullptr);
+		CUIManager::getInst()->SetFocusedUI(nullptr);
+	  }
 	}
 }
 
@@ -101,5 +108,13 @@ void CEventManager::EventChangeScene(GROUP_SCENE scene)
 	event.eEven = TYPE_EVENT::CHANGE_SCENE;
 	event.lParam = (DWORD_PTR)scene;
 
+	AddEvent(event);
+}
+
+void CEventManager::EventGameEnd(GROUP_SCENE scene)
+{
+	tEvent event = {};
+	event.eEven = TYPE_EVENT::GAMEEND_SCENE;
+	event.lParam = (DWORD_PTR)scene;
 	AddEvent(event);
 }
