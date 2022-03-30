@@ -4,6 +4,9 @@
 #include "CPlayerHead.h"
 #include "CIsaacPlayer2.h"
 #include "CItem.h"
+#include "CDropItem.h"
+
+
 class CIsaacPlayer : public CCharacter
 {
 	friend class CPlayerBody;
@@ -11,6 +14,11 @@ class CIsaacPlayer : public CCharacter
 	
 private:
 	CItem* m_item;
+	CGameObject* dropItem;
+
+	CItem* m_tempItem;
+	CIsaacPlayer2* m_tempPlayer2;
+
 public:
 	enum class IsaacStateHead {
 		IDLE,
@@ -72,15 +80,21 @@ public:
 	IsaacStateBody GetBodyState();
 	bool GetIsItem();
 
-	void AddPet(CIsaacPlayer2* character);
+	
 	void PetUpdate();
-	void SetItem(CItem* item);
 	void SetIsItem(bool isitem);
+	void SetItem(CItem* item);
+	void AddPet(CIsaacPlayer2* character);
 
+	void ItemAnimationAfterAdd();
+
+	void AddItemEqu(CGameObject* dropItem , CItem* item  , CIsaacPlayer2* player2);
+	
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);
 	virtual void OnCollisionExit(CCollider* _pOther);
 private:
+	
 
 	CD2DImage* m_pImg;
 
@@ -102,6 +116,11 @@ private:
 	float m_itemAniDuration = 1.f;
 	float m_itemAniTime = 0.f;
 
+	float m_dieAniDuration = 0.6f;
+	float m_dieAniTime = 0.f;
+
+	float m_dieAfterDelay = 0.8f;
+	float m_dieAfterTime = 0.f;
 
 	bool  m_isColCheck = false;
 	bool  m_isMove;
@@ -110,7 +129,7 @@ private:
 	bool  m_isAttacked = false;
 	bool  m_isInvincibility = false;
 	bool  m_isItem = false;
-
+	bool  m_isDie = false;
 	IsaacStateHead m_stHead;
 	IsaacStateBody m_stBody;
 };

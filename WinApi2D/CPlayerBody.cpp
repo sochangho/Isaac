@@ -54,7 +54,7 @@ void CPlayerBody::render()
 {
     CIsaacPlayer* player = dynamic_cast<CIsaacPlayer*>(GetParentObj());
 
-    if (player->m_isAttacked == false) {
+    if (player->m_isAttacked == false && player->m_isDie == false) {
         CCharacter::render();
     }
 }

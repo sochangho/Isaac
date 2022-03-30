@@ -33,6 +33,11 @@ CRedBaby* CRedBaby::Clone()
     return new CRedBaby();
 }
 
+CRedBaby* CRedBaby::Create()
+{
+    return new CRedBaby();
+}
+
 void CRedBaby::update()
 {
   

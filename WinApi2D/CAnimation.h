@@ -24,7 +24,7 @@ private:
 	float			m_fAccTime;		// 다음 프레임까지 축적시간
 
 	bool			m_bReverse;
-
+	bool            m_RenderPosCheck = true;
 public:
 	CAnimation();
 	~CAnimation();
@@ -37,6 +37,9 @@ public:
 
 	void update();
 	void render();	
+
+	void SetRenderPosCheck(bool check);
+
 
 	void Create(CD2DImage* tex, fPoint lt, fPoint slice, fPoint step, float duration, UINT frmCount);	// 애니메이션 생성
 };

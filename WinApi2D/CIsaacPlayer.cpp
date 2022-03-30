@@ -23,6 +23,15 @@ CIsaacPlayer::CIsaacPlayer()
 	GetAnimator()->CreateAnimation(L"Attacked", m_pImg, fPoint(64.f*2, 64.f*3), fPoint(64.f, 64.f), fPoint(64.f, 0.f), 0.5f, 1);
 	GetAnimator()->FindAnimation(L"Attacked")->GetFrame(0).fptOffset = fPoint(0 , -20);
 	GetAnimator()->Play(L"Attacked");
+
+	GetAnimator()->CreateAnimation(L"DIE", m_pImg, fPoint(0.f, 64.f * 2), fPoint(64.f, 64.f), fPoint(64.f, 0.f), 0.2f, 1);
+	GetAnimator()->FindAnimation(L"DIE")->Create(m_pImg, fPoint(64.f * 2, 64.f * 3), fPoint(64.f, 64.f), fPoint(64.f, 0.f), 0.2f, 1);
+	GetAnimator()->FindAnimation(L"DIE")->Create(m_pImg, fPoint(64.f * 4, 64.f * 2), fPoint(64.f, 64.f), fPoint(64.f, 0.f), 0.2f, 1);
+	for (int i = 0; i < 3; i++) {
+		GetAnimator()->FindAnimation(L"DIE")->GetFrame(i).fptOffset = fPoint(0, -20);
+	}
+	GetAnimator()->CreateAnimation(L"DIE2", m_pImg, fPoint(64.f * 3, 64.f * 2), fPoint(64.f, 64.f), fPoint(64.f, 0.f), 0.2f, 1);
+	GetAnimator()->FindAnimation(L"DIE2")->GetFrame(0).fptOffset = fPoint(0, -20);
 	m_stHead = IsaacStateHead::IDLE;
 	m_stBody = IsaacStateBody::IDLE;
 	m_isMove = false;
@@ -61,6 +70,11 @@ CIsaacPlayer::~CIsaacPlayer()
 	if (m_item != nullptr) {
 		delete m_item;
 	}
+
+
+	if (dropItem != nullptr) {
+		dropItem = nullptr;
+	}
 }
 
 CIsaacPlayer* CIsaacPlayer::Clone()
@@ -70,7 +84,16 @@ CIsaacPlayer* CIsaacPlayer::Clone()
 
 void CIsaacPlayer::update()
 {
-	
+
+	if (CGameManager::getInst()->GetHart() == 0) {
+
+		if (!m_isDie) {
+			CSoundManager::getInst()->Play(L"Die");
+			m_isDie = true;
+		}
+	}
+
+	if (!m_isDie) {
 		Attack();
 
 		if (!m_isColCheck && !m_isAttacked) {
@@ -93,8 +116,8 @@ void CIsaacPlayer::update()
 			CreateBomb();
 		}
 
-	
-	
+
+
 
 		fPoint pos = GetPos();
 		if (!m_isAttacked) {
@@ -107,7 +130,47 @@ void CIsaacPlayer::update()
 		PetUpdate();
 		SetPos(pos);
 
-	
+	}
+	else {
+
+		GetAnimator()->Play(L"DIE");
+		
+		if (m_dieAniTime < m_dieAniDuration) {
+			m_dieAniTime += fDT;
+		}
+		else {
+
+			
+			GetAnimator()->Play(L"DIE2");
+			
+			if (m_dieAfterTime < m_dieAfterDelay) {
+
+				m_dieAfterTime += fDT;
+
+			}
+			else {
+				
+				//ui »ý¼º
+				if (!CGameManager::getInst()->GetDieCheck()) {
+					
+					CGameManager::getInst()->SetDiecheck(true);		
+				}
+
+				if (CGameManager::getInst()->GetDieCheck()) {
+
+					if (KeyDown(VK_SPACE)) {
+
+						CSoundManager::getInst()->Stop(L"basement");
+						GameEndScn(GROUP_SCENE::START);
+
+					}
+
+				}
+			}
+
+		}
+
+	}
 	
 
 	GetAnimator()->update();
@@ -117,7 +180,7 @@ void CIsaacPlayer::update()
 
 void CIsaacPlayer::render()
 {
-	if (m_isAttacked == true) {
+	if (m_isAttacked == true || m_isDie == true) {
 		CCharacter::render();
 	}
 }
@@ -387,6 +450,7 @@ void CIsaacPlayer::Move()
 
 			m_itemAniTime += fDT;
 
+			dropItem->SetPos(fPoint(GetPos().x, GetPos().y - 50));
 
 		}
 		else {
@@ -395,6 +459,9 @@ void CIsaacPlayer::Move()
 			m_isItem = false;
 			HeadState(IsaacStateHead::IDLE);
 			BodyState(IsaacStateBody::IDLE);
+			ItemAnimationAfterAdd();
+			DeleteObj(dropItem);
+			
 
 		}
 
@@ -646,7 +713,7 @@ void CIsaacPlayer::PetUpdate()
 
 void CIsaacPlayer::SetItem(CItem* item)
 {
-	m_isItem = true;
+	
 	if (this->m_item != nullptr) {
 		delete this->m_item;
 	}
@@ -659,6 +726,34 @@ void CIsaacPlayer::SetItem(CItem* item)
 void CIsaacPlayer::SetIsItem(bool isitem)
 {
 	m_isItem = isitem;
+}
+
+void CIsaacPlayer::ItemAnimationAfterAdd()
+{
+	if (m_tempItem != nullptr) {
+
+		SetItem(m_tempItem);
+		m_tempItem = nullptr;
+	}
+	
+	if (m_tempPlayer2 != nullptr) {
+
+		AddPet(m_tempPlayer2);
+		m_tempPlayer2 = nullptr;
+	}
+
+
+}
+
+void CIsaacPlayer::AddItemEqu(CGameObject* dropItem ,CItem* item, CIsaacPlayer2* player2)
+{
+	m_isItem = true;
+	this->dropItem = dropItem;	
+	m_tempItem = item;
+	m_tempPlayer2 = player2;
+	CreateObj(this->dropItem, GROUP_GAMEOBJ::DROPITEM);
+	CSoundManager::getInst()->Play(L"Item");
+	
 }
 
 void CIsaacPlayer::OnCollision(CCollider* _pOther)
@@ -728,7 +823,7 @@ void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 		if (CGameManager::getInst()->GetHart() > 0) {
 
 			CGameManager::getInst()->SetHart(CGameManager::getInst()->GetHart() - 1);
-
+			CSoundManager::getInst()->Play(L"Attacked");
 
 		}
 
@@ -751,7 +846,7 @@ void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 		if (CGameManager::getInst()->GetHart() > 0) {
 
 			CGameManager::getInst()->SetHart(CGameManager::getInst()->GetHart() - 1);
-
+			CSoundManager::getInst()->Play(L"Attacked");
 
 		}
 
@@ -776,7 +871,7 @@ void CIsaacPlayer::OnCollisionEnter(CCollider* _pOther)
 		if (CGameManager::getInst()->GetHart() > 0) {
 
 			CGameManager::getInst()->SetHart(CGameManager::getInst()->GetHart() - 1);
-
+			CSoundManager::getInst()->Play(L"Attacked");
 
 		}
 	}

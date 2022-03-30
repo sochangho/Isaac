@@ -50,6 +50,7 @@ void CSoundManager::Play(wstring keyName)
 	map<wstring, CSound*>::iterator iter = m_mapSound.find(keyName);
 	if (iter != m_mapSound.end())
 		iter->second->Play();
+
 }
 
 void CSoundManager::Stop(wstring keyName)

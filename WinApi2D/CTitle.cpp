@@ -29,27 +29,26 @@ void CTitle::render()
 	}
 	fPoint pos = GetPos();
 	fPoint scale = GetScale();
-	fPoint renderPos = CCameraManager::getInst()->GetRenderPos(pos);
-
+	
 
 	CRenderManager::getInst()->RenderFrame(
 		m_pImg,
-		renderPos.x - scale.x,
-		renderPos.y - scale.y,
-		renderPos.x + scale.x,
-		renderPos.y + scale.y, 0.f, 0.f, 480.f, 270.f
+		pos.x - scale.x,
+		pos.y - scale.y,
+		pos.x + scale.x,
+		pos.y + scale.y, 0.f, 0.f, 480.f, 270.f
 
 	);
 
 
-	CRenderManager::getInst()->RenderFrame(
-		m_pImg,
-		renderPos.x - scale.x,
-		renderPos.y - scale.y,
-		renderPos.x + scale.x,
-		renderPos.y + scale.y, 0.f, 270.f, 480.f, 540.f
+	//CRenderManager::getInst()->RenderFrame(
+	//	m_pImg,
+	//	pos.x - scale.x,
+	//	pos.y - scale.y,
+	//	pos.x + scale.x,
+	//	pos.y + scale.y, 0.f, 270.f, 480.f, 540.f
 
-	);
+	//);
 
 
 }

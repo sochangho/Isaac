@@ -46,7 +46,11 @@ void CSound::Pause()
 
 void CSound::Stop()
 {
-	assert(m_pChannel); 
+	//assert(m_pChannel);
+	if (m_pChannel == nullptr) {
+		return;
+	}
+
 	m_pChannel->stop();
 }
 

@@ -36,16 +36,17 @@ void CScene::update()
     }
 
 
-    //테스트용
-    if (CGameManager::getInst()->GetHart() == 0) {
-
-        GameEndScn(GROUP_SCENE::START);
-    }
+  
 
 
     // 씬이 가진 모든 오브젝트 업데이트
     for (int i = 0; i < (int)GROUP_GAMEOBJ::SIZE; i++)
     {
+        if(CGameManager::getInst()->GetDieCheck() && i != (int)GROUP_GAMEOBJ::PLAYER){
+        
+            continue;
+        
+        }
         for (int j = 0; j < m_arrObj[i].size(); j++)
         {
                         
@@ -225,6 +226,7 @@ void CScene::GroupCheckSetting()
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MONSTER, GROUP_GAMEOBJ::TILE);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::TILE);
     CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ATTACKRANGE, GROUP_GAMEOBJ::ROCK);
+    //CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::TILE, GROUP_GAMEOBJ::ROCK);
 }
 
 void CScene::LoadTile(const wstring& strPath)

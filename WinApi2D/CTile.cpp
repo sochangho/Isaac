@@ -5,7 +5,7 @@
 #include "CCollider.h"
 #include "CScene.h"
 #include "CTileNavMap.h"
-
+#include "CRock.h"
 CTile::CTile()
 {
 	m_pImg = nullptr;
@@ -151,14 +151,25 @@ void CTile::Load(FILE* pFile)
 
 void CTile::OnCollisionEnter(CCollider* _pOther)
 {
-	CBombRange* range = dynamic_cast<CBombRange*>(_pOther->GetObj());
+	//CRock* rock = dynamic_cast<CRock*>(_pOther->GetObj());
+	//CBombRange* range = dynamic_cast<CBombRange*>(_pOther->GetObj());
+	//if ( range != nullptr  && this->m_group == GROUP_TILE::WALL) {
 
-	if (range != nullptr && this->m_group == GROUP_TILE::WALL) {
+ //      //Å¸ÀÏ ÆÄ±«
+	//	WallTileDestory();
 
-       //Å¸ÀÏ ÆÄ±«
-		WallTileDestory();
-
-	}
+	//}
 
 
+}
+
+void CTile::OnCollisionExit(CCollider* _pOther)
+{
+	//CRock* rock = dynamic_cast<CRock*>(_pOther->GetObj());
+	//if ((rock != nullptr ) && this->m_group == GROUP_TILE::WALL) {
+
+	//	//Å¸ÀÏ ÆÄ±«
+	//	WallTileDestory();
+
+	//}
 }

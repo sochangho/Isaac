@@ -3,6 +3,9 @@
 #include "CD2DImage.h"
 #include "CBombRange.h"
 #include "CDestoryRock.h"
+#include "CTile.h"
+#include "CTileNavMap.h"
+#include "CScene.h"
 CRock::CRock()
 {
     m_pImg = CResourceManager::getInst()->LoadD2DImage(L"Rock", L"texture\\map\\rocks_basement.png");
@@ -75,7 +78,47 @@ void CRock::OnCollisionEnter(CCollider* _pOther)
         CDestoryRock* rock = new CDestoryRock;
         rock->SetPos(GetPos());
         CreateObj(rock, GROUP_GAMEOBJ::ROCK);
-   }
 
+        fPoint pos = GetPos();
+        fPoint scale = GetScale();
+        fPoint p1;
+        fPoint p2;
+
+       
+
+        p1.x = (pos.x - scale.x/2)/CTile::SIZE_TILE ;
+        p1.y = (pos.y - scale.y/2)/CTile::SIZE_TILE ;
+
+        p2.x = (pos.x + scale.x/2)/CTile::SIZE_TILE ;
+        p2.y = (pos.y + scale.y/2)/CTile::SIZE_TILE ;
+
+        int lengthX = p2.x - p1.x;
+        int lengthY = p2.y - p1.y;
+
+       
+        CScene* sceneCur = CSceneManager::getInst()->GetCurScene();
+        vector<iPoint> points;
+        for (int i = p1.x; i <= p1.x + lengthX; i++) {
+            for (int j = p1.y; j <= p1.y + lengthY; j++) { 
+                points.push_back(iPoint(i, j));
+                sceneCur->GettileNav()->ChanageTileType(GROUP_TILE::ROAD ,i , j);
+            }
+        }
+        
+        const vector<CGameObject*>& tiles = sceneCur->GetGroupObject(GROUP_GAMEOBJ::TILE);
+
+        for (int i = 0; i < points.size(); i++) {
+            for (int j = 0; j < tiles.size(); j++) {
+                CTile* tile = dynamic_cast<CTile*>(tiles[j]);
+                if (tile != nullptr && tile->GetX() == points[i].x && tile->GetY() == points[i].y) {
+
+                    tile->SetGroup(GROUP_TILE::ROAD);
+
+                }
+            }
+        }
+    }
+
+   
 
 }

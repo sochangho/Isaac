@@ -124,7 +124,7 @@ void CStartRoom::init()
 	doorup->SetPos(fPoint(DOORUP_X, DOORUP_Y));
 	doorup->Load(DOOR_DIR::UP, GROUP_SCENE::NOMALROOM1);
 	AddObject(doorup, GROUP_GAMEOBJ::DOOR);
-
+	//CSoundManager::getInst()->Play(L"basement");
 
 }
 

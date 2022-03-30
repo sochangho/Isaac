@@ -11,10 +11,13 @@ private:
 	float m_moveDuration = 2.f;
 	float m_time = 0.f;
 
+	float m_soundDuration = 4.f;
+	float m_soundTime = 0.f;
 	fVec2 m_dirVec2;
 	fVec2 m_Anidir;
 
 	fPoint randomDestonaion;
+
 
 	
 	float  m_hp = 100.f;

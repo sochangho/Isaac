@@ -21,6 +21,7 @@ public:
 	~CIsaacPlayer2();
 	
 	virtual CIsaacPlayer2* Clone();
+	virtual CIsaacPlayer2* Create();
 	virtual void update();
 	virtual void render();
 	virtual void ItemUse(fVec2 dir){};

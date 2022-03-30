@@ -1,6 +1,7 @@
 #pragma once
 #include "CDropItem.h"
 #include "CD2DImage.h"
+#include "CIsaacPlayer2.h"
 class CDropRedBayby :public CDropItem
 {
 private:

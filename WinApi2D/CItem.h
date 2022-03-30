@@ -11,8 +11,8 @@ public:
 	~CItem();
 
 
-	virtual void ItemUse(fVec2 dir) = 0;
-	virtual CItem* Create() = 0;
+	virtual void ItemUse(fVec2 dir) {}
+	virtual CItem* Create() { return new CItem(); }
 	void SetOwnObj(CGameObject* obj);
 	CGameObject* GetOwnObj();
 };

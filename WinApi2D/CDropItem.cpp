@@ -4,6 +4,7 @@
 #include "CIsaacPlayer.h"
 #include "CCollider.h"
 #include "CScene.h"
+
 CDropItem::CDropItem()
 {
 }
@@ -14,12 +15,11 @@ CDropItem::~CDropItem()
 
 CDropItem* CDropItem::Clone()
 {
-    return new CDropItem(*this);
+	return new CDropItem(*this);
 }
 
 void CDropItem::update()
 {
-
     if (m_isPlayerCol) {
 
         if (m_adCurTime < m_adDuration) {
@@ -49,7 +49,6 @@ void CDropItem::update()
     pos.x += m_dir.normalize().x * m_velocity * fDT;
     pos.y += m_dir.normalize().y * m_velocity * fDT;
     SetPos(pos);
-
 }
 
 void CDropItem::render()
@@ -58,7 +57,6 @@ void CDropItem::render()
 
 void CDropItem::OnCollision(CCollider* pOther)
 {
-
     CTile* tile = dynamic_cast<CTile*>(pOther->GetObj());
 
     if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL || tile->GetGroup() == GROUP_TILE::GROUND)) {
@@ -73,29 +71,28 @@ void CDropItem::OnCollision(CCollider* pOther)
 
 void CDropItem::OnCollisionEnter(CCollider* pOther)
 {
-   CScene* curScene =  CSceneManager::getInst()->GetCurScene();
    
+}
+
+void CDropItem::OnCollisionExit(CCollider* pOther)
+{
+
+    CScene* curScene = CSceneManager::getInst()->GetCurScene();
+
     CIsaacPlayer* isaac = dynamic_cast<CIsaacPlayer*>(pOther->GetObj());
 
     if (isaac != nullptr) {
 
-       
+
 
         fPoint thisPos = GetPos();
         fPoint playerPos = pOther->GetObj()->GetPos();
 
-        m_velocity = isaac->GetVelocity();
+        m_velocity = 100;
         m_dir.x = thisPos.x - playerPos.x;
         m_dir.y = thisPos.y - playerPos.y;
         m_adCurTime = 0.f;
         m_isPlayerCol = true;
 
     }
-
-   
-
-}
-
-void CDropItem::OnCollisionExit(CCollider* pOther)
-{
 }

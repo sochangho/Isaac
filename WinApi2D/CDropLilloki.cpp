@@ -12,6 +12,7 @@ CDropLilloki::CDropLilloki()
     SetScale(fPoint(50, 40));
     CreateCollider();
     GetCollider()->SetScale(fPoint(30, 30));
+   
 }
 
 CDropLilloki::~CDropLilloki()
@@ -59,7 +60,7 @@ void CDropLilloki::OnCollisionEnter(CCollider* pOther)
 
     if (player != nullptr) {
 
-        player->SetItem(new CLilloki);
+        player->AddItemEqu(new CDropLilloki , new CLilloki , nullptr);
         DeleteObj(this);
     }
 

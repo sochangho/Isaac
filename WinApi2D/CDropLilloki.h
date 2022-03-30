@@ -1,6 +1,8 @@
 #pragma once
 #include "CDropItem.h"
 #include "CD2DImage.h"
+#include "CLilloki.h"
+#include "CItem.h"
 class CDropLilloki : public CDropItem
 {
 private:

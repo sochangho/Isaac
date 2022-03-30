@@ -17,6 +17,11 @@ CMonster::CMonster()
 	SetName(L"Monster");
 	MonsterRandomPosInit();
 
+	random_device rd;
+	mt19937_64 gen(rd());
+	uniform_int_distribution<int> dis(5, 10);
+	m_soundDuration =  dis(gen);
+	CSoundManager::getInst()->Play(L"Monster");
 }
 
 CMonster::~CMonster()
@@ -25,6 +30,19 @@ CMonster::~CMonster()
 
 void CMonster::update()
 {
+	if (m_soundTime < m_soundDuration) {
+
+		m_soundTime += fDT;
+	}
+	else {
+
+		m_soundTime = 0.f;
+		CSoundManager::getInst()->Play(L"Monster");
+
+		
+	}
+
+
 	if (is_attacked) {
 		Attacked();
 	}

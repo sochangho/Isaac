@@ -52,6 +52,7 @@ void CNomalRoom1::init()
 	doorup->Load(DOOR_DIR::UP, GROUP_SCENE::NOMALROOM2);
 	AddObject(doorup, GROUP_GAMEOBJ::DOOR);
 
+	CSoundManager::getInst()->Play(L"basement");
 
 
 

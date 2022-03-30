@@ -59,4 +59,10 @@ void CCore::init()
 	CCameraManager::getInst()->init();
 	CSceneManager::getInst()->init();
 	CCollisionManager::getInst()->init();
+
+
+
+	
+
+
 }

@@ -17,7 +17,7 @@ CBomb::CBomb()
     CreateAnimator();
     GetAnimator()->CreateAnimation(L"IDLE", m_pImg, fPoint(0.f, 0.f), fPoint(32.5f, 32.5f), fPoint(32.5f, 0.f), 2.f, 1);
     GetAnimator()->Play(L"IDLE");
-    
+
     CreateCollider();
     GetCollider()->SetScale(fPoint(25, 25));
 
@@ -29,6 +29,7 @@ CBomb::CBomb()
 
 CBomb::~CBomb()
 {
+    CSoundManager::getInst()->Play(L"Bomb");
 }
 
 CBomb* CBomb::Clone()

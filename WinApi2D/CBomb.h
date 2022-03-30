@@ -7,6 +7,7 @@
 #include "CIsaacPlayer.h"
 #include "CCollider.h"
 #include "CDropItem.h"
+#include "CGameObject.h"
 class CBomb : public CDropItem
 {
 private:

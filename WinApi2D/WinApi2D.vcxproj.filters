@@ -91,6 +91,9 @@
     <Filter Include="Object\Character\Pet">
       <UniqueIdentifier>{d6071ba5-17a6-4b23-9168-da13796f6bda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Title">
+      <UniqueIdentifier>{92ef4e79-20c9-4e6d-805f-f5df47825083}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -327,14 +330,29 @@
     <ClInclude Include="CDestoryRock.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CTitle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CPlayerStateHart.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CBombImg.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CPaper.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle.h">
+      <Filter>Object\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle1.h">
+      <Filter>Object\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle2.h">
+      <Filter>Object\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle3.h">
+      <Filter>Object\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle4.h">
+      <Filter>Object\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -554,14 +572,29 @@
     <ClCompile Include="CDestoryRock.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CTitle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayerStateHart.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CBombImg.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPaper.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle.cpp">
+      <Filter>Object\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle1.cpp">
+      <Filter>Object\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle2.cpp">
+      <Filter>Object\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle3.cpp">
+      <Filter>Object\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle4.cpp">
+      <Filter>Object\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

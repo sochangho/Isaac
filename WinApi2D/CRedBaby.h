@@ -13,6 +13,7 @@ public:
 	~CRedBaby();
 
 	virtual CRedBaby* Clone();
+	virtual CRedBaby* Create();
 	virtual void update();
 	virtual void render();
 	

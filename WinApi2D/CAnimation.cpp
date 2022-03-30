@@ -57,8 +57,9 @@ void CAnimation::render()
     tAniFrm frm = m_vecFrm[m_iCurFrm];
 
     fptPos = fptPos + frm.fptOffset;
-    fptPos = CCameraManager::getInst()->GetRenderPos(fptPos);
-
+    if (m_RenderPosCheck) {
+        fptPos = CCameraManager::getInst()->GetRenderPos(fptPos);
+    }
 
     if (m_bReverse)
     {
@@ -89,6 +90,11 @@ void CAnimation::render()
         );
     }
 
+}
+
+void CAnimation::SetRenderPosCheck(bool check)
+{
+    m_RenderPosCheck = check;
 }
 
 void CAnimation::Create(CD2DImage* img,     // 애니메이션의 이미지

@@ -28,6 +28,11 @@ CIsaacPlayer2* CIsaacPlayer2::Clone()
     return new CIsaacPlayer2(*this);
 }
 
+CIsaacPlayer2* CIsaacPlayer2::Create()
+{
+    return new CIsaacPlayer2;
+}
+
 void CIsaacPlayer2::update()
 {
     //CCharacter::update();

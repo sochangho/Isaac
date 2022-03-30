@@ -12,7 +12,7 @@ CDropRedBayby::CDropRedBayby()
     CreateCollider();
     GetCollider()->SetScale(fPoint(30, 30));
 
-
+   
 }
 
 CDropRedBayby::~CDropRedBayby()
@@ -59,8 +59,8 @@ void CDropRedBayby::OnCollisionEnter(CCollider* pOther)
 
 
     if (player != nullptr) {       
-        CRedBaby* redbaby = new CRedBaby;
-        player->AddPet(redbaby);
+        player->AddItemEqu(new CDropRedBayby, nullptr, new CRedBaby);
+      
         DeleteObj(this);
     }
 

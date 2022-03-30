@@ -8,10 +8,12 @@
 #include "CIsaacPlayer.h"
 CDefaultTears::CDefaultTears()
 {
+	CSoundManager::getInst()->Play(L"Tear1");
 }
 
 CDefaultTears::~CDefaultTears()
 {
+	CSoundManager::getInst()->Play(L"Tear2");
 }
 
 CDefaultTears* CDefaultTears::Clone()

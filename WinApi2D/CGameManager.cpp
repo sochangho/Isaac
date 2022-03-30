@@ -6,6 +6,7 @@
 #include "CScene.h"
 #include "CPlayerStateHart.h"
 #include "CBombImg.h"
+#include "CPaper.h"
 CGameManager::CGameManager() {
 
 
@@ -13,35 +14,35 @@ CGameManager::CGameManager() {
 
 CGameManager::~CGameManager() {
 
-	if (player != nullptr) {
+	if (m_player != nullptr) {
 
-		player = nullptr;
+		m_player = nullptr;
 	}
 
 
-	for (int i = 0; i < player2Save.size(); i++) {
+	for (int i = 0; i < m_player2Save.size(); i++) {
 
-		player2Save[i] = nullptr;
+		m_player2Save[i] = nullptr;
 	}
 
-	player2Save.clear();
+	m_player2Save.clear();
 
 
-	for (int i = 0; i < hartVec.size(); i++) {
+	for (int i = 0; i < m_hartVec.size(); i++) {
 
-		delete hartVec[i];
+		delete m_hartVec[i];
 	}
 
-	hartVec.clear();
+	m_hartVec.clear();
 
-	delete bombImg;
+	delete m_bombImg;
 }
 
 
 void CGameManager::init()
 {
 	hp = 6;
-	bombCount = 1;
+	bombCount = 20;
 	coin = 0;
 	hartcount = hp/2;
 
@@ -50,15 +51,33 @@ void CGameManager::init()
 	for (int i = 0; i < hartcount; i++) {
 
 		float tum = size * i;
-		hartVec.push_back(new CPlayerStateHart);
-		hartVec[i]->SetPos(fPoint(50 + tum, 50));
-		hartVec[i]->SetScale(fPoint(20 , 20));
+		m_hartVec.push_back(new CPlayerStateHart);
+		m_hartVec[i]->SetPos(fPoint(50 + tum, 50));
+		m_hartVec[i]->SetScale(fPoint(20 , 20));
 
 	}
 
-	bombImg = new CBombImg;
-	bombImg->SetScale(fPoint(20, 20));
-	bombImg->SetPos(fPoint(40, 108));
+	m_bombImg = new CBombImg;
+	m_bombImg->SetScale(fPoint(20, 20));
+	m_bombImg->SetPos(fPoint(40, 108));
+
+	m_paper = new CPaper;
+	m_paper->SetScale(fPoint(500, 500));
+	m_paper->SetPos(fPoint(WINSIZEX/2, WINSIZEY/2));
+
+	CSoundManager::getInst()->AddSound(L"Door_Open", L"sound\\Effect\\doorheavyclose.wav");//
+	CSoundManager::getInst()->AddSound(L"Door_Close", L"sound\\Effect\\doorheavyopen.wav");//
+	CSoundManager::getInst()->AddSound(L"Attacked", L"sound\\Effect\\hurtgrunt.wav");//
+	CSoundManager::getInst()->AddSound(L"Die", L"sound\\Effect\\isaacdiesnew.wav"); //
+	CSoundManager::getInst()->AddSound(L"Monster", L"sound\\Effect\\monsterroar1.wav");
+	CSoundManager::getInst()->AddSound(L"Item", L"sound\\Effect\\powerup1.wav");//
+	CSoundManager::getInst()->AddSound(L"Bomb", L"sound\\Effect\\rockcrumble0.wav"); //
+	CSoundManager::getInst()->AddSound(L"Tear1", L"sound\\Effect\\tearfire4.wav"); //
+	CSoundManager::getInst()->AddSound(L"Tear2", L"sound\\Effect\\tearfire5.wav"); //
+	//CSoundManager::getInst()->AddSound(L"basement", L"sound\\burningbasementloop.ogg" ,false, true); //
+
+	 //
+	
 
 }
 
@@ -73,10 +92,10 @@ void CGameManager::render()
 
 		for (int i = 0; i < life; i++) {
 
-			if (hartVec.size() > count) {
+			if (m_hartVec.size() > count) {
 
-				hartVec[count]->SetState(HARTSTATE::DEFAULT);
-				hartVec[count]->render();
+				m_hartVec[count]->SetState(HARTSTATE::DEFAULT);
+				m_hartVec[count]->render();
 				count++;
 			}
 		}
@@ -85,28 +104,43 @@ void CGameManager::render()
 		
 
 		if (lifeHarf == 1) {
-				if (hartVec.size() > count) {
+				if (m_hartVec.size() > count) {
 
-					hartVec[count]->SetState(HARTSTATE::HALF);
-					hartVec[count]->render();
+					m_hartVec[count]->SetState(HARTSTATE::HALF);
+					m_hartVec[count]->render();
 					count++;
 				}
 		}
 			
-		while(hartVec.size() > count){
+		while(m_hartVec.size() > count){
 
-				hartVec[count]->SetState(HARTSTATE::NONE);
-				hartVec[count]->render();
+				m_hartVec[count]->SetState(HARTSTATE::NONE);
+				m_hartVec[count]->render();
 				count++;
 		}
 
-			if (hartVec.size() > 0) {
+		if (m_hartVec.size() > 0) {
 				
-				bombImg->render();				
+				m_bombImg->render();				
 				WCHAR strFPS[6];
 				swprintf_s(strFPS, L"%5d", bombCount);
 				CRenderManager::getInst()->RenderText(strFPS, 70, 150, 50, 50, 12, RGB(255, 255, 255));
-			}
+				
+		}
+
+		if (m_diePlayer) {
+
+		
+				COLORREF color = RGB(0, 0, 0);
+				CRenderManager::getInst()->RenderFillRectangle(0.f, 0.f, WINSIZEX, WINSIZEY, color, 0.8);
+				if (m_paper != nullptr) {
+
+					m_paper->render();
+				}
+		}
+
+
+		
 		
 }
 
@@ -139,11 +173,11 @@ void CGameManager::SavePlayer()
 	   CIsaacPlayer* player = dynamic_cast<CIsaacPlayer*>(playerVec[i]);
 	   if (player != nullptr) {
 
-		   playerPos = player->GetPos();
-		   this->player = player->Clone();
+		   m_playerPos = player->GetPos();
+		   this->m_player = player->Clone();
 
 		   if (player->GetItem() != nullptr) {
-			   item = player->GetItem()->Create();
+			   m_item = player->GetItem()->Create();
 		   }
 	   }
 
@@ -153,11 +187,11 @@ void CGameManager::SavePlayer()
    for (int i = 0; i < vec.size(); i++) {
 	   CIsaacPlayer2* player2 = dynamic_cast<CIsaacPlayer2*>(vec[i]);
 	   if (player2 != nullptr) {
-		   player2Save.push_back(player2->Clone());
+		   m_player2Save.push_back(player2->Clone());
 	   }
    }
 
-   savePlayer = true;
+   m_savePlayer = true;
 
 }
 
@@ -165,33 +199,43 @@ CIsaacPlayer* CGameManager::LoadPlayer()
 {
 	CScene* scene = CSceneManager::getInst()->GetCurScene();
 	CIsaacPlayer* player = new CIsaacPlayer;
-	player->SetPos(playerPos);
-	if (item != nullptr) {
-		player->SetItem(item);
+	player->SetPos(m_playerPos);
+	if (m_item != nullptr) {
+		player->SetItem(m_item);
 	}
 	scene->AddObject(player, GROUP_GAMEOBJ::PLAYER);
-	for (int i = 0; i < player2Save.size(); i++) {
+	for (int i = 0; i < m_player2Save.size(); i++) {
 
-		player->AddPet(player2Save[i]);
-
-	}
-
-
-	for (int i = 0; i < player2Save.size(); i++) {
-
-		player2Save[i] = nullptr;
+		player->AddPet(m_player2Save[i]);
 
 	}
-	player2Save.clear();
-	item = nullptr;
-	savePlayer = false;
+
+
+	for (int i = 0; i < m_player2Save.size(); i++) {
+
+		m_player2Save[i] = nullptr;
+
+	}
+	m_player2Save.clear();
+	m_item = nullptr;
+	m_savePlayer = false;
 
 	return player;
 }
 
 bool CGameManager::GetSaveCheck()
 {
-	return savePlayer;
+	return m_savePlayer;
+}
+
+bool CGameManager::GetDieCheck()
+{
+	return m_diePlayer;
+}
+
+void CGameManager::SetDiecheck(bool check)
+{
+	m_diePlayer = check;
 }
 
 void CGameManager::Reset()
@@ -201,31 +245,31 @@ void CGameManager::Reset()
 	coin = 0;
 	hartcount = 0;
 
-	bool savePlayer = false;
+	m_savePlayer = false;
+	m_diePlayer = false;
+	if (m_player != nullptr) {
 
-	if (player != nullptr) {
-
-		player = nullptr;
+		m_player = nullptr;
 	}
 
 
-	for (int i = 0; i < player2Save.size(); i++) {
+	for (int i = 0; i < m_player2Save.size(); i++) {
 
-		player2Save[i] = nullptr;
+		m_player2Save[i] = nullptr;
 	}
 
-	player2Save.clear();
+	m_player2Save.clear();
 
 
-	for (int i = 0; i < hartVec.size(); i++) {
+	for (int i = 0; i < m_hartVec.size(); i++) {
 
-		delete hartVec[i];
+		delete m_hartVec[i];
 	}
 
-	hartVec.clear();
+	m_hartVec.clear();
 
-	delete bombImg;
+	delete m_bombImg;
+	delete m_paper;
 
-	bombImg = nullptr;
 
 }

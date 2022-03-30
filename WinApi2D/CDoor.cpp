@@ -74,6 +74,7 @@ void CDoor::update()
     if (!sceneClear) {
 
         if (m_doorstate == DOOR_STATE::Open) {
+            CSoundManager::getInst()->Play(L"Door_Open");
             ChangeDoorState(DOOR_STATE::GO_CLOSE);
         }
         else if (m_doorstate == DOOR_STATE::GO_CLOSE) {
@@ -85,6 +86,7 @@ void CDoor::update()
             else {
                 m_doorT = 0;
                 ChangeDoorState(DOOR_STATE::CLOSE);
+                CSoundManager::getInst()->Play(L"Door_Close");
             }
 
         }
@@ -93,6 +95,7 @@ void CDoor::update()
 
 
         if (m_doorstate == DOOR_STATE::CLOSE) {
+            
             ChangeDoorState(DOOR_STATE::GO_OPEN);
         }
         else if (m_doorstate == DOOR_STATE::GO_OPEN) {
@@ -104,6 +107,7 @@ void CDoor::update()
             else {
                 m_doorT = 0;
                 ChangeDoorState(DOOR_STATE::Open);
+                CSoundManager::getInst()->Play(L"Door_Open");
             }
 
         }
