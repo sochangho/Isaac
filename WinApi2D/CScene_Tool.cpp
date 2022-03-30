@@ -507,9 +507,12 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 		button->SetText(L"ROAD_START");
 	}
 	else if (m_gTile == GROUP_TILE::ROAD) {
+		m_gTile = GROUP_TILE::MOSTERSPAWN;
+		button->SetText(L"MOSTERSPAWN");
+	}
+	else if (m_gTile == GROUP_TILE::MOSTERSPAWN) {
 		m_gTile = GROUP_TILE::NONE;
 		button->SetText(L"NONE");
-
 	}
 	
 }
@@ -684,6 +687,18 @@ void CScene_Tool::PrintTileGroup()
 
 		}
 	
+		else if (GROUP_TILE::MOSTERSPAWN == pTile->GetGroup()) {
+
+			CRenderManager::getInst()->RenderEllipse(
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				CTile::SIZE_TILE / 2.f,
+				CTile::SIZE_TILE / 2.f,
+				RGB(200, 200, 200),
+				3.f
+			);
+
+		}
 	}
 }
 

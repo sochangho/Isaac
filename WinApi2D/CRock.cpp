@@ -79,6 +79,11 @@ void CRock::OnCollisionEnter(CCollider* _pOther)
         rock->SetPos(GetPos());
         CreateObj(rock, GROUP_GAMEOBJ::ROCK);
 
+        CScene* sceneCur = CSceneManager::getInst()->GetCurScene();
+        CTileNavMap* tilemap = sceneCur->GettileNav();
+
+       
+
         fPoint pos = GetPos();
         fPoint scale = GetScale();
         fPoint p1;
@@ -96,27 +101,20 @@ void CRock::OnCollisionEnter(CCollider* _pOther)
         int lengthY = p2.y - p1.y;
 
        
-        CScene* sceneCur = CSceneManager::getInst()->GetCurScene();
+       
         vector<iPoint> points;
         for (int i = p1.x; i <= p1.x + lengthX; i++) {
             for (int j = p1.y; j <= p1.y + lengthY; j++) { 
                 points.push_back(iPoint(i, j));
-                sceneCur->GettileNav()->ChanageTileType(GROUP_TILE::ROAD ,i , j);
-            }
-        }
-        
-        const vector<CGameObject*>& tiles = sceneCur->GetGroupObject(GROUP_GAMEOBJ::TILE);
-
-        for (int i = 0; i < points.size(); i++) {
-            for (int j = 0; j < tiles.size(); j++) {
-                CTile* tile = dynamic_cast<CTile*>(tiles[j]);
-                if (tile != nullptr && tile->GetX() == points[i].x && tile->GetY() == points[i].y) {
-
-                    tile->SetGroup(GROUP_TILE::ROAD);
-
+                if (sceneCur->GettileNav() != nullptr) {
+                    sceneCur->GettileNav()->AddRoadTile(i, j);
                 }
             }
         }
+        
+       
+
+       
     }
 
    

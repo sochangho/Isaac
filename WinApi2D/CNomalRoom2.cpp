@@ -26,7 +26,7 @@ void CNomalRoom2::update()
 void CNomalRoom2::init()
 {
 	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"tile\\ROOM2";
+	path += L"tile\\ROOM22";
 	LoadTile(path);
 
 	CBackGround* backGround = new CBackGround;
@@ -40,7 +40,7 @@ void CNomalRoom2::init()
 	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
 
 	CMap* map = new CMap;
-	map->Load(L"NomalRoom1", L"texture\\map\\basement.png");
+	map->Load(L"NomalRoom1", L"texture\\map\\basement2.png");
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	CDoor* doorDown = new CDoor;
@@ -50,18 +50,18 @@ void CNomalRoom2::init()
 
 
 
-	vector<CMonster*> monsters;
+	const vector<CGameObject*>& tiles = GetGroupObject(GROUP_GAMEOBJ::TILE);
 
+	for (int i = 0; i < tiles.size(); i++) {
+		CTile* tile = dynamic_cast<CTile*>(tiles[i]);
 
-	for (int i = 0; i < 10; i++) {
+		if (tile != nullptr && tile->GetGroup() == GROUP_TILE::MOSTERSPAWN) {
 
-
-		monsters.push_back(new CGaperBodyMonster);
-
-	}
-	for (int i = 0; i < monsters.size(); i++) {
-
-		AddObject(monsters[i], GROUP_GAMEOBJ::MONSTER);
+			CGaperBodyMonster* gaperBody = new CGaperBodyMonster;
+			gaperBody->SetScale(fPoint(50, 50));
+			gaperBody->SetPos(tile->GetPos());
+			AddObject(gaperBody, GROUP_GAMEOBJ::MONSTER);			
+		}
 
 	}
 

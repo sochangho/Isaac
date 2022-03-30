@@ -4,7 +4,7 @@
 #include "CIsaacPlayer.h"
 #include "CCollider.h"
 #include "CScene.h"
-
+#include "CRock.h"
 CDropItem::CDropItem()
 {
 }
@@ -58,8 +58,8 @@ void CDropItem::render()
 void CDropItem::OnCollision(CCollider* pOther)
 {
     CTile* tile = dynamic_cast<CTile*>(pOther->GetObj());
-
-    if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL || tile->GetGroup() == GROUP_TILE::GROUND)) {
+    CRock* rock = dynamic_cast<CRock*>(pOther->GetObj());
+    if ((tile != nullptr && tile->GetGroup() == GROUP_TILE::GROUND) || rock != nullptr) {
 
         fPoint thisPos = GetPos();
         fPoint tilePos = pOther->GetObj()->GetPos();

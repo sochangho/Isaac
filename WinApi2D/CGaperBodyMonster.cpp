@@ -5,6 +5,7 @@
 #include "CCollider.h"
 #include "CBloodTears.h"
 #include "CTile.h"
+#include "CRock.h"
 CGaperBodyMonster::CGaperBodyMonster()
 {
     m_pImg = CResourceManager::getInst()->LoadD2DImage(L"GaperBody2", L"texture\\Animation\\monsterBody.png");
@@ -197,10 +198,10 @@ void CGaperBodyMonster::OnCollisionEnter(CCollider* _pOther)
 	CMonster::OnCollisionEnter(_pOther);
 
 	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+	CRock* rock = dynamic_cast<CRock*>(_pOther->GetObj());
+	if ((tile != nullptr &&  tile->GetGroup() == GROUP_TILE::GROUND) || rock != nullptr) {
 
-	if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL|| tile->GetGroup() == GROUP_TILE::GROUND)) {
-
-		ChangeDir(tile->GetPos());
+		ChangeDir(_pOther->GetObj()->GetPos());
 		ChangeAni(true);
 
 	}

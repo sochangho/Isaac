@@ -120,19 +120,23 @@ void CNomalRoom1::init()
 
 	if (isaacplayer != nullptr) {
 
-		vector<CGaper*> gapers;
 		
-		for (int i = 0; i < 7; i++) {
+		const vector<CGameObject*>& tiles = GetGroupObject(GROUP_GAMEOBJ::TILE);
 
-			gapers.push_back(new CGaper);
-		}
+		for (int i = 0; i < tiles.size(); i++) {
+			CTile* tile = dynamic_cast<CTile*>(tiles[i]);
+
+			if (tile != nullptr && tile->GetGroup() == GROUP_TILE::MOSTERSPAWN) {
+
+				CGaper* gaper = new CGaper;
+				gaper->SetScale(fPoint(50, 50));
+				gaper->SetPos(tile->GetPos());
+		        AddObject(gaper, GROUP_GAMEOBJ::MONSTER);				
+		        gaper->SetDestinaionObj(isaacplayer);
 
 
-		for (int i = 0; i < gapers.size(); i++) {
+			}
 
-			gapers[i]->SetScale(fPoint(50, 50));
-			AddObject(gapers[i], GROUP_GAMEOBJ::MONSTER);
-			gapers[i]->SetDestinaionObj(isaacplayer);
 		}
 
 		

@@ -41,12 +41,7 @@ CTileNavMap::CTileNavMap()
 
 CTileNavMap::~CTileNavMap()
 {
-	for (int i = 0; i < m_tileNavVec.size(); i++) {
-
-		m_tileNavVec[i] = nullptr;
-	}
-
-	m_tileNavVec.clear();
+	
 
 
 }
@@ -60,7 +55,7 @@ void CTileNavMap::CreateCTileNavMap()
 	for (int i = 0; i < tileVec.size(); i++) {
 
 		CTile* tile = dynamic_cast<CTile*>(tileVec[i]);
-		if (tile->GetGroup() == GROUP_TILE::ROAD || tile->GetGroup() == GROUP_TILE::WALL) {
+		if (tile->GetGroup() == GROUP_TILE::ROAD  || tile->GetGroup() == GROUP_TILE::MOSTERSPAWN) {
 
 
 			UINT x = tile->GetX();
@@ -158,24 +153,6 @@ void CTileNavMap::CTileNavAstarUpdate(CGameObject* objdestination, CGameObject* 
 	idtPos.x = fdtPos.x / CTile::SIZE_TILE;
 	idtPos.y = fdtPos.y / CTile::SIZE_TILE;
 	
-	//if (!WallCheck(idtPos.x, idtPos.y)) {
-
-	//	for (int i = -1; i < 2; i++) {
-	//		for (int j = -1; j < 2; j++) {
-
-	//			if (
-	//			
-	//				!((i == 0) && (j == 0)) && WallCheck(idtPos.x + i, idtPos.y + j)) {					
-	//				idtPos.x += i;
-	//				idtPos.y += j;
-	//			}
-
-	//		}
-
-	//	}
-
-
-	//}
 
 
 			
@@ -185,6 +162,13 @@ void CTileNavMap::CTileNavAstarUpdate(CGameObject* objdestination, CGameObject* 
 
 			istartPos.x = fstartPos.x / CTile::SIZE_TILE;
 			istartPos.y = fstartPos.y / CTile::SIZE_TILE;
+
+
+			if (!WallCheck(idtPos.x, idtPos.y)) {
+
+				return;
+			}
+
 
 			ASNode startNode(true, nullptr, istartPos, 0, getH(istartPos, idtPos));
 			roadList.push_back(startNode);
@@ -304,15 +288,12 @@ bool CTileNavMap::WallCheck(UINT x, UINT y)
 		return false;
 	}
 
-	if (iter->second == GROUP_TILE::WALL) {
-
-		return false;
-	}
-	else {
+	if (iter->second == GROUP_TILE::ROAD || iter->second == GROUP_TILE::MOSTERSPAWN) {
 
 		return true;
 	}
 
+	return false;
 }
 
 void CTileNavMap::ChanageTileType(GROUP_TILE type, UINT x, UINT y)
@@ -321,16 +302,28 @@ void CTileNavMap::ChanageTileType(GROUP_TILE type, UINT x, UINT y)
 	tileindex.x = x;
 	tileindex.y = y;
 	map<ULONGLONG, GROUP_TILE>::iterator iter = tileMap.find(tileindex.ID);
-
-
 	if (tileMap.end() == iter) {
 		return;
 	}
-
-
 	iter->second = type;
+}
 
+void CTileNavMap::AddRoadTile(UINT x, UINT y)
+{
 
+	TILE_INDEX tileindex;
+	tileindex.x = x;
+	tileindex.y = y;
+
+	
+	tileMap.insert(make_pair(tileindex.ID, GROUP_TILE::ROAD));
+	
+
+}
+
+void CTileNavMap::Reset()
+{
+	tileMap.clear();
 }
 
 

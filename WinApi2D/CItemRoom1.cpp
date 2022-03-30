@@ -46,9 +46,13 @@ void CItemRoom1::init()
 	//
 
 	CDropRedBayby* item = new CDropRedBayby;
-
+	CDropRedBayby* item1 = new CDropRedBayby;
 	item->SetPos(fPoint(map->GetScale().x / 2, map->GetScale().y / 2));
 	AddObject(item, GROUP_GAMEOBJ::DROPITEM);
+
+
+	item1->SetPos(fPoint(map->GetScale().x / 2 - 200, map->GetScale().y / 2));
+	AddObject(item1, GROUP_GAMEOBJ::DROPITEM);
 
 	CDoor* doorleft = new CDoor;
 	doorleft->SetPos(fPoint(DOORLEFT_X, DOORLFET_Y));

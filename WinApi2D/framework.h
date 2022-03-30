@@ -81,6 +81,7 @@ enum class GROUP_TILE
 	WALL,
 	SLOPE,
     ROAD,
+	MOSTERSPAWN,
 	SIZE,
 };
 

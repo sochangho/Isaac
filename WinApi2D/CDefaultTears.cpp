@@ -6,6 +6,7 @@
 #include "CTile.h"
 #include "CMonster.h"
 #include "CIsaacPlayer.h"
+#include "CRock.h"
 CDefaultTears::CDefaultTears()
 {
 	CSoundManager::getInst()->Play(L"Tear1");
@@ -66,7 +67,8 @@ void CDefaultTears::OnCollisionEnter(CCollider* pOther)
 
 
 	CTile* tile = dynamic_cast<CTile*>(pOther->GetObj());
-	if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL|| tile->GetGroup() == GROUP_TILE::GROUND)) {
+	CRock* rock = dynamic_cast<CRock*>(pOther->GetObj());
+	if ((tile != nullptr && tile->GetGroup() == GROUP_TILE::GROUND) || rock != nullptr ) {
 
 		m_effect->SetPos(GetPos());
 		CreateObj(m_effect, GROUP_GAMEOBJ::EFFECT);

@@ -11,6 +11,7 @@
 #include "CAnimation.h"
 #include "CBombRange.h"
 #include "CScene.h"
+#include "CRock.h"
 CIsaacPlayer::CIsaacPlayer()
 {
 	
@@ -760,34 +761,16 @@ void CIsaacPlayer::OnCollision(CCollider* _pOther)
 {
 
 	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
+	CRock* rock = dynamic_cast<CRock*>(_pOther->GetObj());
 
-	if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL || tile->GetGroup() == GROUP_TILE::GROUND)) {
 
+	if (tile != nullptr && tile->GetGroup() == GROUP_TILE::GROUND || rock != nullptr) {
 		m_isColCheck = true;
-
-		if (tile->GetCollider()->GetFinalPos().x - GetCollider()->GetFinalPos().x > 0) {
-
-			m_dirVec2.x = -1;
-
-		}
-		else {
-
-			m_dirVec2.x = 1;
-		}
-		
-
-		if (tile->GetCollider()->GetFinalPos().y - GetCollider()->GetFinalPos().y > 0) {
-
-			m_dirVec2.y = -1;
-
-		}
-		else {
-
-			m_dirVec2.y = 1;
-		}
-
-
-
+		fPoint ObjPos = _pOther->GetObj()->GetPos();
+		fPoint thisPos = GetPos();
+		fVec2 dir = thisPos - ObjPos;
+		m_dirVec2.x = dir.normalize().x;
+		m_dirVec2.y = dir.normalize().y;
 	}
 
 
@@ -885,11 +868,11 @@ void CIsaacPlayer::OnCollisionExit(CCollider* _pOther)
 
 	
 	CTile* tile = dynamic_cast<CTile*>(_pOther->GetObj());
-
-	if (tile != nullptr && (tile->GetGroup() == GROUP_TILE::WALL || tile->GetGroup() == GROUP_TILE::GROUND)) {
+	CRock* rock = dynamic_cast<CRock*>(_pOther->GetObj());
+	if ((tile != nullptr &&  tile->GetGroup() == GROUP_TILE::GROUND) || rock != nullptr) {
 
 		m_isColCheck = false;
-		m_veclocity = 0;
+		m_veclocity = 10;
 		
 	}
 	

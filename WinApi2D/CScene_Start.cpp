@@ -83,8 +83,8 @@ void CScene_Start::Enter()
 
 
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));
-	//CSoundManager::getInst()->AddSound(L"Title", L"sound\\titlescreen.ogg", false , true);
-	//CSoundManager::getInst()->Play(L"Title");
+	CSoundManager::getInst()->AddSound(L"Title", L"sound\\titlescreen.ogg", false , true);
+	CSoundManager::getInst()->Play(L"Title");
 }
 
 void CScene_Start::Exit()

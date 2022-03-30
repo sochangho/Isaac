@@ -52,8 +52,7 @@ private:
 
 	map<ULONGLONG, GROUP_TILE> tileMap;
 
-	vector<CTile*> m_tileNavVec;
-
+	
 	UINT xSize = 0;
 	UINT ySize = 0;
 
@@ -82,6 +81,7 @@ public:
 
 	bool WallCheck(UINT x, UINT y);
 	void ChanageTileType(GROUP_TILE type , UINT x , UINT y);
-
+	void AddRoadTile(UINT x, UINT y);
+	void Reset();
 };
 

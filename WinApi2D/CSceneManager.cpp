@@ -103,6 +103,12 @@ void CSceneManager::GameEnd(GROUP_SCENE scene)
 			m_arrScene[i]->SetCrear(false);
 			m_arrScene[i]->DeleteAll();
 
+			if (m_arrScene[i]->GettileNav() != nullptr) {
+
+				m_arrScene[i]->GettileNav()->Reset();
+				delete m_arrScene[i]->GettileNav();
+				m_arrScene[i]->SetTileNav(nullptr);
+			}
 		}
    }
 
