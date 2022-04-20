@@ -25,11 +25,11 @@ void CDropItem::update()
         if (m_adCurTime < m_adDuration) {
 
             m_adCurTime += fDT;
-            m_velocity += 50.f * fDT;
+          
         }
         else {
 
-            m_velocity -= 50.f * fDT;
+            m_velocity -= 100.f * fDT;
 
             if (m_velocity < 0.f) {
 
@@ -71,11 +71,6 @@ void CDropItem::OnCollision(CCollider* pOther)
 
 void CDropItem::OnCollisionEnter(CCollider* pOther)
 {
-   
-}
-
-void CDropItem::OnCollisionExit(CCollider* pOther)
-{
 
     CScene* curScene = CSceneManager::getInst()->GetCurScene();
 
@@ -88,11 +83,19 @@ void CDropItem::OnCollisionExit(CCollider* pOther)
         fPoint thisPos = GetPos();
         fPoint playerPos = pOther->GetObj()->GetPos();
 
-        m_velocity = 100;
+        m_velocity = isaac->GetVelocity();
         m_dir.x = thisPos.x - playerPos.x;
         m_dir.y = thisPos.y - playerPos.y;
         m_adCurTime = 0.f;
         m_isPlayerCol = true;
 
     }
+
+   
+}
+
+void CDropItem::OnCollisionExit(CCollider* pOther)
+{
+
+   
 }

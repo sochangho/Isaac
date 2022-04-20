@@ -18,6 +18,7 @@
 #include "CTitle2.h"
 #include "CTitle3.h"
 #include "CTitle4.h"
+
 CScene_Start::CScene_Start()
 {
 }
@@ -38,10 +39,7 @@ void CScene_Start::update()
 	{
 		ChangeScn(GROUP_SCENE::STARTROOM);
 	}
-	if (KeyDown('A')) {
 
-		ChangeScn(GROUP_SCENE::ITEMROOM);
-	}
 	/*if (KeyDown('Z'))
 	{
 		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
@@ -80,6 +78,8 @@ void CScene_Start::Enter()
 	title4->SetScale(fPoint(220, 200));
 	AddObject(title4, GROUP_GAMEOBJ::UI);
 	
+
+
 
 
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2, WINSIZEY / 2));

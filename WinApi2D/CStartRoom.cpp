@@ -21,6 +21,7 @@
 #include "CGaper.h"
 #include "CDropRedBayby.h"
 #include "CDoor.h"
+#include "Monstro.h"
 CStartRoom::CStartRoom()
 {
 }
@@ -125,6 +126,13 @@ void CStartRoom::init()
 	doorup->Load(DOOR_DIR::UP, GROUP_SCENE::NOMALROOM1);
 	AddObject(doorup, GROUP_GAMEOBJ::DOOR);
 	//CSoundManager::getInst()->Play(L"basement");
+
+
+	Monstro* monstro = new Monstro;
+	monstro->SetPos(fPoint(MAPCENTER_X, MAPCENTER_Y));
+	AddObject(monstro, GROUP_GAMEOBJ::MONSTER);
+
+
 
 }
 
