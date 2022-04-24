@@ -14,6 +14,11 @@ private:
 	fVec2 m_fvDir;
 	float m_velocity = 400.f;
 	float m_lifeTime = 0.f;
+	float m_gravity = 50;
+
+
+	float m_durationSecend = 0.8;
+	float m_gravitySecend = 0.5;
 
 	CD2DImage* m_pImg;
 	CEffect* m_effect;
@@ -43,7 +48,8 @@ public:
 	void SetImg(CD2DImage* img);
 	void SetEffect(CEffect* effect);
 
-
+	void SetVelocity(float vel);
+	void SetSecend(float dur, float gravity);
 	CD2DImage* GetImg();
 	CEffect* GetEffect();
 

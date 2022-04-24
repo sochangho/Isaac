@@ -10,6 +10,7 @@
 CDefaultTears::CDefaultTears()
 {
 	CSoundManager::getInst()->Play(L"Tear1");
+	
 }
 
 CDefaultTears::~CDefaultTears()
@@ -27,14 +28,30 @@ void CDefaultTears::update()
 
 	fPoint pos = GetPos();
 
-	if (m_lifeTime < 2.f) {
+	if (m_lifeTime < m_gravitySecend) {
 		m_lifeTime += fDT;
 		pos.x += m_velocity * m_fvDir.x * fDT;
 		pos.y += m_velocity * m_fvDir.y * fDT;
+			
+		
+		
+		SetPos(pos);
+	}
+	else if (m_lifeTime > m_gravitySecend && m_lifeTime < m_durationSecend) {
+		m_lifeTime += fDT;
+		pos.x += m_velocity * m_fvDir.x * fDT;
+		pos.y += m_velocity * m_fvDir.y * fDT + m_gravity * fDT;
+
+		m_gravity += 400 * fDT;
+
 		SetPos(pos);
 	}
 	else {
 
+		m_effect->SetPos(GetPos());
+		CreateObj(m_effect, GROUP_GAMEOBJ::EFFECT);
+
+		DeleteObj(this);
 	}
 
 	GetAnimator()->update();
@@ -92,6 +109,18 @@ void CDefaultTears::SetImg(CD2DImage* img)
 void CDefaultTears::SetEffect(CEffect* effect)
 {
 	m_effect = effect;
+}
+
+void CDefaultTears::SetVelocity(float vel)
+{
+	m_velocity = vel;
+	
+}
+
+void CDefaultTears::SetSecend(float dur, float gravity)
+{
+	m_durationSecend = dur;
+	m_gravitySecend = gravity;
 }
 
 CD2DImage* CDefaultTears::GetImg()
