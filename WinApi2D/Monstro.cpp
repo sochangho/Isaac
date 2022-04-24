@@ -326,8 +326,8 @@ void Monstro::TearsAttack()
                     theta = m_dir.normalize().x * rightVec.x + m_dir.normalize().y * rightVec.y;
                     theta = acos(theta) * 180.f / 3.141592f;
 
-                  
-                    CreateRandomTearsAttack(theta , theta + 3);
+                    
+                    CreateRandomTearsAttack(m_dir);
 
                 }
 
@@ -360,7 +360,7 @@ void Monstro::TearsAttack()
 
 }
 
-void Monstro::CreateRandomTearsAttack(float min , float max)
+void Monstro::CreateRandomTearsAttack(fPoint dir)
 {
     
     CBloodTears* bloodTeas = new CBloodTears;
@@ -372,16 +372,16 @@ void Monstro::CreateRandomTearsAttack(float min , float max)
  
       random_device rd;
       mt19937_64 gen(rd());
-      uniform_int_distribution<int> angle(min, max);
+      uniform_int_distribution<int> angle(0, 20);
       uniform_int_distribution<int> vel(100, 400);
 
-      fVec2 fvDir;
+      fVec2 fvDir = dir;
 
-      fvDir.x = (float)cos(angle(gen));
-      fvDir.y = (float)sin(angle(gen));
+      fvDir.x += (float)cos(angle(gen));
+      fvDir.y += (float)sin(angle(gen));
 
       bloodTeas->SetPos(pos);
-      bloodTeas->SetDir(fvDir);
+      bloodTeas->SetDir(fvDir.normalize());
       CreateObj(bloodTeas, GROUP_GAMEOBJ::TEARS);
       bloodTeas->SetVelocity(vel(gen));
       bloodTeas->SetSecend(1.2f, 0.8f);

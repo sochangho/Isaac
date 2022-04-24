@@ -55,7 +55,7 @@ class Monstro : public CMonster
 	 void MonstroMove();
 	 void Attack();
 	 void TearsAttack();
-	 void CreateRandomTearsAttack(float min , float max);
+	 void CreateRandomTearsAttack(fPoint dir);
 
 public:
 
