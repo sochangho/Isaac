@@ -1,10 +1,11 @@
 #pragma once
 #include "CMonster.h"
 #include "CIsaacPlayer.h"
-
+#include "CBossHealthBar.h"
 class Monstro : public CMonster
 {private: 
 	CD2DImage* m_pImg;
+
 	CGameObject* m_playerObj;
 	enum class MonstroAnimatonState {
 		NONE_LEFT,
@@ -34,13 +35,14 @@ class Monstro : public CMonster
 		TRACE,
 		ATTACK,
 		TREAS_ATTACk,
+		
 	};
 
 
 	 MonstroAnimatonState anistate = MonstroAnimatonState::NONE_LEFT;
 	 MonstroState monstroState = MonstroState::NONE;
 
-
+	
 	 float m_anicur = 0;
 	 float m_animduration;
 
@@ -55,10 +57,10 @@ class Monstro : public CMonster
 	 void MonstroMove();
 	 void Attack();
 	 void TearsAttack();
-	 void CreateRandomTearsAttack(fPoint dir);
+	 void CreateRandomTearsAttack(fPoint dir , float theta);
 
 public:
-
+	
 	Monstro();
 	~Monstro();
 

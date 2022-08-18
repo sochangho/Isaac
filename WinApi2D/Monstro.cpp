@@ -113,11 +113,11 @@ void Monstro::MonstroMove()
         m_dir = playerPos - pos;
         if (m_dir.x < 0) {
             //¿ÞÂÊ
-            ChangeAnimation(MonstroAnimatonState::LEFE_MOVE, 1.f);
+            ChangeAnimation(MonstroAnimatonState::LEFE_MOVE, 0.4f);
         }
         else {
             //¿À¸¥ÂÊ
-            ChangeAnimation(MonstroAnimatonState::RIGHT_MOVE, 1.f);
+            ChangeAnimation(MonstroAnimatonState::RIGHT_MOVE, 0.4f);
         }
 
 
@@ -254,14 +254,14 @@ void Monstro::Attack()
     if (anistate == MonstroAnimatonState::ATTACK3_RIGHT || anistate == MonstroAnimatonState::ATTACK3_LEFT) {
 
         fPoint pos = GetPos();
-        if (abs(pos.y - m_playerPos.y) > 2.f ) {
+        if (abs(pos.y - m_playerPos.y) > 10.f ) {
             m_anicur += fDT;
             pos.y += 1000.f * fDT;
             SetPos(pos);
 
         }
         else {
-            pos.y = m_playerPos.y;
+            pos.y = m_playerPos.y - 40;
             SetPos(pos);
 
             monstroState = MonstroState::NONE;
@@ -327,7 +327,7 @@ void Monstro::TearsAttack()
                     theta = acos(theta) * 180.f / 3.141592f;
 
                     
-                    CreateRandomTearsAttack(m_dir);
+                    CreateRandomTearsAttack(m_dir , theta);
 
                 }
 
@@ -360,7 +360,7 @@ void Monstro::TearsAttack()
 
 }
 
-void Monstro::CreateRandomTearsAttack(fPoint dir)
+void Monstro::CreateRandomTearsAttack(fPoint dir , float theta)
 {
     
     CBloodTears* bloodTeas = new CBloodTears;
@@ -375,11 +375,14 @@ void Monstro::CreateRandomTearsAttack(fPoint dir)
       uniform_int_distribution<int> angle(0, 20);
       uniform_int_distribution<int> vel(100, 400);
 
+      
+
       fVec2 fvDir = dir;
 
       fvDir.x += (float)cos(angle(gen));
       fvDir.y += (float)sin(angle(gen));
 
+     
       bloodTeas->SetPos(pos);
       bloodTeas->SetDir(fvDir.normalize());
       CreateObj(bloodTeas, GROUP_GAMEOBJ::TEARS);
@@ -397,9 +400,9 @@ Monstro::Monstro()
 
    
 
-    GetAnimator()->CreateAnimation(L"MOVE_LEFT", m_pImg, fPoint(0.f, 112.f ), fPoint(80.f, 112.f), fPoint(80.f, 0.f), 0.5f, 2);
+    GetAnimator()->CreateAnimation(L"MOVE_LEFT", m_pImg, fPoint(0.f, 112.f ), fPoint(80.f, 112.f), fPoint(80.f, 0.f), 0.2f, 2);
     GetAnimator()->CreateAnimation(L"JUMP_LEFT", m_pImg, fPoint(80.f * 2, 112.f), fPoint(80.f, 112.f), fPoint(80.f, 0.f), 0.1f, 1);  
-    GetAnimator()->CreateAnimation(L"MOVE_Right", m_pImg, fPoint(0.f, 112.f), fPoint(80.f, 112.f), fPoint(80.f, 0.f), 0.5f, 2 , true);
+    GetAnimator()->CreateAnimation(L"MOVE_Right", m_pImg, fPoint(0.f, 112.f), fPoint(80.f, 112.f), fPoint(80.f, 0.f), 0.2f, 2 , true);
     GetAnimator()->CreateAnimation(L"JUMP_Right", m_pImg, fPoint(80.f * 2, 112.f), fPoint(80.f, 112.f), fPoint(80.f, 0.f), 0.1f, 1 , true);
 
     GetAnimator()->FindAnimation(L"JUMP_LEFT")->GetFrame(0).fptOffset = fPoint(0, -30);
@@ -426,11 +429,14 @@ Monstro::Monstro()
     
     
    
-
+  
     SetScale(fPoint(150, 200));
     CreateCollider();
     GetCollider()->SetScale(fPoint(120, 100));
     GetCollider()->SetOffsetPos(fPoint(0, 70));
+
+    m_maxHp = 500;
+    m_hp = m_maxHp;
 
    const vector<CGameObject*>& playerobjects = CSceneManager::getInst()->GetCurScene()->GetGroupObject(GROUP_GAMEOBJ::PLAYER);
 
@@ -449,7 +455,9 @@ Monstro::Monstro()
 
 Monstro::~Monstro()
 {
-    m_playerObj = nullptr;
+    m_playerObj = nullptr;    
+   
+
 }
 
 Monstro* Monstro::Clone()
@@ -467,12 +475,21 @@ void Monstro::update()
 
         random_device rd;
         mt19937_64 gen(rd());
-        uniform_int_distribution<int> dis(0, 0);
+        uniform_int_distribution<int> dis(0, 2);
 
       if (dis(gen) == 0) {
 
             monstroState = MonstroState::TREAS_ATTACk;
       }
+      else if (dis(gen) == 1) {
+
+          monstroState = MonstroState::ATTACK;
+      }
+      else if (dis(gen) == 2) {
+
+          monstroState = MonstroState::TRACE;
+      }
+      
 
     }
    
@@ -488,6 +505,7 @@ void Monstro::update()
 void Monstro::render()
 {
     component_render();
+   
 }
 
 void Monstro::finalupdate()

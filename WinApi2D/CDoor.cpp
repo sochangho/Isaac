@@ -21,30 +21,7 @@ CDoor::~CDoor()
 
 void CDoor::Load(DOOR_DIR doorDir , GROUP_SCENE scene)
 {
-    goScene = scene;
-    m_doorDir = doorDir;
-    switch (m_doorDir)
-    {
-    case DOOR_DIR::UP: {
-        m_Img = CResourceManager::getInst()->LoadD2DImage(L"DoorUp", L"texture\\Animation\\NomalDoorUp.png");       
-    }
-        break;
-    case DOOR_DIR::DOWN: {
-        m_Img = CResourceManager::getInst()->LoadD2DImage(L"DoorDown", L"texture\\Animation\\NomalDoorDown.png");
-    }
-        break;
-    case DOOR_DIR::LEFT: {
-        m_Img = CResourceManager::getInst()->LoadD2DImage(L"DoorLeft", L"texture\\Animation\\NomalDoorLeft.png");
-    }
-        break;
-    case DOOR_DIR::RIGHT: {
-        m_Img = CResourceManager::getInst()->LoadD2DImage(L"DoorRight", L"texture\\Animation\\NomalDoorRight.png");
-    }
-        break;
-    default:
-        break;
-    }
-
+    LoadDoor(doorDir, scene);
 
     CreateAnimator();
     GetAnimator()->CreateAnimation(L"OPEN", m_Img, fPoint(0.f, 0.f), fPoint(64.f, 48.f), fPoint(64.f, 0.f), 0.1f, 1);
@@ -58,6 +35,34 @@ void CDoor::Load(DOOR_DIR doorDir , GROUP_SCENE scene)
     m_doorstate = DOOR_STATE::Open;
     GetAnimator()->Play(L"OPEN");
 
+
+}
+void CDoor::LoadDoor(DOOR_DIR doorDir, GROUP_SCENE scene) {
+
+
+    goScene = scene;
+    m_doorDir = doorDir;
+    switch (m_doorDir)
+    {
+    case DOOR_DIR::UP: {
+        m_Img = CResourceManager::getInst()->LoadD2DImage(L"DoorUp", L"texture\\Animation\\NomalDoorUp.png");
+    }
+                     break;
+    case DOOR_DIR::DOWN: {
+        m_Img = CResourceManager::getInst()->LoadD2DImage(L"DoorDown", L"texture\\Animation\\NomalDoorDown.png");
+    }
+                       break;
+    case DOOR_DIR::LEFT: {
+        m_Img = CResourceManager::getInst()->LoadD2DImage(L"DoorLeft", L"texture\\Animation\\NomalDoorLeft.png");
+    }
+                       break;
+    case DOOR_DIR::RIGHT: {
+        m_Img = CResourceManager::getInst()->LoadD2DImage(L"DoorRight", L"texture\\Animation\\NomalDoorRight.png");
+    }
+                        break;
+    default:
+        break;
+    }
 
 }
 

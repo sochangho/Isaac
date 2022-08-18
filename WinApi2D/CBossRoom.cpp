@@ -7,7 +7,9 @@
 #include "CIsaacPlayer2.h"
 #include "CDropRedBayby.h"
 #include "CDoor.h"
-
+#include "Monstro.h"
+#include "CBossHealthBar.h"
+#include "CBoosDoor.h"
 CBossRoom::CBossRoom()
 {
 }
@@ -41,10 +43,22 @@ void CBossRoom::init()
 	map->Load(L"Bossroom", L"texture\\map\\bossRoom.png");
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
-	CDoor* doorleft = new CDoor;
-	doorleft->SetPos(fPoint(DOORLEFT_X, DOORLFET_Y));
-	doorleft->Load(DOOR_DIR::LEFT, GROUP_SCENE::NOMALROOM2);
-	AddObject(doorleft, GROUP_GAMEOBJ::DOOR);
+	CDoor* down = new CBoosDoor;
+	down->SetPos(fPoint(DOORDOWN_X, DOORDOWN_Y));
+	down->Load(DOOR_DIR::DOWN, GROUP_SCENE::NOMALROOM2);
+	AddObject(down, GROUP_GAMEOBJ::DOOR);
+
+
+	Monstro* monstro = new Monstro;
+    monstro->SetPos(fPoint(MAPCENTER_X, MAPCENTER_Y));
+    AddObject(monstro, GROUP_GAMEOBJ::MONSTER);
+
+	CBossHealthBar* bossHealthBar = new CBossHealthBar;
+	AddObject(bossHealthBar, GROUP_GAMEOBJ::UI);
+	bossHealthBar->SetPos(fPoint(WINSIZEX/2-200, WINSIZEY/2 - 300));
+	bossHealthBar->SetScale(fPoint(400.f, 100.f));
+	bossHealthBar->SetMonster(monstro);
+
 
 }
 

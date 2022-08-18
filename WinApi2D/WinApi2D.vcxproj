@@ -159,6 +159,8 @@
     <ClInclude Include="CBombEffect.h" />
     <ClInclude Include="CBombImg.h" />
     <ClInclude Include="CBombRange.h" />
+    <ClInclude Include="CBoosDoor.h" />
+    <ClInclude Include="CBossHealthBar.h" />
     <ClInclude Include="CBossRoom.h" />
     <ClInclude Include="CButtonUI.h" />
     <ClInclude Include="CCameraManager.h" />
@@ -249,6 +251,8 @@
     <ClCompile Include="CBombEffect.cpp" />
     <ClCompile Include="CBombImg.cpp" />
     <ClCompile Include="CBombRange.cpp" />
+    <ClCompile Include="CBoosDoor.cpp" />
+    <ClCompile Include="CBossHealthBar.cpp" />
     <ClCompile Include="CBossRoom.cpp" />
     <ClCompile Include="CButtonUI.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
@@ -331,6 +335,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

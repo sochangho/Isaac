@@ -20,7 +20,6 @@ private:
 
 
 	
-	float  m_hp = 100.f;
 	float m_attackedDuration = 0.4f;
 	float m_attackedTime = 0.f;
 
@@ -33,9 +32,13 @@ private:
 
 	list<iPoint> m_destinations;
 	list<iPoint>::iterator m_curIter;
-	
+protected:
+
+	float m_maxHp = 100.f;
+	float  m_hp = 100.f;
 	
 public:
+	
 	float m_veclocity = 40.f;
 	float m_attackedV = 30.f;
 	CMonster();
@@ -49,6 +52,11 @@ public:
 	void SetDestinaionObj(CGameObject* obj);
 	void SetDestination(const list<iPoint>& des);
 	void SetStop(bool stop);
+
+	float GetHpPercent() {
+
+		return m_hp / m_maxHp;
+	}
 
 	bool GoDestition();
 	bool GoRandom();

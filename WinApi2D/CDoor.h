@@ -15,7 +15,7 @@ enum class DOOR_STATE {
 
 class CDoor :public CGameObject
 {
-private:
+protected:
 
 	
 	
@@ -31,7 +31,11 @@ public:
 	CDoor();
 	~CDoor();
 
+
+
 	void Load(DOOR_DIR doorDir , GROUP_SCENE scene);
+
+	virtual void LoadDoor(DOOR_DIR doorDir, GROUP_SCENE scene);
 
 	virtual CDoor* Clone();
 	virtual void update();

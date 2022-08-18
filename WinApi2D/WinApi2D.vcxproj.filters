@@ -360,6 +360,12 @@
     <ClInclude Include="Monstro.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CBossHealthBar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CBoosDoor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -608,6 +614,12 @@
     <ClCompile Include="Monstro.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="CBossHealthBar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBoosDoor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinApi2D.rc">
@@ -624,5 +636,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

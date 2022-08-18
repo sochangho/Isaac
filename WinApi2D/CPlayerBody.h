@@ -2,7 +2,8 @@
 #include "CD2DImage.h"
 #include "CCharacter.h"
 class CPlayerBody : public CCharacter
-{private:
+{
+private:
 	CD2DImage* m_pImg;
 public:
 	CPlayerBody();

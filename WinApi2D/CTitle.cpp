@@ -40,6 +40,7 @@ void CTitle::render()
 
 	);
 
+	
 
 	//CRenderManager::getInst()->RenderFrame(
 	//	m_pImg,

@@ -8,7 +8,7 @@
 #include "CDropRedBayby.h"
 #include "CGaperBodyMonster.h"
 #include "CDoor.h"
-
+#include "CBoosDoor.h"
 
 CNomalRoom2::CNomalRoom2()
 {
@@ -47,6 +47,12 @@ void CNomalRoom2::init()
 	doorDown->SetPos(fPoint(DOORDOWN_X, DOORDOWN_Y));
 	doorDown->Load(DOOR_DIR::DOWN, GROUP_SCENE::NOMALROOM1);
 	AddObject(doorDown, GROUP_GAMEOBJ::DOOR);
+
+
+	CDoor* doorBoss = new CBoosDoor;
+	doorBoss->SetPos(fPoint(DOORUP_X, DOORUP_Y));
+	doorBoss->Load(DOOR_DIR::UP, GROUP_SCENE::BOSSROOM);
+	AddObject(doorBoss, GROUP_GAMEOBJ::DOOR);
 
 
 

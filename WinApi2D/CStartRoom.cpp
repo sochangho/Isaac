@@ -22,6 +22,7 @@
 #include "CDropRedBayby.h"
 #include "CDoor.h"
 #include "Monstro.h"
+#include "CBossHealthBar.h"
 CStartRoom::CStartRoom()
 {
 }
@@ -128,14 +129,17 @@ void CStartRoom::init()
 	//CSoundManager::getInst()->Play(L"basement");
 
 
-	Monstro* monstro = new Monstro;
+	/*Monstro* monstro = new Monstro;
 	monstro->SetPos(fPoint(MAPCENTER_X, MAPCENTER_Y));
 	AddObject(monstro, GROUP_GAMEOBJ::MONSTER);
 
-
+	CBossHealthBar* bossHealthBar = new CBossHealthBar;
+	AddObject(bossHealthBar, GROUP_GAMEOBJ::UI);
+	bossHealthBar->SetPos(fPoint(WINSIZEX/2-200, WINSIZEY/2 - 300));
+	bossHealthBar->SetScale(fPoint(400.f, 100.f));
+	bossHealthBar->SetMonster(monstro);*/
 
 }
-
 void CStartRoom::Exit()
 {
 	CGameManager::getInst()->SavePlayer();

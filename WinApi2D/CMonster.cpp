@@ -53,20 +53,20 @@ void CMonster::render()
 {
 
 	
-	COLORREF rgb = RGB(0, 0, 255);	
-	for (auto iter = m_destinations.begin(); iter != m_destinations.end(); iter++) {
+	//COLORREF rgb = RGB(0, 0, 255);	
+	//for (auto iter = m_destinations.begin(); iter != m_destinations.end(); iter++) {
 
-		fPoint pos;
-		pos.x = iter->x;
-		pos.y = iter->y;
-		fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(pos);
-		CRenderManager::getInst()->RenderRectangle(
-			fptRenderPos.x - CTile::SIZE_TILE / 2,
-			fptRenderPos.y - CTile::SIZE_TILE / 2,
-			fptRenderPos.x + CTile::SIZE_TILE / 2,
-			fptRenderPos.y + CTile::SIZE_TILE / 2 , rgb);
+	//	fPoint pos;
+	//	pos.x = iter->x;
+	//	pos.y = iter->y;
+	//	fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(pos);
+	//	CRenderManager::getInst()->RenderRectangle(
+	//		fptRenderPos.x - CTile::SIZE_TILE / 2,
+	//		fptRenderPos.y - CTile::SIZE_TILE / 2,
+	//		fptRenderPos.x + CTile::SIZE_TILE / 2,
+	//		fptRenderPos.y + CTile::SIZE_TILE / 2 , rgb);
 
-	}
+	//}
 	CCharacter::render();
 
 }

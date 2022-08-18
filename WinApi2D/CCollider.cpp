@@ -76,7 +76,7 @@ void CCollider::finalupdate()
 
 void CCollider::render()
 {
-	COLORREF rgb = RGB(0, 0, 0);
+	/*COLORREF rgb = RGB(0, 0, 0);
 	if (m_iColCount)
 		rgb = RGB(255, 0, 0);
 	else
@@ -89,7 +89,7 @@ void CCollider::render()
 		fptRenderPos.y - m_fptScale.y / 2.f,
 		fptRenderPos.x + m_fptScale.x / 2.f,
 		fptRenderPos.y + m_fptScale.y / 2.f,
-		rgb);
+		rgb);*/
 }
 
 void CCollider::OnCollision(CCollider* pOther)
