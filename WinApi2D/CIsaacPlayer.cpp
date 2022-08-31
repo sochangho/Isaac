@@ -601,7 +601,7 @@ void CIsaacPlayer::CreateWaterballoon(fVec2 dir)
 		}
 		else {
 
-			CIsaacPlayer2* player2 = dynamic_cast<CIsaacPlayer2*>(*iter);
+			CIsaacPet* player2 = dynamic_cast<CIsaacPet*>(*iter);
 			if (player2 != nullptr) {
 				player2->ItemUse(dir);
 			}
@@ -656,7 +656,7 @@ bool CIsaacPlayer::GetIsItem()
 	return m_isItem;
 }
 
-void CIsaacPlayer::AddPet(CIsaacPlayer2* character)
+void CIsaacPlayer::AddPet(CIsaacPet* character)
 {
 
 	character->SetPos(GetPos());
@@ -679,7 +679,7 @@ void CIsaacPlayer::PetUpdate()
 
 			fPoint dPos;
 			fPoint sPos;
-			CIsaacPlayer2* player2 = dynamic_cast<CIsaacPlayer2*>(*iter);
+			CIsaacPet* player2 = dynamic_cast<CIsaacPet*>(*iter);
 			if (player2 != nullptr) {
 
 
@@ -746,7 +746,7 @@ void CIsaacPlayer::ItemAnimationAfterAdd()
 
 }
 
-void CIsaacPlayer::AddItemEqu(CGameObject* dropItem ,CItem* item, CIsaacPlayer2* player2)
+void CIsaacPlayer::AddItemEqu(CGameObject* dropItem ,CItem* item, CIsaacPet* player2)
 {
 	m_isItem = true;
 	this->dropItem = dropItem;	

@@ -42,7 +42,7 @@ void CRedBaby::update()
 {
   
 
-    CIsaacPlayer2::update();
+    CIsaacPet::update();
     ChangeAnimation(GetPlayer2State());
    GetAnimator()->update();
 
@@ -67,7 +67,7 @@ void CRedBaby::ItemUse(fVec2 dir)
     CreateObj(tears, GROUP_GAMEOBJ::TEARS);
 }
 
-void CRedBaby::ChangeAnimation(CIsaacPlayer2::Player2State state)
+void CRedBaby::ChangeAnimation(CIsaacPet::PetState state)
 {
     if (cur_state == state) {
         return;
@@ -80,23 +80,23 @@ void CRedBaby::ChangeAnimation(CIsaacPlayer2::Player2State state)
    
 
 
-    case CIsaacPlayer2::Player2State::IDLE: {
+    case CIsaacPet::PetState::IDLE: {
         GetAnimator()->Play(L"IDLE");
     }
         break;
-    case CIsaacPlayer2::Player2State::UP: {
+    case CIsaacPet::PetState::UP: {
         GetAnimator()->Play(L"UP");
     }
         break;
-    case CIsaacPlayer2::Player2State::DOWN: {
+    case CIsaacPet::PetState::DOWN: {
         GetAnimator()->Play(L"DOWN");
     }
         break;
-    case CIsaacPlayer2::Player2State::LEFT: {
+    case CIsaacPet::PetState::LEFT: {
         GetAnimator()->Play(L"LEFT");
     }
         break;
-    case CIsaacPlayer2::Player2State::RIGHT: {
+    case CIsaacPet::PetState::RIGHT: {
         GetAnimator()->Play(L"RIGHT");
     }
         break;

@@ -1,12 +1,12 @@
 #pragma once
 #include "CIsaacPlayer2.h"
 #include "CD2DImage.h"
-class CRedBaby : public CIsaacPlayer2
+class CRedBaby : public CIsaacPet
 {
 
 private:
 	CD2DImage* m_pImg;
-	Player2State cur_state = Player2State::IDLE;
+	PetState cur_state = PetState::IDLE;
 public:
 
 	CRedBaby();
@@ -18,6 +18,6 @@ public:
 	virtual void render();
 	
 	virtual void ItemUse(fVec2 dir);
-	void ChangeAnimation(CIsaacPlayer2::Player2State state);
+	void ChangeAnimation(CIsaacPet::PetState state);
 };
 

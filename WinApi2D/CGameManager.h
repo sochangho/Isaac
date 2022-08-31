@@ -1,7 +1,7 @@
 #pragma once
 class CGameObject;
 class CIsaacPlayer;
-class CIsaacPlayer2;
+class CIsaacPet;
 class CItem;
 class CPlayerStateHart;
 class CBombImg;
@@ -21,7 +21,7 @@ private:
 	bool                      m_diePlayer = false;
 	fPoint                    m_playerPos;
 	CIsaacPlayer*             m_player;
-	vector<CIsaacPlayer2*>    m_player2Save;
+	vector<CIsaacPet*>    m_player2Save;
 	vector<CPlayerStateHart*> m_hartVec;
 	CBombImg*                 m_bombImg;
 	CPaper*                   m_paper;

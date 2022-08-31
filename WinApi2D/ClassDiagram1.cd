@@ -441,10 +441,10 @@
       <FileName>CTears.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CIsaacPlayer2" Collapsed="true">
+  <Class Name="CIsaacPet" Collapsed="true">
     <Position X="54.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAQAAAAAAAAAAAAhAQAAAAAQAEQEEAAAAAAUABA=</HashCode>
+      <HashCode>AAEAAAQAAAAAAAAAAAAgAQBAAAAAAEQEEAAAgAAUABA=</HashCode>
       <FileName>CIsaacPlayer2.h</FileName>
     </TypeIdentifier>
   </Class>

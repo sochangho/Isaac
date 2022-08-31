@@ -185,7 +185,7 @@ void CGameManager::SavePlayer()
   
 
    for (int i = 0; i < vec.size(); i++) {
-	   CIsaacPlayer2* player2 = dynamic_cast<CIsaacPlayer2*>(vec[i]);
+	   CIsaacPet* player2 = dynamic_cast<CIsaacPet*>(vec[i]);
 	   if (player2 != nullptr) {
 		   m_player2Save.push_back(player2->Clone());
 	   }

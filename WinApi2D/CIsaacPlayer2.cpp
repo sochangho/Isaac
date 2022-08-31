@@ -2,7 +2,7 @@
 #include "CIsaacPlayer2.h"
 #include "CIsaacPlayer.h"
 #include "CScene.h"
-CIsaacPlayer2::CIsaacPlayer2()
+CIsaacPet::CIsaacPet()
 {
 
     random_device rd;
@@ -19,21 +19,21 @@ CIsaacPlayer2::CIsaacPlayer2()
 
 }
 
-CIsaacPlayer2::~CIsaacPlayer2()
+CIsaacPet::~CIsaacPet()
 {
 }
 
-CIsaacPlayer2* CIsaacPlayer2::Clone()
+CIsaacPet* CIsaacPet::Clone()
 {
-    return new CIsaacPlayer2(*this);
+    return new CIsaacPet(*this);
 }
 
-CIsaacPlayer2* CIsaacPlayer2::Create()
+CIsaacPet* CIsaacPet::Create()
 {
-    return new CIsaacPlayer2;
+    return new CIsaacPet;
 }
 
-void CIsaacPlayer2::update()
+void CIsaacPet::update()
 {
     //CCharacter::update();
 
@@ -58,23 +58,23 @@ void CIsaacPlayer2::update()
     switch (dobystate)
     {
     case CIsaacPlayer::IsaacStateBody::IDLE: {
-        state = Player2State::IDLE;
+        state = PetState::IDLE;
     }
         break;
     case CIsaacPlayer::IsaacStateBody::LEFT_MOVE: {
-        state = Player2State::LEFT;
+        state = PetState::LEFT;
     }
         break;
     case CIsaacPlayer::IsaacStateBody::RIGHT_MOVE: {
-        state = Player2State::RIGHT;
+        state = PetState::RIGHT;
     }
         break;
     case CIsaacPlayer::IsaacStateBody::UP_MOVE: {
-        state = Player2State::UP;
+        state = PetState::UP;
     }
         break;
     case CIsaacPlayer::IsaacStateBody::DOWN_MOVE: {
-        state = Player2State::DOWN;
+        state = PetState::DOWN;
     }
         break;
     default:
@@ -83,11 +83,11 @@ void CIsaacPlayer2::update()
  
 }
 
-void CIsaacPlayer2::render()
+void CIsaacPet::render()
 {
 }
 
-CIsaacPlayer2::Player2State CIsaacPlayer2::GetPlayer2State()
+CIsaacPet::PetState CIsaacPet::GetPlayer2State()
 {
     return state;
 }

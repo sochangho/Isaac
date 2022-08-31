@@ -17,7 +17,7 @@ private:
 	CGameObject* dropItem;
 
 	CItem* m_tempItem;
-	CIsaacPlayer2* m_tempPlayer2;
+	CIsaacPet* m_tempPlayer2;
 
 public:
 	enum class IsaacStateHead {
@@ -84,11 +84,11 @@ public:
 	void PetUpdate();
 	void SetIsItem(bool isitem);
 	void SetItem(CItem* item);
-	void AddPet(CIsaacPlayer2* character);
+	void AddPet(CIsaacPet* character);
 
 	void ItemAnimationAfterAdd();
 
-	void AddItemEqu(CGameObject* dropItem , CItem* item  , CIsaacPlayer2* player2);
+	void AddItemEqu(CGameObject* dropItem , CItem* item  , CIsaacPet* player2);
 	
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);
