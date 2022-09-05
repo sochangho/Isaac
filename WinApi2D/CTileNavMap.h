@@ -81,6 +81,7 @@ public:
 
 	bool WallCheck(UINT x, UINT y);
 	void AddRoadTile(UINT x, UINT y);
+	void RemoveRoadTile(UINT x, UINT y);
 	void Reset();
 };
 

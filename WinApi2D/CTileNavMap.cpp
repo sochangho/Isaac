@@ -301,8 +301,25 @@ void CTileNavMap::AddRoadTile(UINT x, UINT y)
 
 	
 	tileSet.insert(tileindex.ID);
-	
+}
 
+void CTileNavMap::RemoveRoadTile(UINT x, UINT y)
+{
+	TILE_INDEX tileindex; 
+	tileindex.x = x;
+	tileindex.y = y;
+
+
+   set<ULONGLONG>::iterator	iter = tileSet.find(tileindex.ID);
+
+   if (tileSet.end() == iter) {
+	   return;
+   }
+
+
+   tileSet.erase(iter);
+
+   return;
 }
 
 void CTileNavMap::Reset()
