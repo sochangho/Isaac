@@ -36,7 +36,7 @@ public:
 	int GetY();
 	GROUP_TILE GetGroup();
 
-	void WallTileDestory();
+
 
 
 	virtual void Save(FILE* pFile);

@@ -340,6 +340,9 @@ void CScene_Tool::LoadTile(const wstring& strPath)
 		((CTile*)vecTile[iIdx])->SetY(pTile->GetY());
 		((CTile*)vecTile[iIdx])->SetImgIdx(pTile->GetIdx());
 		((CTile*)vecTile[iIdx])->SetGroup(pTile->GetGroup());
+
+		
+
 	}
 
 	UINT rockCount = 0;

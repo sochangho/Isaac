@@ -113,20 +113,7 @@ GROUP_TILE CTile::GetGroup()
 	return m_group;
 }
 
-void CTile::WallTileDestory()
-{
-	CScene* curScene =  CSceneManager::getInst()->GetCurScene();
-	CTileNavMap* tilemapNav = curScene->GettileNav();
-	m_group = GROUP_TILE::ROAD;
-	if (tilemapNav != nullptr) {
 
-		curScene->CurSceneMonsterAllStop(true);
-		tilemapNav->ChanageTileType(GROUP_TILE::ROAD, GetX(), GetY());
-		curScene->CurSceneMonsterAllStop(false);
-    }
-
-	
-}
 
 void CTile::Save(FILE* pFile)
 {
@@ -151,25 +138,10 @@ void CTile::Load(FILE* pFile)
 
 void CTile::OnCollisionEnter(CCollider* _pOther)
 {
-	//CRock* rock = dynamic_cast<CRock*>(_pOther->GetObj());
-	//CBombRange* range = dynamic_cast<CBombRange*>(_pOther->GetObj());
-	//if ( range != nullptr  && this->m_group == GROUP_TILE::WALL) {
-
- //      //Å¸ÀÏ ÆÄ±«
-	//	WallTileDestory();
-
-	//}
-
 
 }
 
 void CTile::OnCollisionExit(CCollider* _pOther)
 {
-	//CRock* rock = dynamic_cast<CRock*>(_pOther->GetObj());
-	//if ((rock != nullptr ) && this->m_group == GROUP_TILE::WALL) {
-
-	//	//Å¸ÀÏ ÆÄ±«
-	//	WallTileDestory();
-
-	//}
+	
 }

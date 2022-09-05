@@ -63,7 +63,7 @@ void CTileNavMap::CreateCTileNavMap()
 			TILE_INDEX tileindex;
 			tileindex.x = x;
 			tileindex.y = y;
-			tileMap.insert(make_pair(tileindex.ID, tile->GetGroup()));
+			tileSet.insert(tileindex.ID);
 			
 
 		}
@@ -282,31 +282,15 @@ bool CTileNavMap::WallCheck(UINT x, UINT y)
 	tileindex.x = x;
 	tileindex.y = y;
 
-	map<ULONGLONG, GROUP_TILE>::iterator iter = tileMap.find(tileindex.ID);
+	set<ULONGLONG>::iterator iter = tileSet.find(tileindex.ID);
 
-	if (tileMap.end() == iter) {	
+	if (tileSet.end() == iter) {	
 		return false;
 	}
 
-	if (iter->second == GROUP_TILE::ROAD || iter->second == GROUP_TILE::MOSTERSPAWN) {
-
-		return true;
-	}
-
-	return false;
+	return true;
 }
 
-void CTileNavMap::ChanageTileType(GROUP_TILE type, UINT x, UINT y)
-{
-	TILE_INDEX tileindex;
-	tileindex.x = x;
-	tileindex.y = y;
-	map<ULONGLONG, GROUP_TILE>::iterator iter = tileMap.find(tileindex.ID);
-	if (tileMap.end() == iter) {
-		return;
-	}
-	iter->second = type;
-}
 
 void CTileNavMap::AddRoadTile(UINT x, UINT y)
 {
@@ -316,14 +300,14 @@ void CTileNavMap::AddRoadTile(UINT x, UINT y)
 	tileindex.y = y;
 
 	
-	tileMap.insert(make_pair(tileindex.ID, GROUP_TILE::ROAD));
+	tileSet.insert(tileindex.ID);
 	
 
 }
 
 void CTileNavMap::Reset()
 {
-	tileMap.clear();
+	tileSet.clear();
 }
 
 

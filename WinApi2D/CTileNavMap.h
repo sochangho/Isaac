@@ -49,8 +49,8 @@ private:
 
 
 
-
-	map<ULONGLONG, GROUP_TILE> tileMap;
+	
+	set<ULONGLONG> tileSet;
 
 	
 	UINT xSize = 0;
@@ -80,7 +80,6 @@ public:
 
 
 	bool WallCheck(UINT x, UINT y);
-	void ChanageTileType(GROUP_TILE type , UINT x , UINT y);
 	void AddRoadTile(UINT x, UINT y);
 	void Reset();
 };
